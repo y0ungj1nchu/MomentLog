@@ -1,0 +1,1317 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>모먼트로그 (MomentLog) - 나만의 맞춤형 멘탈 케어</title>
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              blue: '#6A85F1',
+              purple: '#C198F0',
+              navy: '#1B326B',
+              dark: '#1F2937',
+              bgLight: '#F8F9FE',
+            }
+          },
+          fontFamily: {
+            sans: ['Pretendard', '-apple-system', 'BlinkMacSystemFont', 'system-ui', 'Roboto', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Google Pretendard Font Alternative CDN -->
+  <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+
+  <style>
+    /* 그라데이션 공통 클래스 */
+    .gradient-text {
+      background: linear-gradient(135deg, #6A85F1 0%, #C198F0 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .gradient-bg {
+      background: linear-gradient(135deg, #6A85F1 0%, #C198F0 100%);
+    }
+    .gradient-bg-subtle {
+      background: linear-gradient(135deg, rgba(106, 133, 241, 0.08) 0%, rgba(193, 152, 240, 0.08) 100%);
+    }
+
+    /* 부드러운 애니메이션 */
+    @keyframes float {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      50% { transform: translateY(-10px) rotate(1.5deg); }
+    }
+    @keyframes sparkle-rise {
+      0% { transform: translateY(8px) scale(0.7); opacity: 0; }
+      50% { transform: translateY(-6px) scale(1.15); opacity: 1; }
+      100% { transform: translateY(-20px) scale(0.8); opacity: 0; }
+    }
+    @keyframes pulse-slow {
+      0%, 100% { transform: scale(1); opacity: 0.9; }
+      50% { transform: scale(1.04); opacity: 1; }
+    }
+
+    .animate-float {
+      animation: float 4s ease-in-out infinite;
+    }
+    .sparkle-1 { animation: sparkle-rise 2.8s ease-in-out infinite; }
+    .sparkle-2 { animation: sparkle-rise 3.4s ease-in-out infinite 1.2s; }
+    .sparkle-3 { animation: sparkle-rise 3.1s ease-in-out infinite 0.6s; }
+    .animate-pulse-slow { animation: pulse-slow 3s ease-in-out infinite; }
+
+    /* 화면 전환 페이드 인 효과 */
+    .fade-enter {
+      animation: fadeIn 0.45s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(14px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* 차트 툴팁 스타일 */
+    .chart-tooltip {
+      position: absolute;
+      pointer-events: none;
+      transition: all 0.15s ease-out;
+      transform: translate(-50%, -100%);
+      white-space: nowrap;
+      z-index: 50;
+    }
+
+    /* 모바일 터치 리플 & 인터랙션 피드백 애니메이션 */
+    @keyframes touchRipple {
+      0% {
+        transform: translate(-50%, -50%) scale(0);
+        opacity: 0.8;
+      }
+      100% {
+        transform: translate(-50%, -50%) scale(3.5);
+        opacity: 0;
+      }
+    }
+    .touch-ripple-effect {
+      position: absolute;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(106, 133, 241, 0.5) 0%, rgba(193, 152, 240, 0.3) 50%, transparent 75%);
+      pointer-events: none;
+      transform: translate(-50%, -50%);
+      animation: touchRipple 0.55s ease-out forwards;
+      z-index: 40;
+    }
+
+    @keyframes popBadge {
+      0% {
+        transform: scale(0.2) rotate(-8deg);
+        opacity: 0;
+      }
+      65% {
+        transform: scale(1.15) rotate(2deg);
+        opacity: 1;
+      }
+      100% {
+        transform: scale(1) rotate(0deg);
+        opacity: 1;
+      }
+    }
+    .pop-badge-anim {
+      animation: popBadge 0.28s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+    }
+
+    /* 가로 스크롤 방지 */
+    body {
+      overflow-x: hidden;
+      -webkit-tap-highlight-color: transparent;
+    }
+  </style>
+</head>
+<body class="bg-white text-gray-800 font-sans selection:bg-[#C198F0] selection:text-white">
+
+  <!-- ======================================================= -->
+  <!-- STEP 1: 감성 사진 선택 화면 (랜딩) -->
+  <!-- ======================================================= -->
+  <section id="step-landing" class="min-h-[100dvh] flex flex-col justify-between bg-[#F8F9FE] px-4 py-6 md:py-10 fade-enter">
+    <!-- 상단 브랜드 헤더 -->
+    <div class="text-center max-w-xl mx-auto pt-2">
+      <div class="inline-flex items-center gap-2.5 mb-3 px-4 py-1.5 rounded-full bg-white shadow-sm border border-blue-50">
+        <div class="w-8 h-8 rounded-xl gradient-bg flex items-center justify-center shadow-md shadow-blue-200/50">
+          <svg class="w-4 h-4 text-white fill-white" viewBox="0 0 24 24">
+            <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+          </svg>
+        </div>
+        <span class="text-xl font-bold tracking-tight gradient-text">모먼트로그</span>
+      </div>
+      <h1 class="text-2xl sm:text-3xl font-extrabold text-gray-900 tracking-tight leading-snug">
+        오늘 당신의 기분은 어떤가요?
+      </h1>
+      <p class="text-gray-500 text-sm sm:text-base mt-1 font-medium">
+        가장 마음에 드는 사진을 선택해주세요.
+      </p>
+    </div>
+
+    <!-- 사진 4분할 원본 이미지 컨테이너 (단일 이미지에서 4개 영역 선택) -->
+    <div class="w-full max-w-md md:max-w-xl mx-auto my-auto py-3">
+      
+      <!-- 4분할 이미지 액자 카드 -->
+      <div class="relative rounded-[2rem] sm:rounded-[2.5rem] overflow-hidden shadow-2xl border-4 border-white/90 bg-white group">
+        <!-- 사용자가 업로드한 4분할 원본 사진 -->
+        <img src="./mood_selection.jpg" alt="모먼트로그 기분 선택 4분할 사진" 
+             class="w-full h-auto object-cover block select-none" />
+
+        <!-- 2x2 인터랙티브 클릭 핫스팟 오버레이 (A, B, C, D) -->
+        <div class="absolute inset-0 grid grid-cols-2 grid-rows-2">
+          
+          <!-- 사분면 A (좌상단: 여유로운 휴식) -->
+          <button id="btn-quadrant-A" onclick="selectPhoto('A', '여유로운 휴식', event)" 
+                  class="relative focus:outline-none group/a transition-all duration-200 active:scale-[0.98] flex items-center justify-center p-2 sm:p-4 overflow-hidden">
+            <!-- 모바일 터치 선택 팝업 뱃지 -->
+            <div id="badge-A" class="hidden absolute inset-0 flex items-center justify-center bg-black/45 backdrop-blur-[1px] z-30 pointer-events-none">
+              <div class="pop-badge-anim bg-white text-emerald-700 px-4 py-2 rounded-2xl font-black text-sm shadow-2xl border-2 border-emerald-400 flex items-center gap-1.5">
+                <svg class="w-4 h-4 text-emerald-500 fill-current" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                <span>A 선택</span>
+              </div>
+            </div>
+            <div class="absolute inset-1.5 rounded-2xl border-2 border-emerald-400/0 group-hover/a:border-emerald-400/80 transition-colors pointer-events-none"></div>
+          </button>
+
+          <!-- 사분면 B (우상단: 화려한 밤) -->
+          <button id="btn-quadrant-B" onclick="selectPhoto('B', '화려한 밤', event)" 
+                  class="relative focus:outline-none group/b transition-all duration-200 active:scale-[0.98] flex items-center justify-center p-2 sm:p-4 overflow-hidden">
+            <!-- 모바일 터치 선택 팝업 뱃지 -->
+            <div id="badge-B" class="hidden absolute inset-0 flex items-center justify-center bg-black/45 backdrop-blur-[1px] z-30 pointer-events-none">
+              <div class="pop-badge-anim bg-white text-purple-700 px-4 py-2 rounded-2xl font-black text-sm shadow-2xl border-2 border-purple-400 flex items-center gap-1.5">
+                <svg class="w-4 h-4 text-purple-500 fill-current" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                <span>B 선택</span>
+              </div>
+            </div>
+            <div class="absolute inset-1.5 rounded-2xl border-2 border-purple-400/0 group-hover/b:border-purple-400/80 transition-colors pointer-events-none"></div>
+          </button>
+
+          <!-- 사분면 C (좌하단: 새로운 시작) -->
+          <button id="btn-quadrant-C" onclick="selectPhoto('C', '새로운 시작', event)" 
+                  class="relative focus:outline-none group/c transition-all duration-200 active:scale-[0.98] flex items-center justify-center p-2 sm:p-4 overflow-hidden">
+            <!-- 모바일 터치 선택 팝업 뱃지 -->
+            <div id="badge-C" class="hidden absolute inset-0 flex items-center justify-center bg-black/45 backdrop-blur-[1px] z-30 pointer-events-none">
+              <div class="pop-badge-anim bg-white text-blue-700 px-4 py-2 rounded-2xl font-black text-sm shadow-2xl border-2 border-blue-400 flex items-center gap-1.5">
+                <svg class="w-4 h-4 text-blue-500 fill-current" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                <span>C 선택</span>
+              </div>
+            </div>
+            <div class="absolute inset-1.5 rounded-2xl border-2 border-blue-400/0 group-hover/c:border-blue-400/80 transition-colors pointer-events-none"></div>
+          </button>
+
+          <!-- 사분면 D (우하단: 평온한 자연) -->
+          <button id="btn-quadrant-D" onclick="selectPhoto('D', '평온한 자연', event)" 
+                  class="relative focus:outline-none group/d transition-all duration-200 active:scale-[0.98] flex items-center justify-center p-2 sm:p-4 overflow-hidden">
+            <!-- 모바일 터치 선택 팝업 뱃지 -->
+            <div id="badge-D" class="hidden absolute inset-0 flex items-center justify-center bg-black/45 backdrop-blur-[1px] z-30 pointer-events-none">
+              <div class="pop-badge-anim bg-white text-amber-800 px-4 py-2 rounded-2xl font-black text-sm shadow-2xl border-2 border-amber-500 flex items-center gap-1.5">
+                <svg class="w-4 h-4 text-amber-600 fill-current" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                <span>D 선택</span>
+              </div>
+            </div>
+            <div class="absolute inset-1.5 rounded-2xl border-2 border-amber-400/0 group-hover/d:border-amber-400/80 transition-colors pointer-events-none"></div>
+          </button>
+
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ======================================================= -->
+  <!-- STEP 2: 심리테스트 Q1 -->
+  <!-- ======================================================= -->
+  <section id="step-q1" class="hidden min-h-[100dvh] flex flex-col justify-center bg-[#F8F9FE] px-4 py-8">
+    <div class="w-full max-w-md mx-auto">
+      
+      <!-- 진행 상태 바 (Step 1 of 2: 50%) -->
+      <div class="mb-6">
+        <div class="flex items-center justify-between mb-2.5">
+          <span class="text-xs font-bold tracking-wider text-brand-blue uppercase bg-blue-50 px-2.5 py-1 rounded-md border border-blue-100">Step 1 of 2</span>
+          <span class="text-xs font-semibold text-gray-400">50% 완료</span>
+        </div>
+        <div class="w-full h-2.5 bg-gray-200/80 rounded-full overflow-hidden p-0.5">
+          <div class="h-full rounded-full gradient-bg transition-all duration-500" style="width: 50%"></div>
+        </div>
+      </div>
+
+      <!-- 질문 카드 헤더 -->
+      <div class="bg-white rounded-[2rem] p-6 shadow-sm border border-gray-100 mb-5">
+        <span class="inline-block text-xs font-bold text-[#6A85F1] mb-2">기상 생각 테스트</span>
+        <h2 class="text-xl sm:text-2xl font-bold text-gray-900 leading-snug break-keep">
+          Q1. 아침에 눈을 떴을 때, 가장 먼저 머릿속을 스치는 생각은 무엇인가요?
+        </h2>
+        <p class="text-xs sm:text-sm text-gray-400 mt-2">
+          아래 4가지 보기 중 마음에 가장 와닿는 답변을 선택해주세요
+        </p>
+      </div>
+
+      <!-- 4지 선다 세로형 버튼 리스트 -->
+      <div class="space-y-3">
+        <button onclick="selectAnswer('q1', 1, this, event)" class="option-btn w-full p-4 sm:p-5 rounded-2xl bg-white border-2 border-transparent shadow-sm hover:border-[#6A85F1] hover:shadow-md hover:-translate-y-0.5 active:scale-[0.98] transition-all duration-200 flex items-center justify-between text-left group overflow-hidden relative">
+          <div class="flex items-center gap-3.5">
+            <span class="btn-num flex-shrink-0 w-10 h-10 rounded-xl bg-blue-50 text-[#6A85F1] font-bold flex items-center justify-center text-base group-hover:gradient-bg group-hover:text-white transition-colors">
+              1
+            </span>
+            <span class="text-gray-700 text-sm sm:text-base font-medium leading-snug group-hover:text-gray-900 break-keep">
+              "오늘 하루도 무사히 잘 버텨보자" <span class="text-xs text-gray-400 block sm:inline font-normal">(안정 추구형)</span>
+            </span>
+          </div>
+          <div class="check-icon hidden text-[#6A85F1] pop-badge-anim pl-2">
+            <svg class="w-6 h-6 fill-current" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+          </div>
+        </button>
+
+        <button onclick="selectAnswer('q1', 2, this, event)" class="option-btn w-full p-4 sm:p-5 rounded-2xl bg-white border-2 border-transparent shadow-sm hover:border-[#6A85F1] hover:shadow-md hover:-translate-y-0.5 active:scale-[0.98] transition-all duration-200 flex items-center justify-between text-left group overflow-hidden relative">
+          <div class="flex items-center gap-3.5">
+            <span class="btn-num flex-shrink-0 w-10 h-10 rounded-xl bg-blue-50 text-[#6A85F1] font-bold flex items-center justify-center text-base group-hover:gradient-bg group-hover:text-white transition-colors">
+              2
+            </span>
+            <span class="text-gray-700 text-sm sm:text-base font-medium leading-snug group-hover:text-gray-900 break-keep">
+              "어제 끝내지 못한 일들이 산더미네, 벌써 피곤하다" <span class="text-xs text-gray-400 block sm:inline font-normal">(현실 밀착형)</span>
+            </span>
+          </div>
+          <div class="check-icon hidden text-[#6A85F1] pop-badge-anim pl-2">
+            <svg class="w-6 h-6 fill-current" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+          </div>
+        </button>
+
+        <button onclick="selectAnswer('q1', 3, this, event)" class="option-btn w-full p-4 sm:p-5 rounded-2xl bg-white border-2 border-transparent shadow-sm hover:border-[#6A85F1] hover:shadow-md hover:-translate-y-0.5 active:scale-[0.98] transition-all duration-200 flex items-center justify-between text-left group overflow-hidden relative">
+          <div class="flex items-center gap-3.5">
+            <span class="btn-num flex-shrink-0 w-10 h-10 rounded-xl bg-blue-50 text-[#6A85F1] font-bold flex items-center justify-center text-base group-hover:gradient-bg group-hover:text-white transition-colors">
+              3
+            </span>
+            <span class="text-gray-700 text-sm sm:text-base font-medium leading-snug group-hover:text-gray-900 break-keep">
+              "이렇게 쳇바퀴 같은 삶을 언제까지 반복해야 할까?" <span class="text-xs text-gray-400 block sm:inline font-normal">(회의감형)</span>
+            </span>
+          </div>
+          <div class="check-icon hidden text-[#6A85F1] pop-badge-anim pl-2">
+            <svg class="w-6 h-6 fill-current" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+          </div>
+        </button>
+
+        <button onclick="selectAnswer('q1', 4, this, event)" class="option-btn w-full p-4 sm:p-5 rounded-2xl bg-white border-2 border-transparent shadow-sm hover:border-[#6A85F1] hover:shadow-md hover:-translate-y-0.5 active:scale-[0.98] transition-all duration-200 flex items-center justify-between text-left group overflow-hidden relative">
+          <div class="flex items-center gap-3.5">
+            <span class="btn-num flex-shrink-0 w-10 h-10 rounded-xl bg-blue-50 text-[#6A85F1] font-bold flex items-center justify-center text-base group-hover:gradient-bg group-hover:text-white transition-colors">
+              4
+            </span>
+            <span class="text-gray-700 text-sm sm:text-base font-medium leading-snug group-hover:text-gray-900 break-keep">
+              "오늘 나에게 어떤 새로운 기회나 반전이 일어날까?" <span class="text-xs text-gray-400 block sm:inline font-normal">(기대·몽상형)</span>
+            </span>
+          </div>
+          <div class="check-icon hidden text-[#6A85F1] pop-badge-anim pl-2">
+            <svg class="w-6 h-6 fill-current" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+          </div>
+        </button>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ======================================================= -->
+  <!-- STEP 3: 심리테스트 Q2 -->
+  <!-- ======================================================= -->
+  <section id="step-q2" class="hidden min-h-[100dvh] flex flex-col justify-center bg-[#F8F9FE] px-4 py-8">
+    <div class="w-full max-w-md mx-auto">
+      
+      <!-- 진행 상태 바 (Step 2 of 2: 100%) -->
+      <div class="mb-6">
+        <div class="flex items-center justify-between mb-2.5">
+          <span class="text-xs font-bold tracking-wider text-brand-purple uppercase bg-purple-50 px-2.5 py-1 rounded-md border border-purple-100">Step 2 of 2</span>
+          <span class="text-xs font-semibold text-gray-400">100% 완료</span>
+        </div>
+        <div class="w-full h-2.5 bg-gray-200/80 rounded-full overflow-hidden p-0.5">
+          <div class="h-full rounded-full gradient-bg transition-all duration-500" style="width: 100%"></div>
+        </div>
+      </div>
+
+      <!-- 질문 카드 헤더 -->
+      <div class="bg-white rounded-[2rem] p-6 shadow-sm border border-gray-100 mb-5">
+        <span class="inline-block text-xs font-bold text-[#C198F0] mb-2">환경 심리 테스트</span>
+        <h2 class="text-xl sm:text-2xl font-bold text-gray-900 leading-snug break-keep">
+          Q2. 지금 하고 있는 일이나 현재의 환경에 대해 솔직하게 어떤 마음이 드시나요?
+        </h2>
+        <p class="text-xs sm:text-sm text-gray-400 mt-2">
+          선택 즉시 나만의 심리 상태 진단 결과가 발표됩니다
+        </p>
+      </div>
+
+      <!-- 4지 선다 세로형 버튼 리스트 -->
+      <div class="space-y-3">
+        <button onclick="selectAnswer('q2', 1, this, event)" class="option-btn w-full p-4 sm:p-5 rounded-2xl bg-white border-2 border-transparent shadow-sm hover:border-[#C198F0] hover:shadow-md hover:-translate-y-0.5 active:scale-[0.98] transition-all duration-200 flex items-center justify-between text-left group overflow-hidden relative">
+          <div class="flex items-center gap-3.5">
+            <span class="btn-num flex-shrink-0 w-10 h-10 rounded-xl bg-purple-50 text-[#9E8FF0] font-bold flex items-center justify-center text-base group-hover:gradient-bg group-hover:text-white transition-colors">
+              1
+            </span>
+            <span class="text-gray-700 text-sm sm:text-base font-medium leading-snug group-hover:text-gray-900 break-keep">
+              "내 가치를 담기엔 부족해, 더 완벽한 기회가 오면 바로 갈아탈 거야" <span class="text-xs text-gray-400 block sm:inline font-normal">(완벽한 대안 탐색형)</span>
+            </span>
+          </div>
+          <div class="check-icon hidden text-[#C198F0] pop-badge-anim pl-2">
+            <svg class="w-6 h-6 fill-current" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+          </div>
+        </button>
+
+        <button onclick="selectAnswer('q2', 2, this, event)" class="option-btn w-full p-4 sm:p-5 rounded-2xl bg-white border-2 border-transparent shadow-sm hover:border-[#C198F0] hover:shadow-md hover:-translate-y-0.5 active:scale-[0.98] transition-all duration-200 flex items-center justify-between text-left group overflow-hidden relative">
+          <div class="flex items-center gap-3.5">
+            <span class="btn-num flex-shrink-0 w-10 h-10 rounded-xl bg-purple-50 text-[#9E8FF0] font-bold flex items-center justify-center text-base group-hover:gradient-bg group-hover:text-white transition-colors">
+              2
+            </span>
+            <span class="text-gray-700 text-sm sm:text-base font-medium leading-snug group-hover:text-gray-900 break-keep">
+              "쳇바퀴 같은 이 생활은 진짜 내 삶이 아니야, 매일 탈출할 궁리만 해" <span class="text-xs text-gray-400 block sm:inline font-normal">(일상 공백 및 탈출 갈망형)</span>
+            </span>
+          </div>
+          <div class="check-icon hidden text-[#C198F0] pop-badge-anim pl-2">
+            <svg class="w-6 h-6 fill-current" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+          </div>
+        </button>
+
+        <button onclick="selectAnswer('q2', 3, this, event)" class="option-btn w-full p-4 sm:p-5 rounded-2xl bg-white border-2 border-transparent shadow-sm hover:border-[#C198F0] hover:shadow-md hover:-translate-y-0.5 active:scale-[0.98] transition-all duration-200 flex items-center justify-between text-left group overflow-hidden relative">
+          <div class="flex items-center gap-3.5">
+            <span class="btn-num flex-shrink-0 w-10 h-10 rounded-xl bg-purple-50 text-[#9E8FF0] font-bold flex items-center justify-center text-base group-hover:gradient-bg group-hover:text-white transition-colors">
+              3
+            </span>
+            <span class="text-gray-700 text-sm sm:text-base font-medium leading-snug group-hover:text-gray-900 break-keep">
+              "지금의 방황과 지침도, 결국 내 이상향을 찾아가는 멋진 여정일 뿐이야" <span class="text-xs text-gray-400 block sm:inline font-normal">(낭만적 방황형)</span>
+            </span>
+          </div>
+          <div class="check-icon hidden text-[#C198F0] pop-badge-anim pl-2">
+            <svg class="w-6 h-6 fill-current" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+          </div>
+        </button>
+
+        <button onclick="selectAnswer('q2', 4, this, event)" class="option-btn w-full p-4 sm:p-5 rounded-2xl bg-white border-2 border-transparent shadow-sm hover:border-[#C198F0] hover:shadow-md hover:-translate-y-0.5 active:scale-[0.98] transition-all duration-200 flex items-center justify-between text-left group overflow-hidden relative">
+          <div class="flex items-center gap-3.5">
+            <span class="btn-num flex-shrink-0 w-10 h-10 rounded-xl bg-purple-50 text-[#9E8FF0] font-bold flex items-center justify-center text-base group-hover:gradient-bg group-hover:text-white transition-colors">
+              4
+            </span>
+            <span class="text-gray-700 text-sm sm:text-base font-medium leading-snug group-hover:text-gray-900 break-keep">
+              "나를 온전히 알아주고 빛내줄 진짜 무대는 세상 어딘가에 분명히 있어" <span class="text-xs text-gray-400 block sm:inline font-normal">(미지 세계 환상형)</span>
+            </span>
+          </div>
+          <div class="check-icon hidden text-[#C198F0] pop-badge-anim pl-2">
+            <svg class="w-6 h-6 fill-current" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+          </div>
+        </button>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ======================================================= -->
+  <!-- STEP 4 ~ STEP 7: 결과 및 메인 웹사이트 -->
+  <!-- ======================================================= -->
+  <main id="step-main" class="hidden">
+    
+    <!-- 네비게이션 바 (지시서에 따라 '앱 다운로드' 제외, 브랜드 및 다시하기 제공) -->
+    <nav class="sticky top-0 z-50 bg-white/85 backdrop-blur-md border-b border-gray-100">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6 h-18 py-3.5 flex justify-between items-center">
+        <!-- Logo -->
+        <a href="#result" class="flex items-center gap-2.5">
+          <div class="w-9 h-9 rounded-xl gradient-bg flex items-center justify-center shadow-md shadow-blue-200/50">
+            <svg class="w-4 h-4 text-white fill-white" viewBox="0 0 24 24">
+              <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+            </svg>
+          </div>
+          <span class="text-2xl font-bold tracking-tight gradient-text">모먼트로그</span>
+        </a>
+
+        <!-- 다시하기 버튼 (초보자 & 테스터 배려) -->
+        <button onclick="resetTest()" class="text-xs sm:text-sm font-semibold text-gray-500 hover:text-gray-900 bg-gray-100 hover:bg-gray-200/80 px-3.5 py-2 rounded-full transition-all flex items-center gap-1.5">
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+          </svg>
+          <span>테스트 다시하기</span>
+        </button>
+      </div>
+    </nav>
+
+
+    <!-- ======================================================= -->
+    <!-- STEP 4. 결과 발표: '파랑새 증후군' 섹션 -->
+    <!-- ======================================================= -->
+    <section id="result" class="pt-12 pb-16 md:pt-20 md:pb-24 bg-[#F8F9FE] relative overflow-hidden">
+      <!-- 배경 장식 광원 블러 -->
+      <div class="absolute top-0 right-0 w-96 h-96 bg-gradient-to-b from-blue-200/40 to-purple-200/30 rounded-full blur-3xl -translate-y-1/2 translate-x-1/3 pointer-events-none"></div>
+      <div class="absolute bottom-0 left-0 w-80 h-80 bg-gradient-to-t from-blue-100/40 to-transparent rounded-full blur-3xl translate-y-1/3 -translate-x-1/4 pointer-events-none"></div>
+
+      <div class="max-w-3xl mx-auto px-4 sm:px-6 relative z-10">
+        <div class="bg-white/90 backdrop-blur-xl rounded-[2.5rem] md:rounded-[3rem] p-7 sm:p-10 md:p-14 shadow-xl shadow-blue-900/5 border border-white flex flex-col items-center text-center">
+          
+          <!-- 통통한 참새 형태의 파랑새 그래픽 SVG -->
+          <div class="relative w-56 h-56 sm:w-64 sm:h-64 mb-4 flex items-center justify-center">
+            
+            <!-- 반짝이는 마법 입자 (환상/이상향) -->
+            <div class="absolute inset-0 pointer-events-none">
+              <span class="absolute top-4 left-6 text-2xl sparkle-1">✨</span>
+              <span class="absolute top-8 right-6 text-xl sparkle-2">💫</span>
+              <span class="absolute bottom-6 left-10 text-lg sparkle-3">⭐</span>
+            </div>
+
+            <!-- 디테일이 살아있는 파랑새 SVG -->
+            <div class="relative w-48 h-48 sm:w-56 sm:h-56 animate-float">
+              <svg viewBox="0 0 200 200" class="w-full h-full drop-shadow-md" overflow="visible">
+                <defs>
+                  <filter id="softGlow" x="-10%" y="-10%" width="120%" height="120%">
+                    <feGaussianBlur stdDeviation="2.5" result="blur" />
+                    <feComposite in="SourceGraphic" in2="blur" operator="over" />
+                  </filter>
+                  <linearGradient id="birdBody" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#8fd3f4" />
+                    <stop offset="100%" stop-color="#6A85F1" />
+                  </linearGradient>
+                  <linearGradient id="birdWing" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#2d6bbd" />
+                    <stop offset="100%" stop-color="#1B326B" />
+                  </linearGradient>
+                </defs>
+                
+                <g filter="url(#softGlow)">
+                  <!-- 참새 다리 1 (왼쪽) -->
+                  <path d="M 85 155 L 95 185" stroke="#6b4c41" stroke-width="4" stroke-linecap="round" fill="none" />
+                  <path d="M 95 185 L 80 195" stroke="#6b4c41" stroke-width="4" stroke-linecap="round" fill="none" />
+                  <path d="M 95 185 L 110 195" stroke="#6b4c41" stroke-width="4" stroke-linecap="round" fill="none" />
+
+                  <!-- 참새 다리 2 (오른쪽) -->
+                  <path d="M 120 155 L 135 175" stroke="#6b4c41" stroke-width="4" stroke-linecap="round" fill="none" />
+                  <path d="M 135 175 L 120 185" stroke="#6b4c41" stroke-width="4" stroke-linecap="round" fill="none" />
+                  <path d="M 135 175 L 150 170" stroke="#6b4c41" stroke-width="4" stroke-linecap="round" fill="none" />
+
+                  <!-- 꼬리깃 (3갈래 둥근 형태) -->
+                  <path d="M 35 105 C 20 100, 15 110, 25 115 Z" fill="#2d6bbd" />
+                  <path d="M 30 115 C 10 115, 10 130, 25 125 Z" fill="#2d6bbd" />
+                  <path d="M 40 125 C 25 135, 30 145, 45 135 Z" fill="#2d6bbd" />
+                  <path d="M 45 90 C 10 100, 10 150, 45 140 Z" fill="#2d6bbd" />
+
+                  <!-- 통통한 몸통 (참새/새 모티브) -->
+                  <path d="M 115 12 
+                           C 165 12, 185 50, 185 90 
+                           C 185 140, 145 165, 105 165 
+                           C 65 165, 35 140, 45 100 
+                           C 55 60, 75 12, 115 12 Z" 
+                        fill="url(#birdBody)" />
+                  
+                  <!-- 부리 (앙증맞은 주황/빨강) -->
+                  <path d="M 175 46 L 196 50 L 178 62 Z" fill="#E25C47" stroke="#cb4738" stroke-width="1.5" stroke-linejoin="round" />
+
+                  <!-- 눈동자 (까만 콩 + 하얀 반사광) -->
+                  <circle cx="150" cy="50" r="5.5" fill="#1F2937" />
+                  <circle cx="152" cy="48" r="1.8" fill="#FFFFFF" />
+                  
+                  <!-- 발그레한 볼터치 -->
+                  <circle cx="145" cy="66" r="7.5" fill="#C198F0" opacity="0.65" />
+
+                  <!-- 날개 (진남색 계열 + 하늘색 포인트 무늬) -->
+                  <path d="M 125 75 
+                           C 145 115, 125 140, 85 140 
+                           C 55 140, 50 115, 75 90 
+                           C 95 70, 115 65, 125 75 Z" 
+                        fill="url(#birdWing)" />
+                  
+                  <!-- 날개 안쪽 무늬 (하늘색 라인 3개) -->
+                  <path d="M 85 105 C 105 95, 115 90, 125 90" stroke="#8fd3f4" stroke-width="3.5" stroke-linecap="round" fill="none" opacity="0.9" />
+                  <path d="M 75 115 C 95 105, 110 100, 120 100" stroke="#8fd3f4" stroke-width="3.5" stroke-linecap="round" fill="none" opacity="0.9" />
+                  <path d="M 85 125 C 100 115, 110 115, 110 115" stroke="#8fd3f4" stroke-width="3.5" stroke-linecap="round" fill="none" opacity="0.9" />
+                </g>
+              </svg>
+            </div>
+          </div>
+
+          <!-- 진단 결과 배지 -->
+          <div class="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-blue-50 border border-blue-100/80 mb-4">
+            <span class="w-2 h-2 rounded-full bg-brand-blue animate-ping"></span>
+            <span class="text-[#6A85F1] font-bold text-xs sm:text-sm tracking-wide">진단 결과</span>
+          </div>
+          
+          <!-- 진단 결과 헤드라인 -->
+          <h2 class="text-2xl sm:text-3xl md:text-4xl font-extrabold text-gray-900 mb-6 leading-tight break-keep">
+            내 진짜 인생은 분명 따로 있을 거라 믿는,<br class="hidden sm:block" />
+            <span class="gradient-text">'이상향 집착형' 파랑새 증후군</span>입니다.
+          </h2>
+          
+          <!-- 본문 설명 및 타겟 공감 박스 -->
+          <div class="space-y-4 text-gray-700 text-base sm:text-lg leading-relaxed max-w-xl font-medium break-keep w-full">
+            <p>
+              더 멋진 기회를 기다리느라 지금의 소중한 순간들이 조금씩 눈에 밟히지 않나요?
+            </p>
+            
+            <!-- 타겟 공감 카드 -->
+            <div class="gradient-bg-subtle p-5 sm:p-6 rounded-2xl border border-blue-100 shadow-sm mx-auto my-4 text-center">
+              주로 <strong class="text-[#6A85F1] text-lg sm:text-xl font-black px-1">INFJ, INFP, ENFP</strong> 유형에게서<br class="sm:hidden" /> 이 특징이 가장 강하게 나타납니다.
+            </div>
+            
+            <p class="text-gray-500 text-sm sm:text-base">
+              현실의 한계보다 머릿속에 그린 이상향과 무한한 가능성을 먼저 바라보기 때문입니다.
+            </p>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ======================================================= -->
+    <!-- STEP 5. 인스타 연결 (QR & 인스타 캡처 화면) -->
+    <!-- (지시서 기준: 앱 다운로드 버튼 및 스크롤 안내 애니메이션은 제외) -->
+    <!-- ======================================================= -->
+    <section id="instagram" class="py-16 md:py-24 bg-white relative border-t border-gray-100">
+      <div class="max-w-5xl mx-auto px-4 sm:px-6">
+        
+        <div class="text-center mb-12">
+          <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-pink-50 text-pink-600 font-semibold text-xs sm:text-sm mb-3 border border-pink-100">
+            <span>📷</span> MomentLog Official Instagram
+          </div>
+          <h3 class="text-2xl sm:text-3xl font-extrabold text-gray-900 tracking-tight">
+            모먼트로그와 함께하는 일상 케어
+          </h3>
+          <p class="text-gray-500 text-sm sm:text-base mt-2">
+            인스타그램에서 매일 따뜻한 위로와 멘탈 케어 팁을 전해드립니다
+          </p>
+        </div>
+
+        <!-- 데스크톱 좌우 나란히 / 모바일 세로형 스태킹 -->
+        <div class="grid md:grid-cols-2 gap-8 lg:gap-12 items-center">
+          
+          <!-- 좌측: 인스타 연결 QR 코드 카드 -->
+          <div class="flex flex-col items-center">
+            <div class="relative w-full max-w-sm">
+              <!-- 네온 글로우 백그라운드 -->
+              <div class="absolute -inset-1.5 gradient-bg rounded-[2.5rem] blur-lg opacity-30 group-hover:opacity-60 transition duration-500"></div>
+              
+              <div class="relative bg-white p-6 sm:p-7 rounded-[2.2rem] shadow-xl border border-gray-100 flex flex-col items-center text-center">
+                
+                <h4 class="text-xl font-bold text-gray-900 mb-1">
+                  카메라로 스캔하여 연결
+                </h4>
+                <p class="text-xs text-gray-400 mb-5">
+                  스마트폰 기본 카메라로 QR 코드를 비춰보세요
+                </p>
+
+                <!-- 사용자가 제공한 실제 인스타그램 QR 코드 이미지 (클릭 이동 기능 제외, 카메라 스캔 전용) -->
+                <div class="block w-full max-w-[260px] sm:max-w-[280px] rounded-2xl overflow-hidden shadow-md border border-purple-100/60 select-none">
+                  <img src="./instagram_qr.jpg" alt="모먼트로그 공식 인스타그램 QR코드 (@PEAR.PEER.ING)" 
+                       class="w-full h-auto object-cover select-none pointer-events-none" />
+                </div>
+
+                <div class="mt-4 flex flex-col items-center gap-1">
+                  <span class="text-xs font-bold text-purple-600 bg-purple-50 px-3 py-1 rounded-full border border-purple-100">
+                    @PEAR.PEER.ING
+                  </span>
+                  <span class="text-[11px] font-medium text-gray-400">
+                    📷 스마트폰 기본 카메라로 QR 코드를 스캔해주세요
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 우측: 실제 인스타그램 캡처 화면 목업 -->
+          <div class="relative w-full max-w-sm mx-auto flex flex-col items-center">
+            <!-- 인스타 후광 그라데이션 -->
+            <div class="absolute inset-0 bg-gradient-to-tr from-pink-500 via-purple-500 to-yellow-400 rounded-[2.5rem] blur-xl opacity-25 -z-10"></div>
+            
+            <div class="w-full bg-white rounded-[2.5rem] p-3 sm:p-4 shadow-2xl border border-gray-100 flex flex-col items-center">
+              
+              <!-- 상단 프로필 링크 헤더 바 -->
+              <div class="flex items-center justify-between w-full px-3 py-2 mb-2 border-b border-gray-100">
+                <div class="flex items-center gap-2">
+                  <span class="w-2.5 h-2.5 rounded-full bg-pink-500 animate-pulse"></span>
+                  <span class="font-bold text-xs sm:text-sm text-gray-800 tracking-tight">@pear.peer.ing</span>
+                </div>
+                <a href="https://www.instagram.com/pear.peer.ing" target="_blank" rel="noopener noreferrer" 
+                   class="text-xs font-bold text-pink-600 bg-pink-50 hover:bg-pink-100 px-3 py-1 rounded-full transition-colors flex items-center gap-1">
+                  <span>방문하기</span>
+                  <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+                </a>
+              </div>
+
+              <!-- 실제 인스타그램 캡처본 이미지 프레임 -->
+              <div class="w-full rounded-[1.8rem] overflow-hidden border border-gray-200/80 shadow-inner bg-gray-50 relative group">
+                <img src="./instagram_profile.png" alt="피어링(@pear.peer.ing) 공식 인스타그램 프로필 및 피드" 
+                     class="w-full h-auto object-cover block select-none transition-transform duration-500 group-hover:scale-[1.02]" />
+
+                <!-- 호버 시 인스타그램 바로가기 오버레이 -->
+                <a href="https://www.instagram.com/pear.peer.ing" target="_blank" rel="noopener noreferrer" 
+                   class="absolute inset-0 bg-black/30 backdrop-blur-[2px] opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                  <span class="bg-white text-gray-900 px-5 py-2.5 rounded-full font-bold text-xs sm:text-sm shadow-xl flex items-center gap-2 transform hover:scale-105 transition-transform">
+                    <span>인스타그램에서 보기</span>
+                    <svg class="w-4 h-4 text-pink-500" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                    </svg>
+                  </span>
+                </a>
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+
+    <!-- ======================================================= -->
+    <!-- STEP 6. 앱 기능 소개 (시계 그래픽 & 3가지 핵심 기능) -->
+    <!-- ======================================================= -->
+    <section class="py-16 md:py-24 bg-[#F8F9FE] relative">
+      <div class="max-w-5xl mx-auto px-4 sm:px-6">
+        
+        <div class="bg-white rounded-[2.5rem] md:rounded-[3rem] p-8 sm:p-12 md:p-14 shadow-xl border border-blue-50">
+          <div class="grid md:grid-cols-2 gap-10 lg:gap-14 items-center">
+            
+            <!-- 좌측: 감성적인 시계 일러스트 그래픽 -->
+            <div class="flex justify-center">
+              <div class="relative w-60 h-60 sm:w-72 sm:h-72 bg-gradient-to-br from-blue-50 via-white to-purple-50 rounded-full flex items-center justify-center border-8 border-white shadow-xl shadow-blue-100/50">
+                
+                <!-- 외곽 장식 링 -->
+                <div class="absolute inset-3 rounded-full border-2 border-dashed border-[#6A85F1]/30 animate-pulse-slow"></div>
+                
+                <!-- 시계 바늘 & 눈금 SVG -->
+                <svg class="w-44 h-44 sm:w-52 sm:h-52" viewBox="0 0 160 160" fill="none">
+                  <!-- 시계 테두리 & 눈금 -->
+                  <circle cx="80" cy="80" r="70" stroke="#6A85F1" stroke-width="3" stroke-opacity="0.2"/>
+                  <!-- 12, 3, 6, 9시 눈금 점 -->
+                  <circle cx="80" cy="20" r="3" fill="#6A85F1"/>
+                  <circle cx="140" cy="80" r="3" fill="#6A85F1"/>
+                  <circle cx="80" cy="140" r="3" fill="#6A85F1"/>
+                  <circle cx="20" cy="80" r="3" fill="#6A85F1"/>
+
+                  <!-- 시침 (10시 방향) -->
+                  <line x1="80" y1="80" x2="52" y2="48" stroke="#1B326B" stroke-width="4.5" stroke-linecap="round"/>
+                  <!-- 분침 (2시 방향) -->
+                  <line x1="80" y1="80" x2="114" y2="42" stroke="#6A85F1" stroke-width="3.5" stroke-linecap="round"/>
+                  <!-- 초침 (부드러운 퍼플) -->
+                  <line x1="80" y1="80" x2="80" y2="124" stroke="#C198F0" stroke-width="2" stroke-linecap="round"/>
+                  
+                  <!-- 중심 캡 -->
+                  <circle cx="80" cy="80" r="6" fill="#1B326B"/>
+                  <circle cx="80" cy="80" r="2.5" fill="white"/>
+                </svg>
+
+                <!-- 스케치 디테일: 알람 다리 -->
+                <div class="absolute -bottom-2.5 left-10 w-4 h-8 bg-gray-300 rounded-full rotate-45 -z-10"></div>
+                <div class="absolute -bottom-2.5 right-10 w-4 h-8 bg-gray-300 rounded-full -rotate-45 -z-10"></div>
+              </div>
+            </div>
+
+            <!-- 우측: 텍스트 설명 영역 -->
+            <div class="flex flex-col justify-center text-left">
+              
+              <!-- 브랜드 타이틀 -->
+              <div class="flex items-center gap-2.5 mb-2">
+                <div class="w-8 h-8 rounded-xl gradient-bg flex items-center justify-center shadow-md">
+                  <svg class="w-4 h-4 text-white fill-white" viewBox="0 0 24 24">
+                    <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                  </svg>
+                </div>
+                <span class="text-2xl font-bold tracking-tight gradient-text">모먼트로그</span>
+              </div>
+              <p class="text-base sm:text-lg text-gray-500 font-semibold mb-6">
+                (맞춤형 멘탈 케어 앱)
+              </p>
+
+              <!-- 3가지 핵심 기능 리스트 -->
+              <ul class="space-y-4 sm:space-y-5">
+                <!-- 기능 1 -->
+                <li class="flex items-start gap-3.5 p-3 rounded-2xl hover:bg-blue-50/50 transition-colors">
+                  <div class="w-7 h-7 rounded-xl bg-blue-100 text-[#6A85F1] flex items-center justify-center flex-shrink-0 mt-0.5">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/>
+                    </svg>
+                  </div>
+                  <div>
+                    <span class="font-bold text-gray-900 text-sm sm:text-base block">
+                      1. 타인에게 얘기하기 어려운 고민도 털어놓는 AI 상담 서비스
+                    </span>
+                    <span class="text-xs text-gray-400">누구의 눈치도 보지 않고 나의 속마음을 편안하게 고백할 수 있습니다.</span>
+                  </div>
+                </li>
+
+                <!-- 기능 2 -->
+                <li class="flex items-start gap-3.5 p-3 rounded-2xl hover:bg-purple-50/50 transition-colors">
+                  <div class="w-7 h-7 rounded-xl bg-purple-100 text-[#9E8FF0] flex items-center justify-center flex-shrink-0 mt-0.5">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/>
+                    </svg>
+                  </div>
+                  <div>
+                    <span class="font-bold text-gray-900 text-sm sm:text-base block">
+                      2. 설계 통계를 바탕으로 한 AI 맞춤 솔루션
+                    </span>
+                    <span class="text-xs text-gray-400">수만 건의 심리 데이터와 전문 통계를 기반으로 정밀한 피드백을 제공합니다.</span>
+                  </div>
+                </li>
+
+                <!-- 기능 3 -->
+                <li class="flex items-start gap-3.5 p-3 rounded-2xl hover:bg-pink-50/50 transition-colors">
+                  <div class="w-7 h-7 rounded-xl bg-pink-100 text-[#C198F0] flex items-center justify-center flex-shrink-0 mt-0.5">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/>
+                    </svg>
+                  </div>
+                  <div>
+                    <span class="font-bold text-gray-900 text-sm sm:text-base block">
+                      3. 마음이 지치기 전, 사전에 준비하는 나만의 멘탈케어 처방전
+                    </span>
+                    <span class="text-xs text-gray-400">번아웃이 오기 전 미리 스스로를 돌보고 회복할 수 있는 루틴을 제시합니다.</span>
+                  </div>
+                </li>
+              </ul>
+
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+
+    <!-- ======================================================= -->
+    <!-- STEP 7. 통계 대시보드 (3가지 청년 심리 통계 그래프) -->
+    <!-- ======================================================= -->
+    <section class="py-16 md:py-24 bg-white relative border-t border-gray-100">
+      <div class="max-w-5xl mx-auto px-4 sm:px-6">
+        
+        <!-- 섹션 헤더 -->
+        <div class="text-center mb-14">
+          <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-purple-50 text-purple-600 font-semibold text-xs sm:text-sm mb-3 border border-purple-100 shadow-sm">
+            <span>📊</span> 왜 모먼트로그가 필요할까요?
+          </div>
+          <h3 class="text-2xl sm:text-3xl md:text-4xl font-extrabold text-gray-900 tracking-tight break-keep">
+            당신만 그런 것이 아닙니다.<br class="sm:hidden" />
+            <span class="text-brand-navy">데이터로 보는 청년들의 심리 상태</span>
+          </h3>
+          <p class="text-gray-500 text-sm sm:text-base mt-2">
+            지친 일상 속에서 방황하는 청년들의 진짜 목소리를 숫자로 확인해보세요
+          </p>
+        </div>
+
+        <div class="flex flex-col gap-6 sm:gap-8">
+          
+          <!-- ---------------------------------------------------- -->
+          <!-- 차트 1: 직장인 퇴사증후군 픽토그램 (상단 풀 위드) -->
+          <!-- ---------------------------------------------------- -->
+          <div class="bg-[#F8F9FE] rounded-[2.5rem] p-7 sm:p-10 shadow-sm border border-gray-100 relative overflow-hidden group">
+            <div class="flex flex-col md:flex-row items-center justify-between gap-8 md:gap-12">
+              
+              <!-- 사람 픽토그램 영역 (10명 중 6명 진남색 #1B326B, 모바일 5명씩 2줄) -->
+              <div class="w-full md:w-1/2 flex justify-center">
+                <div class="grid grid-cols-5 gap-3 sm:gap-4 md:gap-5">
+                  
+                  <!-- 1~6번: 진남색 (#1B326B) -->
+                  <!-- 1 -->
+                  <div class="w-9 h-20 sm:w-11 sm:h-24 text-[#1B326B] hover:-translate-y-1.5 transition-transform duration-300">
+                    <svg viewBox="0 0 100 200" fill="currentColor" class="w-full h-full drop-shadow">
+                      <circle cx="50" cy="22" r="16" />
+                      <path d="M 14 55 C 14 43, 28 43, 28 55 L 28 115 C 28 125, 14 125, 14 115 Z" />
+                      <path d="M 72 55 C 72 43, 86 43, 86 55 L 86 115 C 86 125, 72 125, 72 115 Z" />
+                      <path d="M 32 55 C 32 43, 68 43, 68 55 L 68 175 C 68 185, 54 185, 54 175 L 54 120 L 46 120 L 46 175 C 46 185, 32 185, 32 175 Z" />
+                    </svg>
+                  </div>
+                  <!-- 2 -->
+                  <div class="w-9 h-20 sm:w-11 sm:h-24 text-[#1B326B] hover:-translate-y-1.5 transition-transform duration-300">
+                    <svg viewBox="0 0 100 200" fill="currentColor" class="w-full h-full drop-shadow">
+                      <circle cx="50" cy="22" r="16" />
+                      <path d="M 14 55 C 14 43, 28 43, 28 55 L 28 115 C 28 125, 14 125, 14 115 Z" />
+                      <path d="M 72 55 C 72 43, 86 43, 86 55 L 86 115 C 86 125, 72 125, 72 115 Z" />
+                      <path d="M 32 55 C 32 43, 68 43, 68 55 L 68 175 C 68 185, 54 185, 54 175 L 54 120 L 46 120 L 46 175 C 46 185, 32 185, 32 175 Z" />
+                    </svg>
+                  </div>
+                  <!-- 3 -->
+                  <div class="w-9 h-20 sm:w-11 sm:h-24 text-[#1B326B] hover:-translate-y-1.5 transition-transform duration-300">
+                    <svg viewBox="0 0 100 200" fill="currentColor" class="w-full h-full drop-shadow">
+                      <circle cx="50" cy="22" r="16" />
+                      <path d="M 14 55 C 14 43, 28 43, 28 55 L 28 115 C 28 125, 14 125, 14 115 Z" />
+                      <path d="M 72 55 C 72 43, 86 43, 86 55 L 86 115 C 86 125, 72 125, 72 115 Z" />
+                      <path d="M 32 55 C 32 43, 68 43, 68 55 L 68 175 C 68 185, 54 185, 54 175 L 54 120 L 46 120 L 46 175 C 46 185, 32 185, 32 175 Z" />
+                    </svg>
+                  </div>
+                  <!-- 4 -->
+                  <div class="w-9 h-20 sm:w-11 sm:h-24 text-[#1B326B] hover:-translate-y-1.5 transition-transform duration-300">
+                    <svg viewBox="0 0 100 200" fill="currentColor" class="w-full h-full drop-shadow">
+                      <circle cx="50" cy="22" r="16" />
+                      <path d="M 14 55 C 14 43, 28 43, 28 55 L 28 115 C 28 125, 14 125, 14 115 Z" />
+                      <path d="M 72 55 C 72 43, 86 43, 86 55 L 86 115 C 86 125, 72 125, 72 115 Z" />
+                      <path d="M 32 55 C 32 43, 68 43, 68 55 L 68 175 C 68 185, 54 185, 54 175 L 54 120 L 46 120 L 46 175 C 46 185, 32 185, 32 175 Z" />
+                    </svg>
+                  </div>
+                  <!-- 5 -->
+                  <div class="w-9 h-20 sm:w-11 sm:h-24 text-[#1B326B] hover:-translate-y-1.5 transition-transform duration-300">
+                    <svg viewBox="0 0 100 200" fill="currentColor" class="w-full h-full drop-shadow">
+                      <circle cx="50" cy="22" r="16" />
+                      <path d="M 14 55 C 14 43, 28 43, 28 55 L 28 115 C 28 125, 14 125, 14 115 Z" />
+                      <path d="M 72 55 C 72 43, 86 43, 86 55 L 86 115 C 86 125, 72 125, 72 115 Z" />
+                      <path d="M 32 55 C 32 43, 68 43, 68 55 L 68 175 C 68 185, 54 185, 54 175 L 54 120 L 46 120 L 46 175 C 46 185, 32 185, 32 175 Z" />
+                    </svg>
+                  </div>
+                  <!-- 6 -->
+                  <div class="w-9 h-20 sm:w-11 sm:h-24 text-[#1B326B] hover:-translate-y-1.5 transition-transform duration-300">
+                    <svg viewBox="0 0 100 200" fill="currentColor" class="w-full h-full drop-shadow">
+                      <circle cx="50" cy="22" r="16" />
+                      <path d="M 14 55 C 14 43, 28 43, 28 55 L 28 115 C 28 125, 14 125, 14 115 Z" />
+                      <path d="M 72 55 C 72 43, 86 43, 86 55 L 86 115 C 86 125, 72 125, 72 115 Z" />
+                      <path d="M 32 55 C 32 43, 68 43, 68 55 L 68 175 C 68 185, 54 185, 54 175 L 54 120 L 46 120 L 46 175 C 46 185, 32 185, 32 175 Z" />
+                    </svg>
+                  </div>
+
+                  <!-- 7~10번: 연그레이 (#E2E8F0) -->
+                  <!-- 7 -->
+                  <div class="w-9 h-20 sm:w-11 sm:h-24 text-gray-300 hover:-translate-y-1.5 transition-transform duration-300">
+                    <svg viewBox="0 0 100 200" fill="currentColor" class="w-full h-full">
+                      <circle cx="50" cy="22" r="16" />
+                      <path d="M 14 55 C 14 43, 28 43, 28 55 L 28 115 C 28 125, 14 125, 14 115 Z" />
+                      <path d="M 72 55 C 72 43, 86 43, 86 55 L 86 115 C 86 125, 72 125, 72 115 Z" />
+                      <path d="M 32 55 C 32 43, 68 43, 68 55 L 68 175 C 68 185, 54 185, 54 175 L 54 120 L 46 120 L 46 175 C 46 185, 32 185, 32 175 Z" />
+                    </svg>
+                  </div>
+                  <!-- 8 -->
+                  <div class="w-9 h-20 sm:w-11 sm:h-24 text-gray-300 hover:-translate-y-1.5 transition-transform duration-300">
+                    <svg viewBox="0 0 100 200" fill="currentColor" class="w-full h-full">
+                      <circle cx="50" cy="22" r="16" />
+                      <path d="M 14 55 C 14 43, 28 43, 28 55 L 28 115 C 28 125, 14 125, 14 115 Z" />
+                      <path d="M 72 55 C 72 43, 86 43, 86 55 L 86 115 C 86 125, 72 125, 72 115 Z" />
+                      <path d="M 32 55 C 32 43, 68 43, 68 55 L 68 175 C 68 185, 54 185, 54 175 L 54 120 L 46 120 L 46 175 C 46 185, 32 185, 32 175 Z" />
+                    </svg>
+                  </div>
+                  <!-- 9 -->
+                  <div class="w-9 h-20 sm:w-11 sm:h-24 text-gray-300 hover:-translate-y-1.5 transition-transform duration-300">
+                    <svg viewBox="0 0 100 200" fill="currentColor" class="w-full h-full">
+                      <circle cx="50" cy="22" r="16" />
+                      <path d="M 14 55 C 14 43, 28 43, 28 55 L 28 115 C 28 125, 14 125, 14 115 Z" />
+                      <path d="M 72 55 C 72 43, 86 43, 86 55 L 86 115 C 86 125, 72 125, 72 115 Z" />
+                      <path d="M 32 55 C 32 43, 68 43, 68 55 L 68 175 C 68 185, 54 185, 54 175 L 54 120 L 46 120 L 46 175 C 46 185, 32 185, 32 175 Z" />
+                    </svg>
+                  </div>
+                  <!-- 10 -->
+                  <div class="w-9 h-20 sm:w-11 sm:h-24 text-gray-300 hover:-translate-y-1.5 transition-transform duration-300">
+                    <svg viewBox="0 0 100 200" fill="currentColor" class="w-full h-full">
+                      <circle cx="50" cy="22" r="16" />
+                      <path d="M 14 55 C 14 43, 28 43, 28 55 L 28 115 C 28 125, 14 125, 14 115 Z" />
+                      <path d="M 72 55 C 72 43, 86 43, 86 55 L 86 115 C 86 125, 72 125, 72 115 Z" />
+                      <path d="M 32 55 C 32 43, 68 43, 68 55 L 68 175 C 68 185, 54 185, 54 175 L 54 120 L 46 120 L 46 175 C 46 185, 32 185, 32 175 Z" />
+                    </svg>
+                  </div>
+
+                </div>
+              </div>
+
+              <!-- 텍스트 영역 -->
+              <div class="w-full md:w-1/2 text-center md:text-left">
+                <span class="text-xs font-bold text-gray-400 uppercase tracking-widest block mb-1">
+                  &lt;직장인이 겪고 있는 증후군&gt;
+                </span>
+                <p class="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-gray-900 leading-tight mb-3 break-keep">
+                  직장인 10명 중 <span class="text-[#1B326B] font-black underline decoration-blue-300 decoration-wavy">6명(60%)</span>은<br />
+                  '<span class="gradient-text">퇴사증후군</span>'을 겪는다
+                </p>
+                <p class="text-xs text-gray-400 font-medium">출처: 취업포털 사람인 설문조사</p>
+              </div>
+
+            </div>
+          </div>
+
+
+          <!-- ---------------------------------------------------- -->
+          <!-- 하단: 2열 그리드 (우울증 꺾은선 차트 & 파이 차트) -->
+          <!-- ---------------------------------------------------- -->
+          <div class="grid md:grid-cols-2 gap-6 sm:gap-8">
+            
+            <!-- 차트 2: 청년기 우울증 환자 수 (부드러운 곡선 Area 차트 + 225% 배지) -->
+            <div class="bg-white rounded-[2.5rem] p-6 sm:p-8 shadow-md border border-gray-100 flex flex-col justify-between relative overflow-hidden">
+              
+              <!-- 헤더 -->
+              <div class="mb-4">
+                <h4 class="text-base sm:text-lg font-bold text-gray-900 mb-0.5">
+                  &lt;청년기(19~39세) 우울증 환자 수&gt;
+                </h4>
+                <p class="text-xs text-gray-400">자료: 건강보험심사평가원 / 단위: 명</p>
+              </div>
+
+              <!-- 225% 증가 뱃지 (10도 회전된 진남색 배지 완벽 구현) -->
+              <div class="absolute top-6 right-6 bg-[#1B326B] text-white px-3.5 py-1.5 font-black text-sm sm:text-base rounded-xl shadow-lg transform -rotate-12 border border-white/30 z-20 animate-pulse-slow">
+                225% ⬆
+              </div>
+
+              <!-- 반응형 인터랙티브 Area Chart (자체 고정밀 SVG) -->
+              <div class="relative w-full h-64 sm:h-72 mt-2" id="chart-area-container">
+                <!-- 툴팁 엘리먼트 -->
+                <div id="area-tooltip" class="chart-tooltip hidden bg-gray-900 text-white text-xs py-1.5 px-3 rounded-xl shadow-xl">
+                  <span id="area-tooltip-text" class="font-bold"></span>
+                </div>
+
+                <svg viewBox="0 0 400 240" class="w-full h-full overflow-visible" preserveAspectRatio="none">
+                  <defs>
+                    <linearGradient id="areaGradient" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="0%" stop-color="#C198F0" stop-opacity="0.55"/>
+                      <stop offset="100%" stop-color="#C198F0" stop-opacity="0.02"/>
+                    </linearGradient>
+                  </defs>
+
+                  <!-- 가로 보조선 그리드 -->
+                  <line x1="35" y1="30" x2="390" y2="30" stroke="#F1F5F9" stroke-width="1.5" stroke-dasharray="3 3"/>
+                  <line x1="35" y1="75" x2="390" y2="75" stroke="#F1F5F9" stroke-width="1.5" stroke-dasharray="3 3"/>
+                  <line x1="35" y1="120" x2="390" y2="120" stroke="#F1F5F9" stroke-width="1.5" stroke-dasharray="3 3"/>
+                  <line x1="35" y1="165" x2="390" y2="165" stroke="#F1F5F9" stroke-width="1.5" stroke-dasharray="3 3"/>
+                  <line x1="35" y1="210" x2="390" y2="210" stroke="#E2E8F0" stroke-width="1.5"/>
+
+                  <!-- Y축 눈금 라벨 -->
+                  <text x="5" y="34" font-size="10" fill="#9CA3AF" font-weight="600">40만</text>
+                  <text x="5" y="79" font-size="10" fill="#9CA3AF" font-weight="600">30만</text>
+                  <text x="5" y="124" font-size="10" fill="#9CA3AF" font-weight="600">20만</text>
+                  <text x="5" y="169" font-size="10" fill="#9CA3AF" font-weight="600">10만</text>
+                  <text x="18" y="214" font-size="10" fill="#9CA3AF" font-weight="600">0</text>
+
+                  <!-- 
+                    데이터 좌표 계산 (0 ~ 400,000 기준, Y축: 210 -> 30, 높이 180):
+                    2014: 112,573 -> Y = 210 - (112573/400000)*180 = 159.3, X = 50
+                    2016: 134,853 -> Y = 210 - (134853/400000)*180 = 149.3, X = 114
+                    2018: 187,057 -> Y = 210 - (187057/400000)*180 = 125.8, X = 178
+                    2020: 256,831 -> Y = 210 - (256831/400000)*180 = 94.4,  X = 242
+                    2022: 349,716 -> Y = 210 - (349716/400000)*180 = 52.6,  X = 306
+                    2023: 365,603 -> Y = 210 - (365603/400000)*180 = 45.5,  X = 370
+                  -->
+
+                  <!-- 그라데이션 채움 영역 (Area) -->
+                  <path d="M 50 210 
+                           L 50 159.3 
+                           C 80 155, 95 152, 114 149.3 
+                           C 145 142, 160 135, 178 125.8 
+                           C 205 110, 220 102, 242 94.4 
+                           C 270 80, 285 62, 306 52.6 
+                           C 335 48, 350 46, 370 45.5 
+                           L 370 210 Z" 
+                        fill="url(#areaGradient)" />
+
+                  <!-- 진남색 굵은 곡선 (Stroke) -->
+                  <path d="M 50 159.3 
+                           C 80 155, 95 152, 114 149.3 
+                           C 145 142, 160 135, 178 125.8 
+                           C 205 110, 220 102, 242 94.4 
+                           C 270 80, 285 62, 306 52.6 
+                           C 335 48, 350 46, 370 45.5" 
+                        fill="none" stroke="#1B326B" stroke-width="4" stroke-linecap="round"/>
+
+                  <!-- 데이터 포인트 (도넛 원형 점 + 호버 효과) -->
+                  <g class="chart-point cursor-pointer" onmouseenter="showTooltip(event, '2014년: 112,573명')" onmouseleave="hideTooltip()">
+                    <circle cx="50" cy="159.3" r="5" fill="#FFFFFF" stroke="#1B326B" stroke-width="3"/>
+                  </g>
+                  <g class="chart-point cursor-pointer" onmouseenter="showTooltip(event, '2016년: 134,853명')" onmouseleave="hideTooltip()">
+                    <circle cx="114" cy="149.3" r="5" fill="#FFFFFF" stroke="#1B326B" stroke-width="3"/>
+                  </g>
+                  <g class="chart-point cursor-pointer" onmouseenter="showTooltip(event, '2018년: 187,057명')" onmouseleave="hideTooltip()">
+                    <circle cx="178" cy="125.8" r="5" fill="#FFFFFF" stroke="#1B326B" stroke-width="3"/>
+                  </g>
+                  <g class="chart-point cursor-pointer" onmouseenter="showTooltip(event, '2020년: 256,831명')" onmouseleave="hideTooltip()">
+                    <circle cx="242" cy="94.4" r="5" fill="#FFFFFF" stroke="#1B326B" stroke-width="3"/>
+                  </g>
+                  <g class="chart-point cursor-pointer" onmouseenter="showTooltip(event, '2022년: 349,716명')" onmouseleave="hideTooltip()">
+                    <circle cx="306" cy="52.6" r="5" fill="#FFFFFF" stroke="#1B326B" stroke-width="3"/>
+                  </g>
+                  <g class="chart-point cursor-pointer" onmouseenter="showTooltip(event, '2023년: 365,603명 (225% 증가)')" onmouseleave="hideTooltip()">
+                    <circle cx="370" cy="45.5" r="6" fill="#1B326B" stroke="#FFFFFF" stroke-width="2.5"/>
+                  </g>
+
+                  <!-- X축 연도 라벨 -->
+                  <text x="50" y="230" font-size="11" fill="#9CA3AF" font-weight="bold" text-anchor="middle">2014</text>
+                  <text x="114" y="230" font-size="11" fill="#9CA3AF" font-weight="bold" text-anchor="middle">2016</text>
+                  <text x="178" y="230" font-size="11" fill="#9CA3AF" font-weight="bold" text-anchor="middle">2018</text>
+                  <text x="242" y="230" font-size="11" fill="#9CA3AF" font-weight="bold" text-anchor="middle">2020</text>
+                  <text x="306" y="230" font-size="11" fill="#9CA3AF" font-weight="bold" text-anchor="middle">2022</text>
+                  <text x="370" y="230" font-size="11" fill="#1B326B" font-weight="black" text-anchor="middle">2023</text>
+                </svg>
+              </div>
+
+            </div>
+
+
+            <!-- 차트 3: 정신건강 서비스 이용률 (가운데가 막힌 꽉 찬 파이 차트) -->
+            <div class="bg-white rounded-[2.5rem] p-6 sm:p-8 shadow-md border border-gray-100 flex flex-col justify-between items-center text-center">
+              
+              <!-- 헤더 -->
+              <div class="mb-3 w-full text-left sm:text-center">
+                <h4 class="text-base sm:text-lg font-bold text-gray-900 mb-0.5">
+                  &lt;우리나라 청년층 정신건강 서비스 이용률&gt;
+                </h4>
+                <p class="text-xs text-gray-400">자료: 보건복지부 (2024 제3회 국가건강검진위원회)</p>
+              </div>
+
+              <!-- 가운데가 꽉 찬 솔리드 파이(Pie) 차트 (16% 이용함 진남색 #1B326B vs 84% 이용 안함) -->
+              <div class="relative w-56 h-56 sm:w-64 sm:h-64 my-2 flex items-center justify-center">
+                <svg viewBox="0 0 240 240" class="w-full h-full overflow-visible">
+                  <defs>
+                    <filter id="pieShadow" x="-20%" y="-20%" width="140%" height="140%">
+                      <feDropShadow dx="3" dy="5" stdDeviation="4" flood-opacity="0.2" flood-color="#1B326B"/>
+                    </filter>
+                  </defs>
+
+                  <!-- 
+                    중심 (120, 120), 반지름 R = 85
+                    전체 100% = 360도
+                    16% = 57.6도 (12시 방향인 -90도에서 시작하여 시계방향으로 -32.4도까지)
+                    84% = 302.4도 (-32.4도에서 시작하여 270도까지)
+
+                    16% 파이 조각 (약간 오른쪽 위로 오프셋되어 돋보임):
+                    시작각: -90도 -> (120, 35)
+                    끝각: -32.4도 (라디안 = -0.565) -> X = 120 + 85*cos(-32.4) = 120 + 71.7 = 191.7, Y = 120 + 85*sin(-32.4) = 120 - 45.5 = 74.5
+                  -->
+
+                  <!-- 84% 조각 (연그레이 #E2E8F0) -->
+                  <path d="M 120 120 
+                           L 191.7 74.5 
+                           A 85 85 0 1 1 120 35 
+                           Z" 
+                        fill="#E5E7EB" stroke="#FFFFFF" stroke-width="3"/>
+
+                  <!-- 16% 조각 (진남색 #1B326B - 돌출 그림자 적용) -->
+                  <!-- 살짝 이동 오프셋 (dx=+4, dy=-4) -->
+                  <g filter="url(#pieShadow)" class="hover:scale-105 transition-transform origin-center cursor-pointer">
+                    <path d="M 124 116 
+                             L 124 31 
+                             A 85 85 0 0 1 195.7 70.5 
+                             Z" 
+                          fill="#1B326B" stroke="#FFFFFF" stroke-width="3"/>
+                  </g>
+
+                  <!-- 84% 텍스트 라벨 (파이 내부) -->
+                  <text x="100" y="130" fill="#6B7280" font-size="13" font-weight="bold" text-anchor="middle">이용하지 않음</text>
+                  <text x="100" y="162" fill="#9CA3AF" font-size="30" font-weight="900" text-anchor="middle">84%</text>
+
+                  <!-- 16% 텍스트 라벨 (파이 외부 지시선 & 강조) -->
+                  <text x="195" y="32" fill="#1B326B" font-size="14" font-weight="bold" text-anchor="middle">이용함</text>
+                  <text x="195" y="56" fill="#1B326B" font-size="24" font-weight="900" text-anchor="middle">16%</text>
+                  <!-- 지시선 화살표 점 -->
+                  <circle cx="160" cy="55" r="3" fill="#1B326B"/>
+                </svg>
+              </div>
+
+              <!-- 하단 공감 텍스트 박스 -->
+              <div class="mt-2 w-full bg-blue-50/70 p-3.5 sm:p-4 rounded-2xl border border-blue-100">
+                <p class="text-gray-700 text-xs sm:text-sm font-medium leading-relaxed break-keep">
+                  대다수의 청년들이 마음의 병을 앓고 있지만, <br class="hidden sm:block"/>
+                  전문적인 도움을 받는 비율은 <strong class="text-[#1B326B] font-bold">16%로 현저히 낮습니다.</strong>
+                </p>
+              </div>
+
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+
+    <!-- ======================================================= -->
+    <!-- FOOTER -->
+    <!-- ======================================================= -->
+    <footer class="bg-gray-50 border-t border-gray-100 py-10">
+      <div class="max-w-5xl mx-auto px-4 sm:px-6 flex flex-col sm:flex-row justify-between items-center gap-4 text-center sm:text-left">
+        <div class="flex items-center gap-2">
+          <div class="w-6 h-6 rounded-lg gradient-bg flex items-center justify-center">
+            <svg class="w-3 h-3 text-white fill-white" viewBox="0 0 24 24">
+              <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+            </svg>
+          </div>
+          <span class="text-lg font-bold text-gray-800">모먼트로그 (MomentLog)</span>
+        </div>
+        <p class="text-xs text-gray-400">
+          © 2026 MomentLog. 청년들의 마음을 보듬는 맞춤형 멘탈 케어. All rights reserved.
+        </p>
+      </div>
+    </footer>
+
+  </main>
+
+
+  <!-- ======================================================= -->
+  <!-- 인터랙티브 유저 플로우 자바스크립트 -->
+  <!-- ======================================================= -->
+  <script>
+    // 사용자 선택 상태 저장
+    const userAnswers = {
+      photo: null,
+      q1: null,
+      q2: null,
+    };
+
+    // 모바일 터치 파동 (Touch Ripple Effect) 생성 함수
+    function triggerTouchRipple(e, element) {
+      if (!element) return;
+      const rect = element.getBoundingClientRect();
+      let clientX = e ? e.clientX : undefined;
+      let clientY = e ? e.clientY : undefined;
+      
+      if ((!clientX || !clientY) && e && e.touches && e.touches[0]) {
+        clientX = e.touches[0].clientX;
+        clientY = e.touches[0].clientY;
+      }
+      
+      const x = (clientX !== undefined ? clientX : (rect.left + rect.width / 2)) - rect.left;
+      const y = (clientY !== undefined ? clientY : (rect.top + rect.height / 2)) - rect.top;
+
+      const ripple = document.createElement('span');
+      ripple.className = 'touch-ripple-effect';
+      const size = Math.max(rect.width, rect.height) * 1.3;
+      ripple.style.width = `${size}px`;
+      ripple.style.height = `${size}px`;
+      ripple.style.left = `${x}px`;
+      ripple.style.top = `${y}px`;
+
+      element.appendChild(ripple);
+      setTimeout(() => ripple.remove(), 600);
+    }
+
+    // Step 1: 사진 선택 시 모바일 터치 피드백 후 전환
+    function selectPhoto(id, name, event) {
+      userAnswers.photo = { id, name };
+      
+      // 1. 해당 사분면 팝업 뱃지 노출
+      const badge = document.getElementById(`badge-${id}`);
+      if (badge) {
+        badge.classList.remove('hidden');
+      }
+
+      // 2. 하단 퀵 버튼 활성화 스타일
+      const quickBtn = document.getElementById(`quick-btn-${id}`);
+      if (quickBtn) {
+        quickBtn.classList.add('ring-4', 'ring-[#6A85F1]', 'scale-95', 'bg-blue-50');
+      }
+
+      // 3. 터치 지점 파동 리플 생성
+      const targetEl = (event && event.currentTarget) ? event.currentTarget : document.getElementById(`btn-quadrant-${id}`);
+      if (targetEl) {
+        triggerTouchRipple(event, targetEl);
+      }
+
+      // 4. 기분 좋은 피드백(320ms) 후 다음 화면으로 부드럽게 이동
+      setTimeout(() => {
+        transitionScreen('step-landing', 'step-q1');
+      }, 320);
+    }
+
+    // Step 2 & 3: 질문 보기 선택 시 모바일 터치 피드백 후 전환
+    function selectAnswer(question, choiceIndex, btnEl, event) {
+      userAnswers[question] = choiceIndex;
+      
+      // 1. 터치 리플 파동
+      if (event && btnEl) {
+        triggerTouchRipple(event, btnEl);
+      }
+
+      // 2. 버튼 선택 강조 스타일 및 체크 아이콘 팝업
+      if (btnEl) {
+        btnEl.classList.add('border-[#6A85F1]', 'bg-blue-50/80', 'ring-4', 'ring-[#6A85F1]/40', 'scale-[0.98]');
+        const checkIcon = btnEl.querySelector('.check-icon');
+        if (checkIcon) {
+          checkIcon.classList.remove('hidden');
+        }
+      }
+
+      // 3. 320ms 후 다음 단계 이동
+      setTimeout(() => {
+        if (question === 'q1') {
+          transitionScreen('step-q1', 'step-q2');
+        } else if (question === 'q2') {
+          transitionScreen('step-q2', 'step-main');
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+      }, 320);
+    }
+
+    // 부드러운 화면 전환 함수
+    function transitionScreen(fromId, toId) {
+      const fromEl = document.getElementById(fromId);
+      const toEl = document.getElementById(toId);
+      
+      if (fromEl) {
+        fromEl.classList.add('opacity-0', 'transition-opacity', 'duration-300');
+        setTimeout(() => {
+          fromEl.classList.add('hidden');
+          fromEl.classList.remove('opacity-0');
+          
+          if (toEl) {
+            toEl.classList.remove('hidden');
+            toEl.classList.add('fade-enter');
+          }
+        }, 280);
+      }
+    }
+
+    // 테스트 다시하기 (상태 및 뱃지 초기화)
+    function resetTest() {
+      userAnswers.photo = null;
+      userAnswers.q1 = null;
+      userAnswers.q2 = null;
+
+      // 뱃지 및 버튼 선택 스타일 초기화
+      ['A', 'B', 'C', 'D'].forEach(id => {
+        const badge = document.getElementById(`badge-${id}`);
+        if (badge) badge.classList.add('hidden');
+        const quickBtn = document.getElementById(`quick-btn-${id}`);
+        if (quickBtn) quickBtn.classList.remove('ring-4', 'ring-[#6A85F1]', 'scale-95', 'bg-blue-50');
+      });
+
+      document.querySelectorAll('.option-btn').forEach(btn => {
+        btn.classList.remove('border-[#6A85F1]', 'bg-blue-50/80', 'ring-4', 'ring-[#6A85F1]/40', 'scale-[0.98]');
+        const check = btn.querySelector('.check-icon');
+        if (check) check.classList.add('hidden');
+      });
+
+      document.getElementById('step-main').classList.add('hidden');
+      document.getElementById('step-q2').classList.add('hidden');
+      document.getElementById('step-q1').classList.add('hidden');
+      
+      const landing = document.getElementById('step-landing');
+      landing.classList.remove('hidden');
+      landing.classList.add('fade-enter');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // 차트 인터랙티브 툴팁 처리
+    function showTooltip(event, text) {
+      const tooltip = document.getElementById('area-tooltip');
+      const tooltipText = document.getElementById('area-tooltip-text');
+      const container = document.getElementById('chart-area-container');
+      
+      if (!tooltip || !container) return;
+
+      const rect = container.getBoundingClientRect();
+      const x = event.clientX - rect.left;
+      const y = event.clientY - rect.top;
+
+      tooltipText.innerText = text;
+      tooltip.style.left = `${x}px`;
+      tooltip.style.top = `${y - 12}px`;
+      tooltip.classList.remove('hidden');
+    }
+
+    function hideTooltip() {
+      const tooltip = document.getElementById('area-tooltip');
+      if (tooltip) {
+        tooltip.classList.add('hidden');
+      }
+    }
+  </script>
+
+</body>
+</html>
