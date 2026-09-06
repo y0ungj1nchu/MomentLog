@@ -14,7 +14,8 @@ node_modules/
 dist/
 dist-ssr/
 
-# Environment files
+# Helper scripts
+push.bat
 .env
 .env.local
 .env.*.local
