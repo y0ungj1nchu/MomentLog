@@ -93,13 +93,6 @@ export const ResultSection: React.FC<ResultSectionProps> = ({ mbti = 'ENFP' }) =
             </div>
           </div>
 
-          {/* 상단 라벨 배지 */}
-          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-blue-50 border border-blue-100 mb-3 shadow-xs">
-            <span className="w-2 h-2 rounded-full bg-[#6A85F1] animate-ping" />
-            <span className="text-[#6A85F1] font-bold text-xs tracking-wider">
-              파랑새 증후군 심리테스트 결과
-            </span>
-          </div>
 
           {/* MBTI 글자 초대형 강조 하이라이트 */}
           <div className="flex flex-col items-center mb-6 w-full">
