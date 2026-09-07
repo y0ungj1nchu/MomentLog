@@ -4,6 +4,7 @@ import { LandingStep } from './components/LandingStep';
 import { QuestionStep } from './components/QuestionStep';
 import { Navbar } from './components/Navbar';
 import { ResultSection } from './components/ResultSection';
+import { BluebirdInfoSection } from './components/BluebirdInfoSection';
 import { InstagramSection } from './components/InstagramSection';
 import { FeaturesSection } from './components/FeaturesSection';
 import { StatisticsSection } from './components/StatisticsSection';
@@ -168,6 +169,7 @@ export const App: React.FC = () => {
         <main className="fade-enter">
           <Navbar />
           <ResultSection mbti={userSelections.mbti} />
+          <BluebirdInfoSection />
           <InstagramSection />
           <FeaturesSection />
           <StatisticsSection />
