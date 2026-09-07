@@ -90,6 +90,22 @@ export const FeaturesSection: React.FC = () => {
 
           </div>
         </div>
+
+        {/* 모먼트로그 처방 노트 (앱 소개 하단 연계) */}
+        <div className="mt-8 sm:mt-10 p-6 sm:p-9 rounded-[2rem] sm:rounded-[2.5rem] bg-gradient-to-r from-blue-50/90 via-purple-50/70 to-blue-50/90 border border-blue-100/80 shadow-md text-center">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white text-[#6A85F1] text-xs sm:text-sm font-bold shadow-xs mb-3.5">
+            <span>🌱</span>
+            <span>MomentLog 처방 노트</span>
+          </div>
+          <h3 className="text-lg sm:text-2xl font-extrabold text-gray-900 mb-2.5 break-keep">
+            “파랑새는 떠나서 찾는 것이 아니라, 지금의 자리에서 발견하는 것입니다.”
+          </h3>
+          <p className="text-gray-600 text-xs sm:text-base leading-relaxed break-keep max-w-2xl mx-auto font-medium">
+            진짜 나다운 삶은 더 완벽한 환경으로 이동했을 때 비로소 시작되는 것이 아닙니다.<br className="hidden sm:inline" />
+            <strong>오늘 내가 경험한 작은 순간과 감정들을 기록하고 소중히 여기는 연습</strong>에서 나만의 파랑새가 자라납니다.
+          </p>
+        </div>
+
       </div>
     </section>
   );

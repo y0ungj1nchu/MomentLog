@@ -85,20 +85,6 @@ export const BluebirdInfoSection: React.FC = () => {
 
         </div>
 
-        {/* 모먼트로그의 조언 및 처방 카드 */}
-        <div className="mt-8 sm:mt-12 p-6 sm:p-8 rounded-3xl bg-gradient-to-r from-blue-50/90 via-purple-50/70 to-blue-50/90 border border-blue-100/80 shadow-sm text-center">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white text-[#6A85F1] text-xs font-bold shadow-xs mb-3">
-            <span>🌱</span>
-            <span>MomentLog 처방 노트</span>
-          </div>
-          <h3 className="text-lg sm:text-xl font-bold text-gray-900 mb-2 break-keep">
-            “파랑새는 떠나서 찾는 것이 아니라, 지금의 자리에서 발견하는 것입니다.”
-          </h3>
-          <p className="text-gray-600 text-xs sm:text-sm md:text-base leading-relaxed break-keep max-w-2xl mx-auto">
-            진짜 나다운 삶은 더 완벽한 환경으로 이동했을 때 비로소 시작되는 것이 아닙니다.<br className="hidden sm:inline" />
-            <strong>오늘 내가 경험한 작은 순간과 감정들을 기록하고 소중히 여기는 연습</strong>에서 나만의 파랑새가 자라납니다.
-          </p>
-        </div>
 
       </div>
     </section>
