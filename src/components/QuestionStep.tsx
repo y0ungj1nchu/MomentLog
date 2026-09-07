@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import { QuestionData } from '../types';
+import { QuestionData, QuestionOption } from '../types';
 
 interface QuestionStepProps {
   data: QuestionData;
   themeColor: 'blue' | 'purple';
-  onSelectOption: (optionId: number) => void;
+  onSelectOption: (option: QuestionOption) => void;
 }
 
 export const QuestionStep: React.FC<QuestionStepProps> = ({
@@ -17,12 +17,12 @@ export const QuestionStep: React.FC<QuestionStepProps> = ({
   const isPurple = themeColor === 'purple';
   const progressPercent = Math.round((data.stepNumber / data.totalSteps) * 100);
 
-  const handleSelect = (optionId: number) => {
-    setSelectedId(optionId);
+  const handleSelect = (option: QuestionOption) => {
+    setSelectedId(option.id);
 
     // 테두리 반짝임 피드백 후 다음 단계 이동
     setTimeout(() => {
-      onSelectOption(optionId);
+      onSelectOption(option);
     }, 350);
   };
 
@@ -76,7 +76,7 @@ export const QuestionStep: React.FC<QuestionStepProps> = ({
           </div>
         </div>
 
-        {/* 우측: 4지 선다 2x2 그리드 선택지 버튼 리스트 (~형 서브텍스트 제거, 클릭 시 테두리만 반짝임) */}
+        {/* 우측: 4지 선다 2x2 그리드 선택지 버튼 리스트 (A, B, C, D 뱃지 & 테두리 반짝임) */}
         <div className="w-full landscape:w-[60%] sm:w-[60%] max-w-md sm:max-w-none flex-grow">
           <div className="grid grid-cols-1 landscape:grid-cols-2 sm:grid-cols-2 gap-2.5 sm:gap-3">
             {data.options.map((option) => {
@@ -85,7 +85,7 @@ export const QuestionStep: React.FC<QuestionStepProps> = ({
                 <button
                   key={option.id}
                   type="button"
-                  onClick={() => handleSelect(option.id)}
+                  onClick={() => handleSelect(option)}
                   className={`p-3.5 sm:p-4 rounded-2xl bg-white border-2 flex items-center justify-between text-left transition-all duration-150 relative cursor-pointer min-h-[64px] sm:min-h-[76px] ${
                     isSelected
                       ? isPurple
@@ -106,7 +106,7 @@ export const QuestionStep: React.FC<QuestionStepProps> = ({
                           : 'bg-blue-50 text-[#6A85F1] group-hover:gradient-bg group-hover:text-white'
                       }`}
                     >
-                      {option.id}
+                      {option.label || option.id}
                     </span>
                     <p className="text-gray-800 text-xs sm:text-sm font-semibold leading-snug break-keep flex-1">
                       "{option.text}"

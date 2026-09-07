@@ -1,6 +1,12 @@
 import React from 'react';
 
-export const ResultSection: React.FC = () => {
+interface ResultSectionProps {
+  mbti?: string;
+}
+
+export const ResultSection: React.FC<ResultSectionProps> = ({ mbti = 'ENFP' }) => {
+  const isHighBluebird = ['INFJ', 'INFP', 'ENFP'].includes(mbti);
+
   return (
     <section id="result" className="pt-12 pb-16 md:pt-20 md:pb-24 bg-[#F8F9FE] relative overflow-hidden">
       {/* 배경 장식 광원 블러 */}
@@ -85,16 +91,21 @@ export const ResultSection: React.FC = () => {
             </div>
           </div>
 
-          {/* 진단 결과 배지 */}
-          <div className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-blue-50 border border-blue-100/80 mb-4">
+          {/* 진단 결과 배지 & MBTI 타입 */}
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-blue-50 border border-blue-100/80 mb-4 shadow-sm">
             <span className="w-2 h-2 rounded-full bg-[#6A85F1] animate-ping" />
-            <span className="text-[#6A85F1] font-bold text-xs sm:text-sm tracking-wide">진단 결과</span>
+            <span className="text-[#6A85F1] font-bold text-xs sm:text-sm tracking-wide">
+              심리테스트 결과
+            </span>
+            <span className="gradient-text font-black text-xs sm:text-sm px-2 py-0.5 rounded-md bg-white border border-purple-100 shadow-sm">
+              {mbti}
+            </span>
           </div>
 
           {/* 진단 결과 헤드라인 */}
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-gray-900 mb-6 leading-tight break-keep">
             내 진짜 인생은 분명 따로 있을 거라 믿는,<br className="hidden sm:block" />
-            <span className="gradient-text">'이상향 집착형' 파랑새 증후군</span>입니다.
+            <span className="gradient-text">'{mbti} 맞춤형' 파랑새 증후군</span>입니다.
           </h2>
 
           {/* 본문 설명 및 타겟 공감 박스 */}
@@ -105,8 +116,12 @@ export const ResultSection: React.FC = () => {
 
             {/* 타겟 공감 카드 */}
             <div className="gradient-bg-subtle p-5 sm:p-6 rounded-2xl border border-blue-100 shadow-sm mx-auto my-4 text-center">
-              주로 <strong className="text-[#6A85F1] text-lg sm:text-xl font-black px-1">INFJ, INFP, ENFP</strong> 유형에게서
-              <br className="sm:hidden" /> 이 특징이 가장 강하게 나타납니다.
+              당신의 테스트 결과는 <strong className="text-[#6A85F1] text-xl sm:text-2xl font-black px-1.5">{mbti}</strong> 유형입니다.<br />
+              <span className="text-xs sm:text-sm text-gray-500 mt-1.5 inline-block font-normal break-keep">
+                {isHighBluebird
+                  ? '머릿속으로 완벽한 이상향을 꿈꾸며 현실의 답답함을 돌파하려는 성향이 가장 강하게 나타납니다.'
+                  : '지금 환경에서 현실과 이상의 간극을 좁히고 나만의 방향성을 진지하게 고민하는 시기입니다.'}
+              </span>
             </div>
 
             <p className="text-gray-500 text-sm sm:text-base">

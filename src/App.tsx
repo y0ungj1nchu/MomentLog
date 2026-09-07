@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Step, MoodOption, QuestionData, UserSelections } from './types';
+import { Step, MoodOption, QuestionData, QuestionOption, UserSelections } from './types';
 import { LandingStep } from './components/LandingStep';
 import { QuestionStep } from './components/QuestionStep';
 import { Navbar } from './components/Navbar';
@@ -9,40 +9,75 @@ import { FeaturesSection } from './components/FeaturesSection';
 import { StatisticsSection } from './components/StatisticsSection';
 import { Footer } from './components/Footer';
 
+// Q1. E vs I (답답할 때 에너지 충전 및 해소 방식)
 const q1Data: QuestionData = {
   stepNumber: 1,
-  totalSteps: 2,
-  category: '기상 생각 테스트',
-  title: 'Q1. 아침에 눈을 떴을 때, 가장 먼저 머릿속을 스치는 생각은 무엇인가요?',
-  description: '아래 4가지 보기 중 마음에 가장 와닿는 답변을 선택해주세요',
+  totalSteps: 4,
+  category: '심리테스트 Q1 · 에너지 방향',
+  title: 'Q1. 지금 있는 환경이 답답할 때 나는?',
+  description: '마음에 가장 와닿는 나의 행동을 하나 선택해주세요',
   options: [
-    { id: 1, text: '오늘 하루도 무사히 잘 버텨보자' },
-    { id: 2, text: '어제 끝내지 못한 일들이 산더미네, 벌써 피곤하다' },
-    { id: 3, text: '이렇게 쳇바퀴 같은 삶을 언제까지 반복해야 할까?' },
-    { id: 4, text: '오늘 나에게 어떤 새로운 기회나 반전이 일어날까?' },
+    { id: 1, label: 'A', text: '일단 사람들 만나서 얘기해봐야지!', letter: 'E', score: 2 },
+    { id: 2, label: 'B', text: '친한 사람한테 한번 털어놔야겠다.', letter: 'E', score: 1 },
+    { id: 3, label: 'C', text: '혼자 좀 생각해봐야겠어.', letter: 'I', score: 1 },
+    { id: 4, label: 'D', text: '내 생각이 정리될 때까지 혼자 고민한다.', letter: 'I', score: 2 },
   ],
 };
 
+// Q2. N vs S (이직 및 새로운 기회에 대한 인식 방식)
 const q2Data: QuestionData = {
   stepNumber: 2,
-  totalSteps: 2,
-  category: '환경 심리 테스트',
-  title: 'Q2. 지금 하고 있는 일이나 현재의 환경에 대해 솔직하게 어떤 마음이 드시나요?',
-  description: '선택 즉시 나만의 심리 상태 진단 결과가 발표됩니다',
+  totalSteps: 4,
+  category: '심리테스트 Q2 · 방향성 인식',
+  title: 'Q2. “여긴 아닌 것 같은데…” 싶을 때 드는 생각은?',
+  description: '내 머릿속을 가장 먼저 스치는 생각을 선택해주세요',
   options: [
-    { id: 1, text: '내 가치를 담기엔 부족해, 더 완벽한 기회가 오면 바로 갈아탈 거야' },
-    { id: 2, text: '쳇바퀴 같은 이 생활은 진짜 내 삶이 아니야, 매일 탈출할 궁리만 해' },
-    { id: 3, text: '지금의 방황과 지침도, 결국 내 이상향을 찾아가는 멋진 여정일 뿐이야' },
-    { id: 4, text: '나를 온전히 알아주고 빛내줄 진짜 무대는 세상 어딘가에 분명히 있어' },
+    { id: 1, label: 'A', text: '분명 더 나한테 맞는 길이 있을 거야!', letter: 'N', score: 2 },
+    { id: 2, label: 'B', text: '여기서 더 성장할 수 있나?', letter: 'N', score: 1 },
+    { id: 3, label: 'C', text: '일단 지금 상황부터 따져보자.', letter: 'S', score: 1 },
+    { id: 4, label: 'D', text: '조건이 실제로 더 좋아지는지가 중요하지.', letter: 'S', score: 2 },
+  ],
+};
+
+// Q3. T vs F (이직/진로 결정 시 판단 기준)
+const q3Data: QuestionData = {
+  stepNumber: 3,
+  totalSteps: 4,
+  category: '심리테스트 Q3 · 진로 판단 기준',
+  title: 'Q3. 옮길지 말지 고민할 때 제일 중요한 건?',
+  description: '결정을 내릴 때 가장 중요하게 따지는 기준을 선택해주세요',
+  options: [
+    { id: 1, label: 'A', text: '뭐가 제일 합리적이지?', letter: 'T', score: 2 },
+    { id: 2, label: 'B', text: '어디가 내 성장에 더 도움 되지?', letter: 'T', score: 1 },
+    { id: 3, label: 'C', text: '어디가 내가 더 편하고 행복하지?', letter: 'F', score: 1 },
+    { id: 4, label: 'D', text: '누구와 함께하느냐가 중요하지.', letter: 'F', score: 2 },
+  ],
+};
+
+// Q4. J vs P (새로운 기회가 왔을 때 대처 방식)
+const q4Data: QuestionData = {
+  stepNumber: 4,
+  totalSteps: 4,
+  category: '심리테스트 Q4 · 기회 대처 방식',
+  title: 'Q4. 더 좋아 보이는 기회가 나타나면?',
+  description: '선택 즉시 나만의 MBTI 성향 진단 결과가 발표됩니다',
+  options: [
+    { id: 1, label: 'A', text: '좋아, 계획부터 짜자.', letter: 'J', score: 2 },
+    { id: 2, label: 'B', text: '기준 정하고 신중하게 보자.', letter: 'J', score: 1 },
+    { id: 3, label: 'C', text: '일단 여러 가능성 열어두자.', letter: 'P', score: 1 },
+    { id: 4, label: 'D', text: '해봐야 알지! 일단 해보자.', letter: 'P', score: 2 },
   ],
 };
 
 export const App: React.FC = () => {
   const [step, setStep] = useState<Step>('landing');
-  const [, setUserSelections] = useState<UserSelections>({
+  const [userSelections, setUserSelections] = useState<UserSelections>({
     mood: null,
     q1: null,
     q2: null,
+    q3: null,
+    q4: null,
+    mbti: 'ENFP',
   });
 
   const handleSelectMood = (mood: MoodOption) => {
@@ -51,20 +86,49 @@ export const App: React.FC = () => {
     window.scrollTo({ top: 0, behavior: 'instant' });
   };
 
-  const handleSelectQ1 = (optionId: number) => {
-    setUserSelections((prev) => ({ ...prev, q1: optionId }));
+  const handleSelectQ1 = (option: QuestionOption) => {
+    setUserSelections((prev) => ({ ...prev, q1: option }));
     setStep('q2');
     window.scrollTo({ top: 0, behavior: 'instant' });
   };
 
-  const handleSelectQ2 = (optionId: number) => {
-    setUserSelections((prev) => ({ ...prev, q2: optionId }));
+  const handleSelectQ2 = (option: QuestionOption) => {
+    setUserSelections((prev) => ({ ...prev, q2: option }));
+    setStep('q3');
+    window.scrollTo({ top: 0, behavior: 'instant' });
+  };
+
+  const handleSelectQ3 = (option: QuestionOption) => {
+    setUserSelections((prev) => ({ ...prev, q3: option }));
+    setStep('q4');
+    window.scrollTo({ top: 0, behavior: 'instant' });
+  };
+
+  const handleSelectQ4 = (option: QuestionOption) => {
+    const eOrI = userSelections.q1?.letter || 'E';
+    const nOrS = userSelections.q2?.letter || 'N';
+    const tOrF = userSelections.q3?.letter || 'F';
+    const jOrP = option.letter || 'P';
+    const calculatedMbti = `${eOrI}${nOrS}${tOrF}${jOrP}`;
+
+    setUserSelections((prev) => ({
+      ...prev,
+      q4: option,
+      mbti: calculatedMbti,
+    }));
     setStep('main');
     window.scrollTo({ top: 0, behavior: 'instant' });
   };
 
   const handleReset = () => {
-    setUserSelections({ mood: null, q1: null, q2: null });
+    setUserSelections({
+      mood: null,
+      q1: null,
+      q2: null,
+      q3: null,
+      q4: null,
+      mbti: 'ENFP',
+    });
     setStep('landing');
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
@@ -86,10 +150,24 @@ export const App: React.FC = () => {
           onSelectOption={handleSelectQ2}
         />
       )}
+      {step === 'q3' && (
+        <QuestionStep
+          data={q3Data}
+          themeColor="blue"
+          onSelectOption={handleSelectQ3}
+        />
+      )}
+      {step === 'q4' && (
+        <QuestionStep
+          data={q4Data}
+          themeColor="purple"
+          onSelectOption={handleSelectQ4}
+        />
+      )}
       {step === 'main' && (
         <main className="fade-enter">
           <Navbar />
-          <ResultSection />
+          <ResultSection mbti={userSelections.mbti} />
           <InstagramSection />
           <FeaturesSection />
           <StatisticsSection />
