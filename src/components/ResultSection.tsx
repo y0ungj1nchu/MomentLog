@@ -1,23 +1,25 @@
 import React from 'react';
+import { mbtiDataMap } from '../data/mbtiData';
 
 interface ResultSectionProps {
   mbti?: string;
 }
 
 export const ResultSection: React.FC<ResultSectionProps> = ({ mbti = 'ENFP' }) => {
-  const isHighBluebird = ['INFJ', 'INFP', 'ENFP'].includes(mbti);
+  const normalizedMbti = mbti.toUpperCase();
+  const data = mbtiDataMap[normalizedMbti] || mbtiDataMap['ENFP'];
 
   return (
-    <section id="result" className="pt-12 pb-16 md:pt-20 md:pb-24 bg-[#F8F9FE] relative overflow-hidden">
+    <section id="result" className="pt-10 pb-16 md:pt-16 md:pb-24 bg-[#F8F9FE] relative overflow-hidden">
       {/* 배경 장식 광원 블러 */}
       <div className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-b from-blue-200/40 to-purple-200/30 rounded-full blur-3xl -translate-y-1/2 translate-x-1/3 pointer-events-none" />
       <div className="absolute bottom-0 left-0 w-80 h-80 bg-gradient-to-t from-blue-100/40 to-transparent rounded-full blur-3xl translate-y-1/3 -translate-x-1/4 pointer-events-none" />
 
-      <div className="max-w-3xl mx-auto px-4 sm:px-6 relative z-10">
-        <div className="bg-white/90 backdrop-blur-xl rounded-[2.5rem] md:rounded-[3rem] p-7 sm:p-10 md:p-14 shadow-xl shadow-blue-900/5 border border-white flex flex-col items-center text-center">
+      <div className="max-w-2xl mx-auto px-4 sm:px-6 relative z-10">
+        <div className="bg-white/95 backdrop-blur-xl rounded-[2.5rem] md:rounded-[3rem] p-6 sm:p-10 md:p-12 shadow-2xl shadow-blue-900/5 border border-white flex flex-col items-center text-center">
           
           {/* 통통한 참새 형태의 파랑새 그래픽 SVG */}
-          <div className="relative w-56 h-56 sm:w-64 sm:h-64 mb-4 flex items-center justify-center">
+          <div className="relative w-48 h-48 sm:w-56 sm:h-56 mb-2 flex items-center justify-center">
             {/* 반짝이는 마법 입자 (환상/이상향) */}
             <div className="absolute inset-0 pointer-events-none select-none">
               <span className="absolute top-4 left-6 text-2xl sparkle-1">✨</span>
@@ -26,7 +28,7 @@ export const ResultSection: React.FC<ResultSectionProps> = ({ mbti = 'ENFP' }) =
             </div>
 
             {/* 디테일이 살아있는 파랑새 SVG */}
-            <div className="relative w-48 h-48 sm:w-56 sm:h-56 animate-float">
+            <div className="relative w-44 h-44 sm:w-52 sm:h-52 animate-float">
               <svg viewBox="0 0 200 200" className="w-full h-full drop-shadow-md overflow-visible">
                 <defs>
                   <filter id="softGlow" x="-10%" y="-10%" width="120%" height="120%">
@@ -91,42 +93,99 @@ export const ResultSection: React.FC<ResultSectionProps> = ({ mbti = 'ENFP' }) =
             </div>
           </div>
 
-          {/* 진단 결과 배지 & MBTI 타입 */}
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-blue-50 border border-blue-100/80 mb-4 shadow-sm">
+          {/* 상단 라벨 배지 */}
+          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-blue-50 border border-blue-100 mb-3 shadow-xs">
             <span className="w-2 h-2 rounded-full bg-[#6A85F1] animate-ping" />
-            <span className="text-[#6A85F1] font-bold text-xs sm:text-sm tracking-wide">
-              심리테스트 결과
-            </span>
-            <span className="gradient-text font-black text-xs sm:text-sm px-2 py-0.5 rounded-md bg-white border border-purple-100 shadow-sm">
-              {mbti}
+            <span className="text-[#6A85F1] font-bold text-xs tracking-wider">
+              파랑새 증후군 심리테스트 결과
             </span>
           </div>
 
-          {/* 진단 결과 헤드라인 */}
-          <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-gray-900 mb-6 leading-tight break-keep">
-            내 진짜 인생은 분명 따로 있을 거라 믿는,<br className="hidden sm:block" />
-            <span className="gradient-text">'{mbti} 맞춤형' 파랑새 증후군</span>입니다.
-          </h2>
-
-          {/* 본문 설명 및 타겟 공감 박스 */}
-          <div className="space-y-4 text-gray-700 text-base sm:text-lg leading-relaxed max-w-xl font-medium break-keep w-full">
-            <p>
-              더 멋진 기회를 기다리느라 지금의 소중한 순간들이 조금씩 눈에 밟히지 않나요?
-            </p>
-
-            {/* 타겟 공감 카드 */}
-            <div className="gradient-bg-subtle p-5 sm:p-6 rounded-2xl border border-blue-100 shadow-sm mx-auto my-4 text-center">
-              당신의 테스트 결과는 <strong className="text-[#6A85F1] text-xl sm:text-2xl font-black px-1.5">{mbti}</strong> 유형입니다.<br />
-              <span className="text-xs sm:text-sm text-gray-500 mt-1.5 inline-block font-normal break-keep">
-                {isHighBluebird
-                  ? '머릿속으로 완벽한 이상향을 꿈꾸며 현실의 답답함을 돌파하려는 성향이 가장 강하게 나타납니다.'
-                  : '지금 환경에서 현실과 이상의 간극을 좁히고 나만의 방향성을 진지하게 고민하는 시기입니다.'}
-              </span>
+          {/* MBTI 글자 초대형 강조 하이라이트 */}
+          <div className="flex flex-col items-center mb-6 w-full">
+            <div className="flex items-center justify-center gap-2 sm:gap-3 mb-1">
+              <span className="text-3xl sm:text-4xl">{data.emoji}</span>
+              <h1 className="text-5xl sm:text-6xl md:text-7xl font-black tracking-tight bg-gradient-to-r from-[#6A85F1] via-[#8B6BF7] to-[#C198F0] bg-clip-text text-transparent">
+                {data.mbti}
+              </h1>
             </div>
 
-            <p className="text-gray-500 text-sm sm:text-base">
-              현실의 한계보다 머릿속에 그린 이상향과 무한한 가능성을 먼저 바라보기 때문입니다.
+            {/* 유형 별칭 */}
+            <div className="text-xl sm:text-2xl md:text-3xl font-extrabold text-gray-900 tracking-tight mt-1 mb-3">
+              {data.nickname}
+            </div>
+
+            {/* 당신의 파랑새는 '새로운 가능성'입니다 */}
+            <div className="inline-block px-4 py-2 rounded-xl bg-blue-50/90 border border-blue-100 text-gray-800 text-sm sm:text-base font-medium mb-3">
+              당신의 파랑새는 <strong className="text-[#6A85F1] font-black">{data.bluebird}</strong>입니다.
+            </div>
+
+            {/* 내면의 독백 따옴표 */}
+            <p className="text-gray-600 italic font-medium text-base sm:text-lg break-keep px-2">
+              {data.quote}
             </p>
+          </div>
+
+          {/* 세로 1열 카드 섹션 (요청사항: 수직 방향으로 나란히 정렬) */}
+          <div className="w-full space-y-4 text-left">
+            
+            {/* 블록 1: 이런 모습이 자주 보여요 */}
+            <div className="bg-gradient-to-b from-blue-50/50 to-slate-50/30 border border-blue-100/90 rounded-2xl p-5 sm:p-6 shadow-xs">
+              <div className="flex items-center gap-2 font-bold text-gray-900 text-base sm:text-lg mb-3.5">
+                <span className="w-7 h-7 rounded-xl bg-blue-100/80 text-blue-600 flex items-center justify-center text-sm">
+                  🌟
+                </span>
+                <span>이런 모습이 자주 보여요</span>
+              </div>
+              <ul className="space-y-2.5">
+                {data.traits.map((trait, idx) => (
+                  <li key={idx} className="flex items-start gap-2.5 text-gray-700 text-sm sm:text-base leading-relaxed">
+                    <span className="mt-1 flex-shrink-0 w-4 h-4 rounded-full bg-blue-200/80 text-blue-700 flex items-center justify-center text-[10px] font-bold">
+                      ✓
+                    </span>
+                    <span className="font-medium text-gray-800 break-keep">{trait}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* 블록 2: ⚠️ 파랑새 위험신호 */}
+            <div className="bg-amber-50/70 border border-amber-200/80 rounded-2xl p-5 sm:p-6 shadow-xs">
+              <div className="flex items-center gap-2 font-bold text-amber-900 text-base sm:text-lg mb-2.5">
+                <span className="w-7 h-7 rounded-xl bg-amber-200/70 text-amber-800 flex items-center justify-center text-sm">
+                  ⚠️
+                </span>
+                <span>파랑새 위험신호</span>
+              </div>
+              <p className="text-amber-950 font-medium text-sm sm:text-base leading-relaxed break-keep pl-1">
+                {data.warning}
+              </p>
+            </div>
+
+            {/* 블록 3: 💊 필요한 처방 */}
+            <div className="bg-emerald-50/70 border border-emerald-200/80 rounded-2xl p-5 sm:p-6 shadow-xs">
+              <div className="flex items-center gap-2 font-bold text-emerald-900 text-base sm:text-lg mb-2.5">
+                <span className="w-7 h-7 rounded-xl bg-emerald-200/70 text-emerald-800 flex items-center justify-center text-sm">
+                  💊
+                </span>
+                <span>필요한 처방</span>
+              </div>
+              <p className="text-emerald-950 font-semibold text-sm sm:text-base leading-relaxed break-keep pl-1">
+                {data.prescription}
+              </p>
+            </div>
+
+            {/* 블록 4: 💬 한마디 */}
+            <div className="bg-gradient-to-r from-purple-50/90 via-blue-50/70 to-indigo-50/90 border border-purple-100 rounded-2xl p-5 sm:p-6 text-center shadow-xs">
+              <div className="inline-flex items-center gap-1.5 text-xs font-bold text-purple-700 mb-2 px-2.5 py-0.5 rounded-full bg-white/80 border border-purple-100 shadow-xs">
+                <span>💬</span>
+                <span>한마디</span>
+              </div>
+              <p className="text-gray-800 font-semibold text-sm sm:text-base leading-relaxed break-keep">
+                {data.comment}
+              </p>
+            </div>
+
           </div>
 
         </div>
