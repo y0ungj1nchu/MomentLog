@@ -2,6 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
+/* 전체 UI 15% 확대 (Root font-size 115% 설정으로 모든 rem 기반 요소 일괄 15% 스케일업) */
+html {
+  font-size: 115%;
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+}
+
 /* 그라데이션 공통 클래스 */
 .gradient-text {
   background: linear-gradient(135deg, #6A85F1 0%, #C198F0 100%);

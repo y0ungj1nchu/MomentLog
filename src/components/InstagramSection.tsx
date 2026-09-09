@@ -33,7 +33,7 @@ export const InstagramSection: React.FC = () => {
             </div>
 
             {/* QR 이미지 액자 */}
-            <div className="w-full max-w-[130px] sm:max-w-[240px] rounded-xl sm:rounded-2xl overflow-hidden shadow-md border border-purple-100/60 select-none my-auto">
+            <div className="w-full max-w-[9.5rem] sm:max-w-[17.5rem] rounded-xl sm:rounded-2xl overflow-hidden shadow-md border border-purple-100/60 select-none my-auto">
               <img
                 src="/instagram_qr.jpg"
                 alt="모먼트로그 인스타그램 QR코드"

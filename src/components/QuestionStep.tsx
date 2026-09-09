@@ -27,7 +27,7 @@ export const QuestionStep: React.FC<QuestionStepProps> = ({
   };
 
   return (
-    <section className="min-h-[100dvh] flex flex-col justify-center items-center bg-[#F8F9FE] px-4 py-3 sm:py-6 fade-enter overflow-hidden">
+    <section className="min-h-[100dvh] flex flex-col justify-center items-center bg-[#F8F9FE] px-4 py-3 sm:py-6 fade-enter overflow-y-auto">
       {/* 모바일 가로 모드(Landscape) 기준: 좌측 질문 + 우측 4지선다 2x2 그리드 */}
       <div className="w-full max-w-5xl mx-auto flex flex-col landscape:flex-row sm:flex-row items-center justify-center gap-4 sm:gap-6 lg:gap-10 my-auto">
         
@@ -86,7 +86,7 @@ export const QuestionStep: React.FC<QuestionStepProps> = ({
                   key={option.id}
                   type="button"
                   onClick={() => handleSelect(option)}
-                  className={`p-3.5 sm:p-4 rounded-2xl bg-white border-2 flex items-center justify-between text-left transition-all duration-150 relative cursor-pointer min-h-[64px] sm:min-h-[76px] ${
+                  className={`p-3.5 sm:p-4 rounded-2xl bg-white border-2 flex items-center justify-between text-left transition-all duration-150 relative cursor-pointer min-h-[4.25rem] sm:min-h-[5rem] ${
                     isSelected
                       ? isPurple
                         ? 'border-[#C198F0] ring-4 ring-[#C198F0] shadow-[0_0_18px_rgba(193,152,240,0.95)] sparkle-border z-10'
