@@ -81,6 +81,11 @@ export const App: React.FC = () => {
     mbti: 'ENFP',
   });
 
+  const handleStart = () => {
+    setStep('q1');
+    window.scrollTo({ top: 0, behavior: 'instant' });
+  };
+
   const handleSelectMood = (mood: MoodOption) => {
     setUserSelections((prev) => ({ ...prev, mood }));
     setStep('q1');
@@ -136,7 +141,9 @@ export const App: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-[#F8F9FE] text-gray-800 font-sans selection:bg-[#C198F0] selection:text-white">
-      {step === 'landing' && <LandingStep onSelectMood={handleSelectMood} />}
+      {step === 'landing' && (
+        <LandingStep onStart={handleStart} onSelectMood={handleSelectMood} />
+      )}
       {step === 'q1' && (
         <QuestionStep
           data={q1Data}
