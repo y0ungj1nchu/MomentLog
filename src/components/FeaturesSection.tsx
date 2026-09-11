@@ -40,49 +40,49 @@ export const FeaturesSection: React.FC = () => {
               </p>
 
               {/* 3가지 핵심 기능 리스트 */}
-              <ul className="space-y-4 sm:space-y-5">
+              <ul className="space-y-3.5 sm:space-y-4">
                 {/* 기능 1 */}
-                <li className="flex items-start gap-3.5 p-3 rounded-2xl hover:bg-blue-50/50 transition-colors">
-                  <div className="w-7 h-7 rounded-xl bg-blue-100 text-[#6A85F1] flex items-center justify-center flex-shrink-0 mt-0.5">
-                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M5 13l4 4L19 7" />
-                    </svg>
+                <li className="flex items-start gap-3.5 p-3.5 sm:p-4 rounded-2xl bg-gray-50/70 border border-gray-100/80 hover:bg-blue-50/50 transition-colors">
+                  <div className="w-8 h-8 rounded-xl bg-blue-100 text-[#6A85F1] font-black text-xs flex items-center justify-center flex-shrink-0 mt-0.5 shadow-xs">
+                    01
                   </div>
-                  <div>
-                    <span className="font-bold text-gray-900 text-sm sm:text-base block">
-                      1. 타인에게 얘기하기 어려운 고민도 털어놓는 AI 상담 서비스
-                    </span>
-                    <span className="text-xs text-gray-400">누구의 눈치도 보지 않고 나의 속마음을 편안하게 고백할 수 있습니다.</span>
+                  <div className="flex-1 min-w-0">
+                    <h4 className="font-bold text-gray-900 text-sm sm:text-base leading-snug break-keep">
+                      타인에게 얘기하기 어려운 고민도 털어놓는 AI 상담
+                    </h4>
+                    <p className="text-xs sm:text-sm text-gray-500 mt-1 leading-relaxed break-keep font-medium">
+                      누구의 눈치도 보지 않고 나의 속마음을 편안하게 고백할 수 있습니다.
+                    </p>
                   </div>
                 </li>
 
                 {/* 기능 2 */}
-                <li className="flex items-start gap-3.5 p-3 rounded-2xl hover:bg-purple-50/50 transition-colors">
-                  <div className="w-7 h-7 rounded-xl bg-purple-100 text-[#9E8FF0] flex items-center justify-center flex-shrink-0 mt-0.5">
-                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M5 13l4 4L19 7" />
-                    </svg>
+                <li className="flex items-start gap-3.5 p-3.5 sm:p-4 rounded-2xl bg-gray-50/70 border border-gray-100/80 hover:bg-purple-50/50 transition-colors">
+                  <div className="w-8 h-8 rounded-xl bg-purple-100 text-[#9E8FF0] font-black text-xs flex items-center justify-center flex-shrink-0 mt-0.5 shadow-xs">
+                    02
                   </div>
-                  <div>
-                    <span className="font-bold text-gray-900 text-sm sm:text-base block">
-                      2. 설계 통계를 바탕으로 한 AI 맞춤 솔루션
-                    </span>
-                    <span className="text-xs text-gray-400">수만 건의 심리 데이터와 전문 통계를 기반으로 정밀한 피드백을 제공합니다.</span>
+                  <div className="flex-1 min-w-0">
+                    <h4 className="font-bold text-gray-900 text-sm sm:text-base leading-snug break-keep">
+                      설계 통계를 바탕으로 한 AI 맞춤 솔루션
+                    </h4>
+                    <p className="text-xs sm:text-sm text-gray-500 mt-1 leading-relaxed break-keep font-medium">
+                      수만 건의 심리 데이터와 전문 통계를 기반으로 정밀한 피드백을 제공합니다.
+                    </p>
                   </div>
                 </li>
 
                 {/* 기능 3 */}
-                <li className="flex items-start gap-3.5 p-3 rounded-2xl hover:bg-pink-50/50 transition-colors">
-                  <div className="w-7 h-7 rounded-xl bg-pink-100 text-[#C198F0] flex items-center justify-center flex-shrink-0 mt-0.5">
-                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M5 13l4 4L19 7" />
-                    </svg>
+                <li className="flex items-start gap-3.5 p-3.5 sm:p-4 rounded-2xl bg-gray-50/70 border border-gray-100/80 hover:bg-pink-50/50 transition-colors">
+                  <div className="w-8 h-8 rounded-xl bg-pink-100 text-[#C198F0] font-black text-xs flex items-center justify-center flex-shrink-0 mt-0.5 shadow-xs">
+                    03
                   </div>
-                  <div>
-                    <span className="font-bold text-gray-900 text-sm sm:text-base block">
-                      3. 마음이 지치기 전, 사전에 준비하는 나만의 멘탈케어 처방전
-                    </span>
-                    <span className="text-xs text-gray-400">번아웃이 오기 전 미리 스스로를 돌보고 회복할 수 있는 루틴을 제시합니다.</span>
+                  <div className="flex-1 min-w-0">
+                    <h4 className="font-bold text-gray-900 text-sm sm:text-base leading-snug break-keep">
+                      마음이 지치기 전, 사전에 준비하는 나만의 멘탈케어 처방전
+                    </h4>
+                    <p className="text-xs sm:text-sm text-gray-500 mt-1 leading-relaxed break-keep font-medium">
+                      번아웃이 오기 전 미리 스스로를 돌보고 회복할 수 있는 루틴을 제시합니다.
+                    </p>
                   </div>
                 </li>
               </ul>
@@ -97,13 +97,17 @@ export const FeaturesSection: React.FC = () => {
             <span>🌱</span>
             <span>MomentLog 처방 노트</span>
           </div>
-          <h3 className="text-lg sm:text-2xl font-extrabold text-gray-900 mb-2.5 break-keep">
+          <h3 className="text-lg sm:text-2xl font-extrabold text-gray-900 mb-3 break-keep leading-snug">
             “파랑새는 떠나서 찾는 것이 아니라, 지금의 자리에서 발견하는 것입니다.”
           </h3>
-          <p className="text-gray-600 text-xs sm:text-base leading-relaxed break-keep max-w-2xl mx-auto font-medium">
-            진짜 나다운 삶은 더 완벽한 환경으로 이동했을 때 비로소 시작되는 것이 아닙니다.<br className="hidden sm:inline" />
-            <strong>오늘 내가 경험한 작은 순간과 감정들을 기록하고 소중히 여기는 연습</strong>에서 나만의 파랑새가 자라납니다.
-          </p>
+          <div className="text-gray-600 text-xs sm:text-sm md:text-base leading-relaxed break-keep max-w-2xl mx-auto font-medium space-y-1">
+            <p>
+              진짜 나다운 삶은 더 완벽한 환경으로 이동했을 때 비로소 시작되는 것이 아닙니다.
+            </p>
+            <p className="text-[#1B326B] font-bold">
+              오늘 내가 경험한 작은 순간과 감정들을 기록하고 소중히 여기는 연습에서 나만의 파랑새가 자라납니다.
+            </p>
+          </div>
         </div>
 
       </div>

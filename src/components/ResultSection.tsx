@@ -119,13 +119,13 @@ export const ResultSection: React.FC<ResultSectionProps> = ({ mbti = 'ENFP' }) =
             </p>
           </div>
 
-          {/* 세로 1열 카드 섹션 (요청사항: 수직 방향으로 나란히 정렬) */}
-          <div className="w-full space-y-4 text-left">
+          {/* 세로 1열 카드 섹션 (글자 및 문장 정렬 최적화) */}
+          <div className="w-full space-y-3.5 sm:space-y-4 text-left">
             
             {/* 블록 1: 이런 모습이 자주 보여요 */}
             <div className="bg-gradient-to-b from-blue-50/50 to-slate-50/30 border border-blue-100/90 rounded-2xl p-5 sm:p-6 shadow-xs">
-              <div className="flex items-center gap-2 font-bold text-gray-900 text-base sm:text-lg mb-3.5">
-                <span className="w-7 h-7 rounded-xl bg-blue-100/80 text-blue-600 flex items-center justify-center text-sm">
+              <div className="flex items-center gap-2.5 font-bold text-gray-900 text-base sm:text-lg mb-3.5">
+                <span className="w-7 h-7 rounded-xl bg-blue-100/80 text-blue-600 flex items-center justify-center text-sm shadow-xs flex-shrink-0">
                   🌟
                 </span>
                 <span>이런 모습이 자주 보여요</span>
@@ -136,7 +136,7 @@ export const ResultSection: React.FC<ResultSectionProps> = ({ mbti = 'ENFP' }) =
                     <span className="mt-1 flex-shrink-0 w-4 h-4 rounded-full bg-blue-200/80 text-blue-700 flex items-center justify-center text-[10px] font-bold">
                       ✓
                     </span>
-                    <span className="font-medium text-gray-800 break-keep">{trait}</span>
+                    <span className="font-medium text-gray-800 break-keep leading-relaxed">{trait}</span>
                   </li>
                 ))}
               </ul>
@@ -144,35 +144,37 @@ export const ResultSection: React.FC<ResultSectionProps> = ({ mbti = 'ENFP' }) =
 
             {/* 블록 2: ⚠️ 파랑새 위험신호 */}
             <div className="bg-amber-50/70 border border-amber-200/80 rounded-2xl p-5 sm:p-6 shadow-xs">
-              <div className="flex items-center gap-2 font-bold text-amber-900 text-base sm:text-lg mb-2.5">
-                <span className="w-7 h-7 rounded-xl bg-amber-200/70 text-amber-800 flex items-center justify-center text-sm">
+              <div className="flex items-center gap-2.5 font-bold text-amber-900 text-base sm:text-lg mb-2.5">
+                <span className="w-7 h-7 rounded-xl bg-amber-200/70 text-amber-800 flex items-center justify-center text-sm shadow-xs flex-shrink-0">
                   ⚠️
                 </span>
                 <span>파랑새 위험신호</span>
               </div>
-              <p className="text-amber-950 font-medium text-sm sm:text-base leading-relaxed break-keep pl-1">
+              <p className="text-amber-950 font-medium text-sm sm:text-base leading-relaxed break-keep">
                 {data.warning}
               </p>
             </div>
 
             {/* 블록 3: 💊 필요한 처방 */}
             <div className="bg-emerald-50/70 border border-emerald-200/80 rounded-2xl p-5 sm:p-6 shadow-xs">
-              <div className="flex items-center gap-2 font-bold text-emerald-900 text-base sm:text-lg mb-2.5">
-                <span className="w-7 h-7 rounded-xl bg-emerald-200/70 text-emerald-800 flex items-center justify-center text-sm">
+              <div className="flex items-center gap-2.5 font-bold text-emerald-900 text-base sm:text-lg mb-2.5">
+                <span className="w-7 h-7 rounded-xl bg-emerald-200/70 text-emerald-800 flex items-center justify-center text-sm shadow-xs flex-shrink-0">
                   💊
                 </span>
                 <span>필요한 처방</span>
               </div>
-              <p className="text-emerald-950 font-semibold text-sm sm:text-base leading-relaxed break-keep pl-1">
+              <p className="text-emerald-950 font-semibold text-sm sm:text-base leading-relaxed break-keep">
                 {data.prescription}
               </p>
             </div>
 
-            {/* 블록 4: 💬 한마디 */}
-            <div className="bg-gradient-to-r from-purple-50/90 via-blue-50/70 to-indigo-50/90 border border-purple-100 rounded-2xl p-5 sm:p-6 text-center shadow-xs">
-              <div className="inline-flex items-center gap-1.5 text-xs font-bold text-purple-700 mb-2 px-2.5 py-0.5 rounded-full bg-white/80 border border-purple-100 shadow-xs">
-                <span>💬</span>
-                <span>한마디</span>
+            {/* 블록 4: 💬 마음 처방 한마디 */}
+            <div className="bg-gradient-to-r from-purple-50/90 via-blue-50/70 to-indigo-50/90 border border-purple-100 rounded-2xl p-5 sm:p-6 shadow-xs">
+              <div className="flex items-center gap-2.5 font-bold text-purple-900 text-base sm:text-lg mb-2.5">
+                <span className="w-7 h-7 rounded-xl bg-purple-200/70 text-purple-800 flex items-center justify-center text-sm shadow-xs flex-shrink-0">
+                  💬
+                </span>
+                <span>마음 처방 한마디</span>
               </div>
               <p className="text-gray-800 font-semibold text-sm sm:text-base leading-relaxed break-keep">
                 {data.comment}
