@@ -98,11 +98,11 @@ export const StatisticsSection: React.FC = () => {
               {/* 텍스트 영역 */}
               <div className="w-full md:w-1/2 text-center md:text-left">
                 <span className="text-xs font-bold text-gray-400 uppercase tracking-widest block mb-1">
-                  &lt;직장인이 겪고 있는 증후군&gt;
+                  &lt;파랑새 증후군&gt;
                 </span>
                 <p className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-gray-900 leading-tight mb-3 break-keep">
                   직장인 10명 중 <span className="text-[#1B326B] font-black underline decoration-blue-300 decoration-wavy">6명(60%)</span>은<br />
-                  '<span className="gradient-text">퇴사증후군</span>'을 겪는다
+                  '<span className="gradient-text">파랑새 증후군</span>'을 겪는다
                 </p>
                 <p className="text-xs text-gray-400 font-medium">출처: 취업포털 사람인 설문조사</p>
               </div>
@@ -115,16 +115,18 @@ export const StatisticsSection: React.FC = () => {
             
             {/* 차트 2: 청년기 우울증 환자 수 */}
             <div className="bg-white rounded-[2.5rem] p-6 sm:p-8 shadow-md border border-gray-100 flex flex-col justify-between relative overflow-hidden">
-              <div className="mb-4">
-                <h4 className="text-base sm:text-lg font-bold text-gray-900 mb-0.5">
-                  &lt;청년기(19~39세) 우울증 환자 수&gt;
-                </h4>
-                <p className="text-xs text-gray-400">자료: 건강보험심사평가원 / 단위: 명</p>
-              </div>
+              <div className="flex items-start justify-between gap-2 mb-3">
+                <div className="flex-1">
+                  <h4 className="text-base sm:text-lg font-bold text-gray-900 mb-0.5 leading-snug break-keep">
+                    &lt;청년기(19~39세) 우울증 환자 수&gt;
+                  </h4>
+                  <p className="text-xs text-gray-400">자료: 건강보험심사평가원 / 단위: 명</p>
+                </div>
 
-              {/* 225% 증가 뱃지 */}
-              <div className="absolute top-6 right-6 bg-[#1B326B] text-white px-3.5 py-1.5 font-black text-sm sm:text-base rounded-xl shadow-lg transform -rotate-12 border border-white/30 z-20 animate-pulse-slow">
-                225% ⬆
+                {/* 225% 증가 뱃지 (상단 타이틀 우측에 배치하여 모바일 겹침 방지) */}
+                <div className="flex-shrink-0 bg-[#1B326B] text-white px-2.5 py-1 font-black text-xs sm:text-sm rounded-xl shadow-md border border-white/20 whitespace-nowrap animate-pulse-slow mt-0.5">
+                  225% ⬆
+                </div>
               </div>
 
               {/* 자체 고정밀 SVG Area Chart */}
@@ -231,63 +233,93 @@ export const StatisticsSection: React.FC = () => {
               </div>
             </div>
 
-            {/* 차트 3: 정신건강 서비스 이용률 (가운데가 막힌 솔리드 파이 차트) */}
+            {/* 차트 3: 정신건강 서비스 이용률 (가독성 대폭 향상된 파이 차트 & 비교 카드) */}
             <div className="bg-white rounded-[2.5rem] p-6 sm:p-8 shadow-md border border-gray-100 flex flex-col justify-between items-center text-center">
-              <div className="mb-3 w-full text-left sm:text-center">
-                <h4 className="text-base sm:text-lg font-bold text-gray-900 mb-0.5">
+              <div className="mb-2 w-full text-left sm:text-center">
+                <h4 className="text-base sm:text-lg font-bold text-gray-900 mb-0.5 leading-snug break-keep">
                   &lt;우리나라 청년층 정신건강 서비스 이용률&gt;
                 </h4>
                 <p className="text-xs text-gray-400">자료: 보건복지부 (2024 제3회 국가건강검진위원회)</p>
               </div>
 
-              {/* 솔리드 파이 차트 */}
-              <div className="relative w-56 h-56 sm:w-64 sm:h-64 my-2 flex items-center justify-center">
-                <svg viewBox="0 0 240 240" className="w-full h-full overflow-visible">
+              {/* 고대비 파이 차트 (리더 라인 및 명확한 수치 표기) */}
+              <div className="relative w-56 h-52 sm:w-64 sm:h-56 my-1 flex items-center justify-center">
+                <svg viewBox="0 0 260 220" className="w-full h-full overflow-visible">
                   <defs>
                     <filter id="pieShadow" x="-20%" y="-20%" width="140%" height="140%">
-                      <feDropShadow dx="3" dy="5" stdDeviation="4" floodOpacity="0.2" floodColor="#1B326B" />
+                      <feDropShadow dx="2" dy="4" stdDeviation="3" floodOpacity="0.25" floodColor="#1B326B" />
                     </filter>
                   </defs>
 
-                  {/* 84% 조각 (연그레이 #E5E7EB) */}
+                  {/* 84% 조각 (연한 슬레이트 그레이 #E2E8F0) */}
                   <path
-                    d="M 120 120 L 191.7 74.5 A 85 85 0 1 1 120 35 Z"
-                    fill="#E5E7EB"
+                    d="M 110 110 L 173.3 69.8 A 75 75 0 1 1 110 35 Z"
+                    fill="#E2E8F0"
                     stroke="#FFFFFF"
                     strokeWidth="3"
                   />
 
                   {/* 16% 조각 (진남색 #1B326B - 돌출 그림자 적용) */}
-                  <g filter="url(#pieShadow)" className="hover:scale-105 transition-transform origin-center cursor-pointer">
+                  <g filter="url(#pieShadow)" className="hover:scale-105 transition-transform origin-[110px_110px] cursor-pointer">
                     <path
-                      d="M 124 116 L 124 31 A 85 85 0 0 1 195.7 70.5 Z"
+                      d="M 114 107 L 114 32 A 75 75 0 0 1 177.3 66.8 Z"
                       fill="#1B326B"
                       stroke="#FFFFFF"
                       strokeWidth="3"
                     />
                   </g>
 
-                  {/* 84% 텍스트 라벨 */}
-                  <text x="100" y="130" fill="#6B7280" fontSize="13" fontWeight="bold" textAnchor="middle">
+                  {/* 84% 텍스트 라벨 (파이 중심에 고대비 볼드로 명확히 배치) */}
+                  <text x="88" y="108" fill="#475569" fontSize="12" fontWeight="bold" textAnchor="middle">
                     이용하지 않음
                   </text>
-                  <text x="100" y="162" fill="#9CA3AF" fontSize="30" fontWeight="900" textAnchor="middle">
+                  <text x="88" y="138" fill="#1E293B" fontSize="28" fontWeight="900" textAnchor="middle">
                     84%
                   </text>
 
-                  {/* 16% 텍스트 라벨 */}
-                  <text x="195" y="32" fill="#1B326B" fontSize="14" fontWeight="bold" textAnchor="middle">
+                  {/* 16% 슬라이스 지시선 (Leader line) */}
+                  <path
+                    d="M 148 54 L 178 38 L 225 38"
+                    stroke="#1B326B"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    fill="none"
+                  />
+                  <circle cx="148" cy="54" r="2.5" fill="#1B326B" />
+
+                  {/* 16% 텍스트 라벨 (지시선 상단에 진남색 강조) */}
+                  <text x="202" y="24" fill="#1B326B" fontSize="12" fontWeight="bold" textAnchor="middle">
                     이용함
                   </text>
-                  <text x="195" y="56" fill="#1B326B" fontSize="24" fontWeight="900" textAnchor="middle">
+                  <text x="202" y="34" fill="#1B326B" fontSize="18" fontWeight="900" textAnchor="middle">
                     16%
                   </text>
-                  <circle cx="160" cy="55" r="3" fill="#1B326B" />
                 </svg>
               </div>
 
+              {/* 한눈에 보이는 2열 직관 비교 카드 (모바일 가독성 극대화) */}
+              <div className="grid grid-cols-2 gap-2.5 sm:gap-3 w-full my-2">
+                {/* 84% 카드 */}
+                <div className="bg-gray-50/90 border border-gray-200/80 rounded-2xl p-2.5 sm:p-3 text-center">
+                  <div className="flex items-center justify-center gap-1.5 mb-0.5">
+                    <span className="w-2 h-2 rounded-full bg-gray-400" />
+                    <span className="text-[11px] sm:text-xs font-bold text-gray-500">이용하지 않음</span>
+                  </div>
+                  <span className="text-2xl sm:text-3xl font-black text-gray-700 tracking-tight">84%</span>
+                </div>
+
+                {/* 16% 카드 (핵심 포인트 강조) */}
+                <div className="bg-blue-50/90 border-2 border-[#1B326B]/25 rounded-2xl p-2.5 sm:p-3 text-center shadow-xs">
+                  <div className="flex items-center justify-center gap-1.5 mb-0.5">
+                    <span className="w-2 h-2 rounded-full bg-[#1B326B]" />
+                    <span className="text-[11px] sm:text-xs font-bold text-[#1B326B]">이용함 (도움 받음)</span>
+                  </div>
+                  <span className="text-2xl sm:text-3xl font-black text-[#1B326B] tracking-tight">16%</span>
+                </div>
+              </div>
+
               {/* 하단 공감 텍스트 박스 */}
-              <div className="mt-2 w-full bg-blue-50/70 p-3.5 sm:p-4 rounded-2xl border border-blue-100">
+              <div className="mt-1 w-full bg-blue-50/70 p-3 sm:p-3.5 rounded-2xl border border-blue-100">
                 <p className="text-gray-700 text-xs sm:text-sm font-medium leading-relaxed break-keep">
                   대다수의 청년들이 마음의 병을 앓고 있지만, <br className="hidden sm:block" />
                   전문적인 도움을 받는 비율은 <strong className="text-[#1B326B] font-bold">16%로 현저히 낮습니다.</strong>
