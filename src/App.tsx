@@ -14,7 +14,7 @@ import { Footer } from './components/Footer';
 const q1Data: QuestionData = {
   stepNumber: 1,
   totalSteps: 4,
-  category: '심리테스트 Q1 · 에너지 방향',
+  category: '',
   title: 'Q1. 지금 있는 환경이 답답할 때 나는?',
   description: '마음에 가장 와닿는 나의 행동을 하나 선택해주세요',
   options: [
@@ -29,7 +29,7 @@ const q1Data: QuestionData = {
 const q2Data: QuestionData = {
   stepNumber: 2,
   totalSteps: 4,
-  category: '심리테스트 Q2 · 방향성 인식',
+  category: '',
   title: 'Q2. “여긴 아닌 것 같은데…” 싶을 때 드는 생각은?',
   description: '내 머릿속을 가장 먼저 스치는 생각을 선택해주세요',
   options: [
@@ -44,7 +44,7 @@ const q2Data: QuestionData = {
 const q3Data: QuestionData = {
   stepNumber: 3,
   totalSteps: 4,
-  category: '심리테스트 Q3 · 진로 판단 기준',
+  category: '',
   title: 'Q3. 옮길지 말지 고민할 때 제일 중요한 건?',
   description: '결정을 내릴 때 가장 중요하게 따지는 기준을 선택해주세요',
   options: [
@@ -59,7 +59,7 @@ const q3Data: QuestionData = {
 const q4Data: QuestionData = {
   stepNumber: 4,
   totalSteps: 4,
-  category: '심리테스트 Q4 · 기회 대처 방식',
+  category: '',
   title: 'Q4. 더 좋아 보이는 기회가 나타나면?',
   description: '선택 즉시 나만의 MBTI 성향 진단 결과가 발표됩니다',
   options: [
@@ -126,6 +126,30 @@ export const App: React.FC = () => {
     window.scrollTo({ top: 0, behavior: 'instant' });
   };
 
+  const handleBackToLanding = () => {
+    setUserSelections((prev) => ({ ...prev, q1: null }));
+    setStep('landing');
+    window.scrollTo({ top: 0, behavior: 'instant' });
+  };
+
+  const handleBackToQ1 = () => {
+    setUserSelections((prev) => ({ ...prev, q2: null }));
+    setStep('q1');
+    window.scrollTo({ top: 0, behavior: 'instant' });
+  };
+
+  const handleBackToQ2 = () => {
+    setUserSelections((prev) => ({ ...prev, q3: null }));
+    setStep('q2');
+    window.scrollTo({ top: 0, behavior: 'instant' });
+  };
+
+  const handleBackToQ3 = () => {
+    setUserSelections((prev) => ({ ...prev, q4: null }));
+    setStep('q3');
+    window.scrollTo({ top: 0, behavior: 'instant' });
+  };
+
   const handleReset = () => {
     setUserSelections({
       mood: null,
@@ -148,28 +172,36 @@ export const App: React.FC = () => {
         <QuestionStep
           data={q1Data}
           themeColor="blue"
+          selectedOptionId={userSelections.q1?.id}
           onSelectOption={handleSelectQ1}
+          onBack={handleBackToLanding}
         />
       )}
       {step === 'q2' && (
         <QuestionStep
           data={q2Data}
           themeColor="purple"
+          selectedOptionId={userSelections.q2?.id}
           onSelectOption={handleSelectQ2}
+          onBack={handleBackToQ1}
         />
       )}
       {step === 'q3' && (
         <QuestionStep
           data={q3Data}
           themeColor="blue"
+          selectedOptionId={userSelections.q3?.id}
           onSelectOption={handleSelectQ3}
+          onBack={handleBackToQ2}
         />
       )}
       {step === 'q4' && (
         <QuestionStep
           data={q4Data}
           themeColor="purple"
+          selectedOptionId={userSelections.q4?.id}
           onSelectOption={handleSelectQ4}
+          onBack={handleBackToQ3}
         />
       )}
       {step === 'main' && (

@@ -1,18 +1,26 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { QuestionData, QuestionOption } from '../types';
 
 interface QuestionStepProps {
   data: QuestionData;
   themeColor: 'blue' | 'purple';
+  selectedOptionId?: number | null;
   onSelectOption: (option: QuestionOption) => void;
+  onBack: () => void;
 }
 
 export const QuestionStep: React.FC<QuestionStepProps> = ({
   data,
   themeColor,
+  selectedOptionId,
   onSelectOption,
+  onBack,
 }) => {
-  const [selectedId, setSelectedId] = useState<number | null>(null);
+  const [selectedId, setSelectedId] = useState<number | null>(selectedOptionId ?? null);
+
+  useEffect(() => {
+    setSelectedId(selectedOptionId ?? null);
+  }, [data.stepNumber, selectedOptionId]);
 
   const isPurple = themeColor === 'purple';
   const progressPercent = Math.round((data.stepNumber / data.totalSteps) * 100);
@@ -23,99 +31,108 @@ export const QuestionStep: React.FC<QuestionStepProps> = ({
     // 테두리 반짝임 피드백 후 다음 단계 이동
     setTimeout(() => {
       onSelectOption(option);
-    }, 350);
+    }, 320);
   };
 
   return (
-    <section className="min-h-[100dvh] flex flex-col justify-center items-center bg-[#F8F9FE] px-4 py-3 sm:py-6 fade-enter overflow-y-auto">
-      {/* 모바일 가로 모드(Landscape) 기준: 좌측 질문 + 우측 4지선다 2x2 그리드 */}
-      <div className="w-full max-w-5xl mx-auto flex flex-col landscape:flex-row sm:flex-row items-center justify-center gap-4 sm:gap-6 lg:gap-10 my-auto">
+    <section className="min-h-[100dvh] flex flex-col justify-between bg-[#F8F9FE] px-4 py-4 sm:py-6 fade-enter overflow-y-auto">
+      {/* 핸드폰 세로 방향(Portrait) 기준 최적화 컨테이너 */}
+      <div className="w-full max-w-md mx-auto flex flex-col flex-1 justify-between gap-4 sm:gap-5 my-auto py-2">
         
-        {/* 좌측: 진행 상태 바 & 질문 헤더 카드 */}
-        <div className="w-full landscape:w-[40%] sm:w-[40%] max-w-sm sm:max-w-none flex flex-col justify-center flex-shrink-0">
-          
-          {/* 진행 상태 바 */}
-          <div className="mb-3 sm:mb-4">
-            <div className="flex items-center justify-between mb-1.5 sm:mb-2">
-              <span
-                className={`text-xs font-bold tracking-wider uppercase px-2.5 py-0.5 rounded-md border ${
-                  isPurple
-                    ? 'text-[#9E8FF0] bg-purple-50 border-purple-100'
-                    : 'text-[#6A85F1] bg-blue-50 border-blue-100'
-                }`}
-              >
-                Step {data.stepNumber} of {data.totalSteps}
+        {/* 상단 네비게이션 바: 뒤로가기 버튼 & 진행률 */}
+        <div className="w-full">
+          <div className="flex items-center justify-between mb-2.5">
+            {/* 뒤로가기 버튼 */}
+            <button
+              type="button"
+              onClick={onBack}
+              className="w-10 h-10 rounded-full bg-white shadow-xs border border-gray-200/80 flex items-center justify-center text-gray-700 hover:text-gray-900 hover:bg-gray-50 active:scale-95 transition-all cursor-pointer"
+              aria-label="이전 단계로 이동"
+              title="이전으로 돌아가기"
+            >
+              <svg className="w-5 h-5 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M15 19l-7-7 7-7" />
+              </svg>
+            </button>
+
+            {/* 단계 표시 (간결한 숫자 배지) */}
+            <div className="flex items-center gap-1 px-3 py-1 bg-white rounded-full border border-gray-200/80 shadow-xs">
+              <span className={`text-xs font-black ${isPurple ? 'text-[#9E8FF0]' : 'text-[#6A85F1]'}`}>
+                {data.stepNumber}
               </span>
-              <span className="text-xs font-semibold text-gray-400">
-                {progressPercent}% 완료
+              <span className="text-xs font-bold text-gray-300">/</span>
+              <span className="text-xs font-bold text-gray-400">
+                {data.totalSteps}
               </span>
-            </div>
-            <div className="w-full h-2 sm:h-2.5 bg-gray-200/80 rounded-full overflow-hidden p-0.5">
-              <div
-                className="h-full rounded-full gradient-bg transition-all duration-500"
-                style={{ width: `${progressPercent}%` }}
-              />
             </div>
           </div>
 
-          {/* 질문 카드 */}
-          <div className="bg-white rounded-[1.8rem] sm:rounded-[2rem] p-4 sm:p-6 shadow-sm border border-gray-100">
-            <span
-              className={`inline-block text-xs font-bold mb-1.5 sm:mb-2 ${
-                isPurple ? 'text-[#C198F0]' : 'text-[#6A85F1]'
-              }`}
-            >
-              {data.category}
-            </span>
-            <h2 className="text-lg sm:text-xl lg:text-2xl font-bold text-gray-900 leading-snug break-keep">
-              {data.title}
-            </h2>
-            <p className="text-xs sm:text-sm text-gray-400 mt-1.5 sm:mt-2 break-keep">
-              {data.description}
-            </p>
+          {/* 세련된 진행 상태 프로그레스 바 */}
+          <div className="w-full h-2 bg-gray-200/70 rounded-full overflow-hidden p-0.5">
+            <div
+              className="h-full rounded-full gradient-bg transition-all duration-400 ease-out"
+              style={{ width: `${progressPercent}%` }}
+            />
           </div>
         </div>
 
-        {/* 우측: 4지 선다 2x2 그리드 선택지 버튼 리스트 (A, B, C, D 뱃지 & 테두리 반짝임) */}
-        <div className="w-full landscape:w-[60%] sm:w-[60%] max-w-md sm:max-w-none flex-grow">
-          <div className="grid grid-cols-1 landscape:grid-cols-2 sm:grid-cols-2 gap-2.5 sm:gap-3">
-            {data.options.map((option) => {
-              const isSelected = selectedId === option.id;
-              return (
-                <button
-                  key={option.id}
-                  type="button"
-                  onClick={() => handleSelect(option)}
-                  className={`p-3.5 sm:p-4 rounded-2xl bg-white border-2 flex items-center justify-between text-left transition-all duration-150 relative cursor-pointer min-h-[4.25rem] sm:min-h-[5rem] ${
-                    isSelected
-                      ? isPurple
-                        ? 'border-[#C198F0] ring-4 ring-[#C198F0] shadow-[0_0_18px_rgba(193,152,240,0.95)] sparkle-border z-10'
-                        : 'border-[#6A85F1] ring-4 ring-[#6A85F1] shadow-[0_0_18px_rgba(106,133,241,0.95)] sparkle-border z-10'
-                      : isPurple
-                      ? 'border-transparent shadow-sm hover:border-[#C198F0]/60 hover:shadow-md'
-                      : 'border-transparent shadow-sm hover:border-[#6A85F1]/60 hover:shadow-md'
-                  }`}
-                >
-                  <div className="flex items-center gap-3 relative z-10 w-full pr-1">
-                    <span
-                      className={`btn-num flex-shrink-0 w-8 h-8 sm:w-9 sm:h-9 rounded-xl font-bold flex items-center justify-center text-sm sm:text-base transition-colors ${
-                        isSelected
-                          ? 'gradient-bg text-white'
-                          : isPurple
-                          ? 'bg-purple-50 text-[#9E8FF0] group-hover:gradient-bg group-hover:text-white'
-                          : 'bg-blue-50 text-[#6A85F1] group-hover:gradient-bg group-hover:text-white'
-                      }`}
-                    >
-                      {option.label || option.id}
-                    </span>
-                    <p className="text-gray-800 text-xs sm:text-sm font-semibold leading-snug break-keep flex-1">
-                      "{option.text}"
-                    </p>
-                  </div>
-                </button>
-              );
-            })}
-          </div>
+        {/* 질문 카드 (질문 위에 불필요한 '심리테스트 Q1' 라벨 제거) */}
+        <div className="bg-white rounded-[2rem] p-5 sm:p-6 shadow-xs border border-gray-100/90 text-left">
+          <h2 className="text-lg sm:text-xl font-black text-gray-900 leading-snug break-keep">
+            {data.title}
+          </h2>
+          {data.description && (
+            <p className="text-xs sm:text-sm text-gray-400 mt-2 font-medium break-keep">
+              {data.description}
+            </p>
+          )}
+        </div>
+
+        {/* 4지선다 선택지 버튼 리스트 (핸드폰 세로 방향 1열 스택 배치) */}
+        <div className="flex flex-col gap-2.5 sm:gap-3 w-full">
+          {data.options.map((option) => {
+            const isSelected = selectedId === option.id;
+            return (
+              <button
+                key={option.id}
+                type="button"
+                onClick={() => handleSelect(option)}
+                className={`w-full p-4 rounded-2xl bg-white border-2 flex items-center justify-between text-left transition-all duration-150 relative cursor-pointer active:scale-[0.98] min-h-[4.25rem] ${
+                  isSelected
+                    ? isPurple
+                      ? 'border-[#C198F0] ring-4 ring-[#C198F0]/30 shadow-[0_0_16px_rgba(193,152,240,0.45)] z-10'
+                      : 'border-[#6A85F1] ring-4 ring-[#6A85F1]/30 shadow-[0_0_16px_rgba(106,133,241,0.45)] z-10'
+                    : isPurple
+                    ? 'border-transparent shadow-xs hover:border-[#C198F0]/50 hover:shadow-md'
+                    : 'border-transparent shadow-xs hover:border-[#6A85F1]/50 hover:shadow-md'
+                }`}
+              >
+                <div className="flex items-center gap-3.5 relative z-10 w-full pr-1">
+                  <span
+                    className={`flex-shrink-0 w-8 h-8 sm:w-9 sm:h-9 rounded-xl font-black flex items-center justify-center text-sm sm:text-base transition-colors ${
+                      isSelected
+                        ? 'gradient-bg text-white shadow-xs'
+                        : isPurple
+                        ? 'bg-purple-50 text-[#9E8FF0]'
+                        : 'bg-blue-50 text-[#6A85F1]'
+                    }`}
+                  >
+                    {option.label || option.id}
+                  </span>
+                  <p className="text-gray-800 text-sm sm:text-base font-semibold leading-snug break-keep flex-1">
+                    "{option.text}"
+                  </p>
+                </div>
+              </button>
+            );
+          })}
+        </div>
+
+        {/* 하단 미니 브랜딩 문구 */}
+        <div className="text-center pt-1 pb-1">
+          <span className="text-[11px] font-bold text-gray-300 tracking-wider">
+            MOMENTLOG · 나만의 파랑새 찾기
+          </span>
         </div>
 
       </div>
