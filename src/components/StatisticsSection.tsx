@@ -113,17 +113,17 @@ export const StatisticsSection: React.FC = () => {
           {/* 하단 2열 그리드: 우울증 꺾은선 차트 & 파이 차트 */}
           <div className="grid md:grid-cols-2 gap-6 sm:gap-8">
             
-            {/* 차트 2: 청년기 우울증 환자 수 */}
-            <div className="bg-white rounded-[2.5rem] p-6 sm:p-8 shadow-md border border-gray-100 flex flex-col justify-between relative overflow-hidden">
-              <div className="mb-3">
+            {/* 차트 2: 청년기 우울증 환자 수 (자연스럽게 가로로 길고 완만한 2.1:1 랜드스케이프 차트) */}
+            <div className="bg-white rounded-[2.5rem] p-5 sm:p-8 shadow-md border border-gray-100 flex flex-col justify-between relative overflow-hidden">
+              <div className="mb-2">
                 <h4 className="text-base sm:text-lg font-bold text-gray-900 mb-0.5 leading-snug break-keep">
                   &lt;청년기(19~39세) 우울증 환자 수&gt;
                 </h4>
                 <p className="text-xs text-gray-400">자료: 건강보험심사평가원 / 단위: 명</p>
               </div>
 
-              {/* 자체 고정밀 SVG Area Chart */}
-              <div className="relative w-full h-64 sm:h-72 mt-2" id="chart-area-container">
+              {/* 자체 고정밀 SVG Area Chart (가로로 길고 자연스러운 비례) */}
+              <div className="relative w-full aspect-[420/200] max-h-72 my-auto flex items-center justify-center" id="chart-area-container">
                 {/* 툴팁 */}
                 {tooltip.visible && (
                   <div
@@ -134,7 +134,7 @@ export const StatisticsSection: React.FC = () => {
                   </div>
                 )}
 
-                <svg viewBox="0 0 400 240" className="w-full h-full overflow-visible" preserveAspectRatio="none">
+                <svg viewBox="0 0 420 200" className="w-full h-full overflow-visible">
                   <defs>
                     <linearGradient id="areaGradient" x1="0" y1="0" x2="0" y2="1">
                       <stop offset="0%" stopColor="#C198F0" stopOpacity="0.55" />
@@ -143,28 +143,28 @@ export const StatisticsSection: React.FC = () => {
                   </defs>
 
                   {/* 가로 보조선 그리드 */}
-                  <line x1="35" y1="30" x2="390" y2="30" stroke="#F1F5F9" strokeWidth="1.5" strokeDasharray="3 3" />
-                  <line x1="35" y1="75" x2="390" y2="75" stroke="#F1F5F9" strokeWidth="1.5" strokeDasharray="3 3" />
-                  <line x1="35" y1="120" x2="390" y2="120" stroke="#F1F5F9" strokeWidth="1.5" strokeDasharray="3 3" />
-                  <line x1="35" y1="165" x2="390" y2="165" stroke="#F1F5F9" strokeWidth="1.5" strokeDasharray="3 3" />
-                  <line x1="35" y1="210" x2="390" y2="210" stroke="#E2E8F0" strokeWidth="1.5" />
+                  <line x1="35" y1="25" x2="410" y2="25" stroke="#F1F5F9" strokeWidth="1.5" strokeDasharray="3 3" />
+                  <line x1="35" y1="65" x2="410" y2="65" stroke="#F1F5F9" strokeWidth="1.5" strokeDasharray="3 3" />
+                  <line x1="35" y1="105" x2="410" y2="105" stroke="#F1F5F9" strokeWidth="1.5" strokeDasharray="3 3" />
+                  <line x1="35" y1="145" x2="410" y2="145" stroke="#F1F5F9" strokeWidth="1.5" strokeDasharray="3 3" />
+                  <line x1="35" y1="180" x2="410" y2="180" stroke="#E2E8F0" strokeWidth="1.5" />
 
                   {/* Y축 눈금 라벨 */}
-                  <text x="5" y="34" fontSize="10" fill="#9CA3AF" fontWeight="600">40만</text>
-                  <text x="5" y="79" fontSize="10" fill="#9CA3AF" fontWeight="600">30만</text>
-                  <text x="5" y="124" fontSize="10" fill="#9CA3AF" fontWeight="600">20만</text>
-                  <text x="5" y="169" fontSize="10" fill="#9CA3AF" fontWeight="600">10만</text>
-                  <text x="18" y="214" fontSize="10" fill="#9CA3AF" fontWeight="600">0</text>
+                  <text x="5" y="29" fontSize="10" fill="#9CA3AF" fontWeight="600">40만</text>
+                  <text x="5" y="69" fontSize="10" fill="#9CA3AF" fontWeight="600">30만</text>
+                  <text x="5" y="109" fontSize="10" fill="#9CA3AF" fontWeight="600">20만</text>
+                  <text x="5" y="149" fontSize="10" fill="#9CA3AF" fontWeight="600">10만</text>
+                  <text x="18" y="184" fontSize="10" fill="#9CA3AF" fontWeight="600">0</text>
 
                   {/* 그라데이션 채움 영역 (Area) */}
                   <path
-                    d="M 50 210 L 50 159.3 C 80 155, 95 152, 114 149.3 C 145 142, 160 135, 178 125.8 C 205 110, 220 102, 242 94.4 C 270 80, 285 62, 306 52.6 C 335 48, 350 46, 370 45.5 L 370 210 Z"
+                    d="M 55 180 L 55 136.4 C 85 133, 100 130, 122 127.7 C 148 122, 168 116, 188 107.5 C 215 95, 235 88, 255 80.5 C 280 68, 302 52, 322 44.5 C 348 39, 370 38.5, 390 38.3 L 390 180 Z"
                     fill="url(#areaGradient)"
                   />
 
                   {/* 진남색 굵은 곡선 (Stroke) */}
                   <path
-                    d="M 50 159.3 C 80 155, 95 152, 114 149.3 C 145 142, 160 135, 178 125.8 C 205 110, 220 102, 242 94.4 C 270 80, 285 62, 306 52.6 C 335 48, 350 46, 370 45.5"
+                    d="M 55 136.4 C 85 133, 100 130, 122 127.7 C 148 122, 168 116, 188 107.5 C 215 95, 235 88, 255 80.5 C 280 68, 302 52, 322 44.5 C 348 39, 370 38.5, 390 38.3"
                     fill="none"
                     stroke="#1B326B"
                     strokeWidth="4"
@@ -177,57 +177,57 @@ export const StatisticsSection: React.FC = () => {
                     onMouseEnter={(e) => handlePointHover(e, '2014년: 112,573명')}
                     onMouseLeave={handlePointLeave}
                   >
-                    <circle cx="50" cy="159.3" r="5" fill="#FFFFFF" stroke="#1B326B" strokeWidth="3" />
+                    <circle cx="55" cy="136.4" r="5" fill="#FFFFFF" stroke="#1B326B" strokeWidth="3" />
                   </g>
                   <g
                     className="cursor-pointer"
                     onMouseEnter={(e) => handlePointHover(e, '2016년: 134,853명')}
                     onMouseLeave={handlePointLeave}
                   >
-                    <circle cx="114" cy="149.3" r="5" fill="#FFFFFF" stroke="#1B326B" strokeWidth="3" />
+                    <circle cx="122" cy="127.7" r="5" fill="#FFFFFF" stroke="#1B326B" strokeWidth="3" />
                   </g>
                   <g
                     className="cursor-pointer"
                     onMouseEnter={(e) => handlePointHover(e, '2018년: 187,057명')}
                     onMouseLeave={handlePointLeave}
                   >
-                    <circle cx="178" cy="125.8" r="5" fill="#FFFFFF" stroke="#1B326B" strokeWidth="3" />
+                    <circle cx="188" cy="107.5" r="5" fill="#FFFFFF" stroke="#1B326B" strokeWidth="3" />
                   </g>
                   <g
                     className="cursor-pointer"
                     onMouseEnter={(e) => handlePointHover(e, '2020년: 256,831명')}
                     onMouseLeave={handlePointLeave}
                   >
-                    <circle cx="242" cy="94.4" r="5" fill="#FFFFFF" stroke="#1B326B" strokeWidth="3" />
+                    <circle cx="255" cy="80.5" r="5" fill="#FFFFFF" stroke="#1B326B" strokeWidth="3" />
                   </g>
                   <g
                     className="cursor-pointer"
                     onMouseEnter={(e) => handlePointHover(e, '2022년: 349,716명')}
                     onMouseLeave={handlePointLeave}
                   >
-                    <circle cx="306" cy="52.6" r="5" fill="#FFFFFF" stroke="#1B326B" strokeWidth="3" />
+                    <circle cx="322" cy="44.5" r="5" fill="#FFFFFF" stroke="#1B326B" strokeWidth="3" />
                   </g>
                   <g
                     className="cursor-pointer"
                     onMouseEnter={(e) => handlePointHover(e, '2023년: 365,603명 (225% 증가)')}
                     onMouseLeave={handlePointLeave}
                   >
-                    <circle cx="370" cy="45.5" r="6" fill="#1B326B" stroke="#FFFFFF" strokeWidth="2.5" />
+                    <circle cx="390" cy="38.3" r="6" fill="#1B326B" stroke="#FFFFFF" strokeWidth="2.5" />
                   </g>
 
                   {/* 225% 증가 뱃지 (꺾은선 그래프 안쪽 우측 상단 배치) */}
-                  <g transform="translate(285, 12)">
+                  <g transform="translate(300, 7)">
                     <rect
                       x="0"
                       y="0"
-                      width="88"
-                      height="26"
-                      rx="13"
+                      width="94"
+                      height="24"
+                      rx="12"
                       fill="#1B326B"
                     />
                     <text
-                      x="44"
-                      y="17.5"
+                      x="47"
+                      y="16.5"
                       fill="#FFFFFF"
                       fontSize="12"
                       fontWeight="900"
@@ -238,18 +238,18 @@ export const StatisticsSection: React.FC = () => {
                   </g>
 
                   {/* X축 연도 라벨 */}
-                  <text x="50" y="230" fontSize="11" fill="#9CA3AF" fontWeight="bold" textAnchor="middle">2014</text>
-                  <text x="114" y="230" fontSize="11" fill="#9CA3AF" fontWeight="bold" textAnchor="middle">2016</text>
-                  <text x="178" y="230" fontSize="11" fill="#9CA3AF" fontWeight="bold" textAnchor="middle">2018</text>
-                  <text x="242" y="230" fontSize="11" fill="#9CA3AF" fontWeight="bold" textAnchor="middle">2020</text>
-                  <text x="306" y="230" fontSize="11" fill="#9CA3AF" fontWeight="bold" textAnchor="middle">2022</text>
-                  <text x="370" y="230" fontSize="11" fill="#1B326B" fontWeight="900" textAnchor="middle">2023</text>
+                  <text x="55" y="196" fontSize="11" fill="#9CA3AF" fontWeight="bold" textAnchor="middle">2014</text>
+                  <text x="122" y="196" fontSize="11" fill="#9CA3AF" fontWeight="bold" textAnchor="middle">2016</text>
+                  <text x="188" y="196" fontSize="11" fill="#9CA3AF" fontWeight="bold" textAnchor="middle">2018</text>
+                  <text x="255" y="196" fontSize="11" fill="#9CA3AF" fontWeight="bold" textAnchor="middle">2020</text>
+                  <text x="322" y="196" fontSize="11" fill="#9CA3AF" fontWeight="bold" textAnchor="middle">2022</text>
+                  <text x="390" y="196" fontSize="11" fill="#1B326B" fontWeight="900" textAnchor="middle">2023</text>
                 </svg>
               </div>
             </div>
 
             {/* 차트 3: 정신건강 서비스 이용률 (단독 그래프 & 겹침 없는 텍스트 디자인) */}
-            <div className="bg-white rounded-[2.5rem] p-6 sm:p-8 shadow-md border border-gray-100 flex flex-col justify-between items-center text-center">
+            <div className="bg-white rounded-[2.5rem] p-5 sm:p-8 shadow-md border border-gray-100 flex flex-col justify-between items-center text-center">
               <div className="mb-2 w-full text-left sm:text-center">
                 <h4 className="text-base sm:text-lg font-bold text-gray-900 mb-0.5 leading-snug break-keep">
                   &lt;우리나라 청년층 정신건강 서비스 이용률&gt;
@@ -257,9 +257,9 @@ export const StatisticsSection: React.FC = () => {
                 <p className="text-xs text-gray-400">자료: 보건복지부 (2024 제3회 국가건강검진위원회)</p>
               </div>
 
-              {/* 고대비 파이 차트 (단독 그래프: 문자 & 퍼센트 완벽 분리) */}
-              <div className="relative w-full max-w-[280px] sm:max-w-[320px] aspect-[280/230] my-auto flex items-center justify-center">
-                <svg viewBox="0 0 280 230" className="w-full h-full overflow-visible">
+              {/* 고대비 파이 차트 (단독 그래프: 문자 & 퍼센트 완벽 분리 및 최적의 폰트 위치) */}
+              <div className="relative w-full max-w-[280px] sm:max-w-[320px] aspect-[280/220] my-auto flex items-center justify-center">
+                <svg viewBox="0 0 280 220" className="w-full h-full overflow-visible">
                   <defs>
                     <filter id="pieShadow" x="-20%" y="-20%" width="140%" height="140%">
                       <feDropShadow dx="2" dy="4" stdDeviation="3" floodOpacity="0.25" floodColor="#1B326B" />
@@ -268,45 +268,45 @@ export const StatisticsSection: React.FC = () => {
 
                   {/* 84% 조각 (연한 슬레이트 그레이) */}
                   <path
-                    d="M 115 125 L 182.5 82.1 A 80 80 0 1 1 115 45 Z"
+                    d="M 115 120 L 182.5 77.1 A 80 80 0 1 1 115 40 Z"
                     fill="#E2E8F0"
                     stroke="#FFFFFF"
                     strokeWidth="3"
                   />
 
                   {/* 16% 조각 (진남색 #1B326B - 돌출 그림자 적용) */}
-                  <g filter="url(#pieShadow)" className="hover:scale-105 transition-transform origin-[118px_121px] cursor-pointer">
+                  <g filter="url(#pieShadow)" className="hover:scale-105 transition-transform origin-[118px_116px] cursor-pointer">
                     <path
-                      d="M 118 121 L 118 41 A 80 80 0 0 1 185.5 78.1 Z"
+                      d="M 118 116 L 118 36 A 80 80 0 0 1 185.5 73.1 Z"
                       fill="#1B326B"
                       stroke="#FFFFFF"
                       strokeWidth="3"
                     />
                   </g>
 
-                  {/* 84% 텍스트 라벨 (파이 내부: 문자와 수치가 37px 간격으로 완전히 분리) */}
-                  <text x="88" y="122" fill="#475569" fontSize="13" fontWeight="bold" textAnchor="middle">
-                    이용하지 않음
-                  </text>
-                  <text x="88" y="159" fill="#1E293B" fontSize="32" fontWeight="900" textAnchor="middle">
+                  {/* 84% 텍스트 라벨 (84% 수치를 중앙 상단에, '이용하지 않음' 설명을 하단에 넓게 배치하여 완벽한 가독성 확보) */}
+                  <text x="96" y="128" fill="#1E293B" fontSize="32" fontWeight="900" textAnchor="middle">
                     84%
+                  </text>
+                  <text x="96" y="152" fill="#475569" fontSize="13" fontWeight="bold" textAnchor="middle">
+                    이용하지 않음
                   </text>
 
                   {/* 16% 슬라이스 지시선 (Leader line) */}
                   <path
-                    d="M 158 52 L 190 32 L 265 32"
+                    d="M 158 48 L 190 28 L 265 28"
                     stroke="#1B326B"
                     strokeWidth="2"
                     strokeLinecap="round"
                     fill="none"
                   />
-                  <circle cx="158" cy="52" r="3" fill="#1B326B" />
+                  <circle cx="158" cy="48" r="3" fill="#1B326B" />
 
-                  {/* 16% 텍스트 라벨 (지시선 위: 문자 / 지시선 아래: 수치로 36px 분리, 절대 겹침 없음) */}
-                  <text x="228" y="24" fill="#1B326B" fontSize="13" fontWeight="bold" textAnchor="middle">
+                  {/* 16% 텍스트 라벨 (지시선 위: 문자 / 지시선 아래: 수치) */}
+                  <text x="228" y="20" fill="#1B326B" fontSize="13" fontWeight="bold" textAnchor="middle">
                     이용함
                   </text>
-                  <text x="228" y="60" fill="#1B326B" fontSize="26" fontWeight="900" textAnchor="middle">
+                  <text x="228" y="56" fill="#1B326B" fontSize="26" fontWeight="900" textAnchor="middle">
                     16%
                   </text>
                 </svg>
