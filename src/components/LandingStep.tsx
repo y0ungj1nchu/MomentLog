@@ -23,14 +23,14 @@ export const LandingStep: React.FC<LandingStepProps> = ({ onStart, onSelectMood 
   };
 
   return (
-    <section className="min-h-[100dvh] flex flex-col justify-center items-center bg-[#F4F5FB] px-2 py-3 sm:px-4 sm:py-6 fade-enter overflow-y-auto relative">
+    <section className="min-h-[100dvh] w-full flex flex-col justify-start sm:justify-center items-center bg-[#F4F5FB] px-2 py-2 sm:px-4 sm:py-6 fade-enter overflow-y-auto overflow-x-hidden relative">
       {/* 배경 장식 은은한 파스텔 광원 블러 */}
       <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[580px] h-[580px] bg-gradient-to-br from-blue-200/35 via-purple-200/30 to-pink-200/25 rounded-full blur-3xl pointer-events-none" />
       <div className="absolute bottom-10 left-10 w-72 h-72 bg-blue-100/30 rounded-full blur-3xl pointer-events-none" />
       <div className="absolute top-10 right-10 w-64 h-64 bg-purple-100/30 rounded-full blur-3xl pointer-events-none" />
 
-      {/* 스마트폰 목업 형태의 메인 랜딩 포스터 카드 (100% 코드 기반 렌더링) */}
-      <div className="relative h-[95dvh] max-h-[900px] w-full max-w-[420px] rounded-[2.5rem] sm:rounded-[3rem] p-4 sm:p-6 shadow-2xl border-[3px] sm:border-4 border-white bg-gradient-to-b from-[#FAF8FF] via-[#FDF9FF] to-[#FFF5FA] flex flex-col justify-between overflow-hidden select-none my-auto">
+      {/* 스마트폰 목업 형태의 메인 랜딩 포스터 카드 (반응형 비율 최적화) */}
+      <div className="landing-card relative min-h-[90dvh] sm:min-h-0 sm:h-[95dvh] max-h-none sm:max-h-[920px] w-full max-w-[425px] rounded-[2rem] sm:rounded-[3rem] p-3.5 min-[380px]:p-5 sm:p-6 shadow-2xl border-[3px] sm:border-4 border-white bg-gradient-to-b from-[#FAF8FF] via-[#FDF9FF] to-[#FFF5FA] flex flex-col justify-between overflow-hidden select-none my-auto">
         
         {/* 좌측 하단 장식용 리본 루프 라인 SVG */}
         <svg
@@ -47,10 +47,10 @@ export const LandingStep: React.FC<LandingStepProps> = ({ onStart, onSelectMood 
         </svg>
 
         {/* 1. 상단 브랜딩 & 로고 영역 */}
-        <div className="flex flex-col items-center text-center pt-2 relative z-10">
+        <div className="flex flex-col items-center text-center pt-1 sm:pt-2 relative z-10">
           
           {/* 모먼트로그 공식 심볼 마크 SVG */}
-          <div className="relative w-12 h-12 sm:w-14 sm:h-14 flex items-center justify-center">
+          <div className="landing-brand-logo relative w-11 h-11 min-[380px]:w-12 min-[380px]:h-12 sm:w-14 sm:h-14 flex items-center justify-center">
             <svg viewBox="0 0 100 100" className="w-full h-full overflow-visible">
               <defs>
                 <linearGradient id="logoSymbolGrad" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -112,25 +112,25 @@ export const LandingStep: React.FC<LandingStepProps> = ({ onStart, onSelectMood 
           </div>
 
           {/* 브랜드 타이포그래피 */}
-          <h2 className="text-2xl sm:text-[1.65rem] font-black text-[#1E293B] tracking-tight mt-1">
+          <h2 className="landing-brand-title text-xl min-[380px]:text-2xl sm:text-[1.65rem] font-black text-[#1E293B] tracking-tight mt-0.5 sm:mt-1">
             모먼트로그
           </h2>
-          <span className="text-[10px] font-bold text-gray-400 tracking-[0.28em] uppercase -mt-0.5">
+          <span className="text-[9px] min-[380px]:text-[10px] font-bold text-gray-400 tracking-[0.28em] uppercase -mt-0.5">
             M O M E N T L O G
           </span>
-          <p className="text-[11px] sm:text-xs font-medium text-gray-500 tracking-tight mt-0.5">
+          <p className="text-[10px] min-[380px]:text-[11px] sm:text-xs font-medium text-gray-500 tracking-tight mt-0.5">
             순간을 기록하고, 나를 이해하는 시간
           </p>
         </div>
 
         {/* 2. 메인 헤드라인 카피 */}
-        <div className="text-center my-1.5 sm:my-2 relative z-10 flex flex-col items-center">
-          <h3 className="text-xl sm:text-2xl md:text-[1.7rem] font-extrabold text-[#1E293B] tracking-tight">
+        <div className="text-center my-1 sm:my-2 relative z-10 flex flex-col items-center">
+          <h3 className="landing-headline-sub text-lg min-[360px]:text-xl sm:text-2xl md:text-[1.7rem] font-extrabold text-[#1E293B] tracking-tight">
             나도 몰랐던 내 마음,
           </h3>
 
           <div className="relative inline-block mt-0.5">
-            <h1 className="text-3xl sm:text-4xl md:text-[2.6rem] font-black tracking-tight">
+            <h1 className="landing-headline-main text-2xl min-[360px]:text-3xl min-[400px]:text-[2.25rem] sm:text-4xl md:text-[2.6rem] font-black tracking-tight">
               <span className="bg-gradient-to-r from-[#4F75FF] via-[#7C4DFF] to-[#F43F9E] bg-clip-text text-transparent">
                 AI는 알아볼까?
               </span>
@@ -138,7 +138,7 @@ export const LandingStep: React.FC<LandingStepProps> = ({ onStart, onSelectMood 
 
             {/* AI는 알아볼까? 하단 손그림 물결 언더라인 SVG */}
             <svg
-              className="w-full h-3 -mt-1 overflow-visible"
+              className="w-full h-2.5 sm:h-3 -mt-0.5 sm:-mt-1 overflow-visible"
               viewBox="0 0 200 12"
               fill="none"
             >
@@ -160,17 +160,17 @@ export const LandingStep: React.FC<LandingStepProps> = ({ onStart, onSelectMood 
         </div>
 
         {/* 3. 중앙 비주얼: 스마트폰 + 귀여운 캐릭터 + 6대 감정 플로팅 캡슐 */}
-        <div className="relative w-full flex-1 flex items-center justify-center my-0.5 sm:my-1 min-h-[310px] sm:min-h-[360px]">
+        <div className="landing-phone-visual relative w-full flex-1 flex items-center justify-center my-0.5 sm:my-1 min-h-[255px] min-[360px]:min-h-[285px] sm:min-h-[360px]">
           
           {/* 스마트폰 및 말풍선 통합 래퍼 (말풍선들이 사각형 경계에 자연스럽게 걸치도록 기준 컨테이너 역할) */}
-          <div className="relative w-[195px] min-[390px]:w-[208px] sm:w-[230px] h-[315px] min-[390px]:h-[335px] sm:h-[375px]">
+          <div className="landing-phone-box relative w-[180px] min-[360px]:w-[198px] min-[400px]:w-[218px] sm:w-[230px] h-[280px] min-[360px]:h-[315px] min-[400px]:h-[340px] sm:h-[375px]">
 
             {/* 중앙 스마트폰 디바이스 프레임 (세로로 긴 슬림 비율) */}
-            <div className="w-full h-full rounded-[2.3rem] sm:rounded-[2.7rem] border-[5px] sm:border-[6px] border-white shadow-xl shadow-purple-900/10 bg-gradient-to-b from-white via-[#FAF5FF]/80 to-[#EFF6FF]/70 backdrop-blur-md flex flex-col items-center pt-3.5 sm:pt-4 overflow-hidden relative z-10">
+            <div className="w-full h-full rounded-[2rem] sm:rounded-[2.7rem] border-[4px] sm:border-[6px] border-white shadow-xl shadow-purple-900/10 bg-gradient-to-b from-white via-[#FAF5FF]/80 to-[#EFF6FF]/70 backdrop-blur-md flex flex-col items-center pt-3 sm:pt-4 overflow-hidden relative z-10">
               
               {/* 폰 상단 미니 로고 & 인사말 */}
               <div className="flex flex-col items-center text-center">
-                <div className="w-8 h-8 opacity-85">
+                <div className="w-7 h-7 sm:w-8 sm:h-8 opacity-85">
                   <svg viewBox="0 0 100 100" className="w-full h-full">
                     <path
                       d="M 28 72 C 16 60 18 36 30 24 C 42 14 58 14 70 24 C 82 36 84 60 72 72"
@@ -196,14 +196,14 @@ export const LandingStep: React.FC<LandingStepProps> = ({ onStart, onSelectMood 
                     />
                   </svg>
                 </div>
-                <p className="text-[10px] sm:text-[11px] text-gray-400 font-medium mt-0.5 leading-tight">
+                <p className="text-[9px] min-[360px]:text-[10px] sm:text-[11px] text-gray-400 font-medium mt-0.5 leading-tight">
                   오늘도<br />수고했어요 :)
                 </p>
               </div>
 
               {/* 폰 하단에서 고개를 빼꼼 내민 귀여운 3D 젤리 캐릭터 */}
               <div className="absolute -bottom-2 inset-x-0 flex justify-center items-end">
-                <div className="relative w-36 sm:w-44 h-28 sm:h-34">
+                <div className="relative w-32 min-[360px]:w-36 sm:w-44 h-26 min-[360px]:h-28 sm:h-34">
                   <svg viewBox="0 0 160 120" className="w-full h-full overflow-visible">
                     <defs>
                       {/* 캐릭터 3D 볼륨감 그라데이션 */}
@@ -251,67 +251,67 @@ export const LandingStep: React.FC<LandingStepProps> = ({ onStart, onSelectMood 
               </div>
 
               {/* 하단 화이트 책상/포그라운드 선반 */}
-              <div className="absolute -bottom-1 inset-x-0 h-6 bg-white/95 border-t border-purple-50 shadow-sm" />
+              <div className="absolute -bottom-1 inset-x-0 h-5 sm:h-6 bg-white/95 border-t border-purple-50 shadow-sm" />
             </div>
 
             {/* 좌측 3대 감정 플로팅 캡슐 (사각형 좌측 경계선에 걸치도록 배치) */}
             {/* 1. 행복한 ☺️ */}
-            <div className="absolute left-0 -translate-x-[48%] top-[12%] sm:top-[13%] z-20 pointer-events-none">
+            <div className="absolute left-0 -translate-x-[46%] top-[12%] sm:top-[13%] z-20 pointer-events-none">
               <div className="anim-capsule-1 pointer-events-auto">
-                <div className="bg-white/95 backdrop-blur-md px-3 py-1.5 rounded-full shadow-md border border-purple-100/90 text-gray-700 text-[11px] sm:text-xs font-bold flex items-center gap-1.5 whitespace-nowrap">
+                <div className="bg-white/95 backdrop-blur-md px-2 min-[360px]:px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-full shadow-md border border-purple-100/90 text-gray-700 text-[10px] min-[360px]:text-[11px] sm:text-xs font-bold flex items-center gap-1 sm:gap-1.5 whitespace-nowrap">
                   <span>행복한</span>
-                  <span className="text-sm">☺️</span>
+                  <span className="text-xs sm:text-sm">☺️</span>
                 </div>
               </div>
             </div>
 
             {/* 2. 지친... 😔 */}
-            <div className="absolute left-0 -translate-x-[52%] top-[42%] sm:top-[43%] z-20 pointer-events-none">
+            <div className="absolute left-0 -translate-x-[50%] top-[42%] sm:top-[43%] z-20 pointer-events-none">
               <div className="anim-capsule-2 pointer-events-auto">
-                <div className="bg-white/95 backdrop-blur-md px-3 py-1.5 rounded-full shadow-md border border-blue-100/90 text-gray-600 text-[11px] sm:text-xs font-bold flex items-center gap-1.5 whitespace-nowrap">
+                <div className="bg-white/95 backdrop-blur-md px-2 min-[360px]:px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-full shadow-md border border-blue-100/90 text-gray-600 text-[10px] min-[360px]:text-[11px] sm:text-xs font-bold flex items-center gap-1 sm:gap-1.5 whitespace-nowrap">
                   <span>지친...</span>
-                  <span className="text-sm">😔</span>
+                  <span className="text-xs sm:text-sm">😔</span>
                 </div>
               </div>
             </div>
 
             {/* 3. 설레는 💖 */}
-            <div className="absolute left-0 -translate-x-[44%] top-[70%] sm:top-[71%] z-20 pointer-events-none">
+            <div className="absolute left-0 -translate-x-[42%] top-[70%] sm:top-[71%] z-20 pointer-events-none">
               <div className="anim-capsule-3 pointer-events-auto">
-                <div className="bg-white/95 backdrop-blur-md px-3 py-1.5 rounded-full shadow-md border border-pink-100/90 text-gray-700 text-[11px] sm:text-xs font-bold flex items-center gap-1.5 whitespace-nowrap">
+                <div className="bg-white/95 backdrop-blur-md px-2 min-[360px]:px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-full shadow-md border border-pink-100/90 text-gray-700 text-[10px] min-[360px]:text-[11px] sm:text-xs font-bold flex items-center gap-1 sm:gap-1.5 whitespace-nowrap">
                   <span>설레는</span>
-                  <span className="text-sm">💖</span>
+                  <span className="text-xs sm:text-sm">💖</span>
                 </div>
               </div>
             </div>
 
             {/* 우측 3대 감정 플로팅 캡슐 (사각형 우측 경계선에 걸치도록 배치) */}
             {/* 4. 복잡한 🌀 */}
-            <div className="absolute right-0 translate-x-[48%] top-[18%] sm:top-[19%] z-20 pointer-events-none">
+            <div className="absolute right-0 translate-x-[46%] top-[18%] sm:top-[19%] z-20 pointer-events-none">
               <div className="anim-capsule-4 pointer-events-auto">
-                <div className="bg-white/95 backdrop-blur-md px-3 py-1.5 rounded-full shadow-md border border-purple-100/90 text-gray-700 text-[11px] sm:text-xs font-bold flex items-center gap-1.5 whitespace-nowrap">
+                <div className="bg-white/95 backdrop-blur-md px-2 min-[360px]:px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-full shadow-md border border-purple-100/90 text-gray-700 text-[10px] min-[360px]:text-[11px] sm:text-xs font-bold flex items-center gap-1 sm:gap-1.5 whitespace-nowrap">
                   <span>복잡한</span>
-                  <span className="text-sm">🌀</span>
+                  <span className="text-xs sm:text-sm">🌀</span>
                 </div>
               </div>
             </div>
 
             {/* 5. 괜찮은 것 같아 🍃 */}
-            <div className="absolute right-0 translate-x-[50%] top-[46%] sm:top-[47%] z-20 pointer-events-none">
+            <div className="absolute right-0 translate-x-[48%] top-[46%] sm:top-[47%] z-20 pointer-events-none">
               <div className="anim-capsule-5 pointer-events-auto">
-                <div className="bg-white/95 backdrop-blur-md px-3 py-1.5 rounded-full shadow-md border border-emerald-100/90 text-gray-700 text-[11px] sm:text-xs font-bold flex items-center gap-1.5 whitespace-nowrap">
+                <div className="bg-white/95 backdrop-blur-md px-2 min-[360px]:px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-full shadow-md border border-emerald-100/90 text-gray-700 text-[10px] min-[360px]:text-[11px] sm:text-xs font-bold flex items-center gap-1 sm:gap-1.5 whitespace-nowrap">
                   <span>괜찮은 것 같아</span>
-                  <span className="text-sm">🍃</span>
+                  <span className="text-xs sm:text-sm">🍃</span>
                 </div>
               </div>
             </div>
 
             {/* 6. 조금 불안해 ☁️ */}
-            <div className="absolute right-0 translate-x-[46%] top-[72%] sm:top-[73%] z-20 pointer-events-none">
+            <div className="absolute right-0 translate-x-[44%] top-[72%] sm:top-[73%] z-20 pointer-events-none">
               <div className="anim-capsule-6 pointer-events-auto">
-                <div className="bg-white/95 backdrop-blur-md px-3 py-1.5 rounded-full shadow-md border border-slate-100/90 text-gray-600 text-[11px] sm:text-xs font-bold flex items-center gap-1.5 whitespace-nowrap">
+                <div className="bg-white/95 backdrop-blur-md px-2 min-[360px]:px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-full shadow-md border border-slate-100/90 text-gray-600 text-[10px] min-[360px]:text-[11px] sm:text-xs font-bold flex items-center gap-1 sm:gap-1.5 whitespace-nowrap">
                   <span>조금 불안해</span>
-                  <span className="text-sm">☁️</span>
+                  <span className="text-xs sm:text-sm">☁️</span>
                 </div>
               </div>
             </div>
@@ -321,10 +321,10 @@ export const LandingStep: React.FC<LandingStepProps> = ({ onStart, onSelectMood 
         </div>
 
         {/* 4. 하단 액션 & 시작 버튼 영역 */}
-        <div className="w-full flex flex-col items-center pt-1 sm:pt-2 relative z-20">
+        <div className="w-full flex flex-col items-center pt-1 sm:pt-2 pb-1 sm:pb-0 relative z-20">
           
           {/* 지금, 여기서 잠깐 나를 돌아보는 시간 (버튼 위 1열 배치) */}
-          <div className="text-center mb-2 sm:mb-2.5 text-xs sm:text-[13px] font-semibold text-[#64748B] tracking-tight flex items-center justify-center gap-1 select-none">
+          <div className="text-center mb-1.5 sm:mb-2.5 text-[11px] min-[360px]:text-xs sm:text-[13px] font-semibold text-[#64748B] tracking-tight flex items-center justify-center gap-1 select-none">
             <span>지금 여기서 잠깐 나를 돌아보는 시간</span>
             <span className="text-[#A855F7]">♥</span>
           </div>
@@ -334,7 +334,7 @@ export const LandingStep: React.FC<LandingStepProps> = ({ onStart, onSelectMood 
             type="button"
             onClick={handleStart}
             aria-label="지금, 내 마음 확인하기 시작"
-            className={`w-full max-w-[360px] py-3.5 sm:py-4 px-6 rounded-full bg-gradient-to-r from-[#5B7BF7] via-[#8F65F6] to-[#EE59AB] text-white font-extrabold text-base sm:text-lg shadow-lg shadow-purple-500/25 hover:shadow-xl hover:shadow-purple-500/35 active:scale-[0.98] transition-all cursor-pointer flex items-center justify-center gap-2 group ${
+            className={`landing-btn w-full max-w-[360px] py-3 min-[360px]:py-3.5 sm:py-4 px-4 sm:px-6 rounded-full bg-gradient-to-r from-[#5B7BF7] via-[#8F65F6] to-[#EE59AB] text-white font-extrabold text-sm min-[360px]:text-base sm:text-lg shadow-lg shadow-purple-500/25 hover:shadow-xl hover:shadow-purple-500/35 active:scale-[0.98] transition-all cursor-pointer flex items-center justify-center gap-2 group ${
               isPressed ? 'scale-95 ring-4 ring-[#8B5CF6]/50' : ''
             }`}
           >
@@ -343,7 +343,7 @@ export const LandingStep: React.FC<LandingStepProps> = ({ onStart, onSelectMood 
           </button>
 
           {/* 개발 중 안내 문구 및 방사형 스파크 */}
-          <div className="text-center mt-2.5 text-[11px] sm:text-xs text-gray-600 leading-snug">
+          <div className="text-center mt-2 sm:mt-2.5 text-[10px] min-[360px]:text-[11px] sm:text-xs text-gray-600 leading-snug">
             <div className="flex items-center justify-center gap-1 font-medium">
               <span className="text-[#818CF8] text-xs">✨</span>
               <span>현재 개발 중인 서비스입니다.</span>
@@ -354,10 +354,11 @@ export const LandingStep: React.FC<LandingStepProps> = ({ onStart, onSelectMood 
           </div>
 
           {/* 스마트폰 홈 바 인디케이터 라인 */}
-          <div className="w-28 h-1 bg-gray-300/80 rounded-full mx-auto mt-2 sm:mt-2.5 opacity-80" />
+          <div className="w-24 sm:w-28 h-1 bg-gray-300/80 rounded-full mx-auto mt-1.5 sm:mt-2.5 opacity-80" />
         </div>
 
       </div>
     </section>
   );
 };
+

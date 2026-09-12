@@ -3,14 +3,14 @@ import React from 'react';
 export const InstagramSection: React.FC = () => {
   return (
     <section id="instagram" className="py-14 md:py-24 bg-white relative border-t border-gray-100">
-      <div className="max-w-5xl mx-auto px-4 sm:px-6">
+      <div className="max-w-5xl mx-auto px-3.5 min-[380px]:px-4 sm:px-6">
         
         {/* 헤더 */}
         <div className="text-center mb-8 sm:mb-12">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-pink-50 text-pink-600 font-semibold text-xs sm:text-sm mb-3 border border-pink-100">
             <span>📷</span> MomentLog Official Instagram
           </div>
-          <h3 className="text-2xl sm:text-3xl font-extrabold text-gray-900 tracking-tight break-keep">
+          <h3 className="text-xl sm:text-3xl font-extrabold text-gray-900 tracking-tight break-keep">
             모먼트로그와 함께하는 일상 케어
           </h3>
           <p className="text-gray-500 text-xs sm:text-base mt-2 break-keep">
@@ -19,15 +19,15 @@ export const InstagramSection: React.FC = () => {
         </div>
 
         {/* 한눈에 함께 보기: 모바일 및 데스크톱 2분할 나란히 배치 */}
-        <div className="grid grid-cols-2 md:grid-cols-2 gap-3 sm:gap-8 lg:gap-12 items-stretch max-w-4xl mx-auto">
+        <div className="grid grid-cols-2 gap-2.5 min-[380px]:gap-4 sm:gap-8 lg:gap-12 items-stretch max-w-4xl mx-auto">
           
           {/* 좌측: QR 코드 카드 (스마트폰 카메라 스캔 전용, 클릭 이동 없음) */}
-          <div className="flex flex-col items-center justify-between bg-white p-3.5 sm:p-7 rounded-[1.8rem] sm:rounded-[2.2rem] shadow-xl border border-gray-100 relative group">
+          <div className="flex flex-col items-center justify-between bg-white p-2.5 min-[380px]:p-3.5 sm:p-7 rounded-[1.5rem] sm:rounded-[2.2rem] shadow-xl border border-gray-100 relative group">
             <div className="text-center mb-2 sm:mb-4">
-              <span className="text-[10px] sm:text-xs font-bold text-purple-600 bg-purple-50 px-2 sm:px-3 py-0.5 sm:py-1 rounded-full border border-purple-100 block mb-1">
+              <span className="text-[9px] min-[380px]:text-[10px] sm:text-xs font-bold text-purple-600 bg-purple-50 px-2 sm:px-3 py-0.5 sm:py-1 rounded-full border border-purple-100 block mb-1">
                 QR 코드
               </span>
-              <h4 className="text-xs sm:text-lg font-bold text-gray-900 break-keep leading-tight">
+              <h4 className="text-[11px] min-[380px]:text-xs sm:text-lg font-bold text-gray-900 break-keep leading-tight">
                 카메라로 스캔
               </h4>
             </div>
@@ -42,7 +42,7 @@ export const InstagramSection: React.FC = () => {
             </div>
 
             <div className="mt-2.5 sm:mt-4 text-center w-full">
-              <span className="text-[10px] sm:text-xs font-bold text-purple-700 bg-purple-50 px-2 sm:px-3 py-0.5 sm:py-1 rounded-full border border-purple-100 inline-block mb-1">
+              <span className="text-[9px] min-[380px]:text-[10px] sm:text-xs font-bold text-purple-700 bg-purple-50 px-2 sm:px-3 py-0.5 sm:py-1 rounded-full border border-purple-100 inline-block mb-1">
                 @PEAR.PEER.ING
               </span>
               <p className="text-[9px] sm:text-xs font-medium text-gray-400 break-keep">
@@ -52,7 +52,7 @@ export const InstagramSection: React.FC = () => {
           </div>
 
           {/* 우측: 인스타그램 피드 목업 카드 */}
-          <div className="flex flex-col items-center justify-between bg-white p-3 sm:p-4 rounded-[1.8rem] sm:rounded-[2.5rem] shadow-2xl border border-gray-100 relative group">
+          <div className="flex flex-col items-center justify-between bg-white p-2.5 min-[380px]:p-3 sm:p-4 rounded-[1.5rem] sm:rounded-[2.5rem] shadow-2xl border border-gray-100 relative group">
             
             {/* 상단 프로필 헤더 */}
             <div className="flex items-center justify-between w-full px-1 sm:px-2 py-1 mb-1.5 border-b border-gray-100">

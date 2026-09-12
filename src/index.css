@@ -2,11 +2,23 @@
 @tailwind components;
 @tailwind utilities;
 
-/* 전체 UI 15% 확대 (Root font-size 115% 설정으로 모든 rem 기반 요소 일괄 15% 스케일업) */
+/* 반응형 Root Font-size: 화면 크기별 최적 비례 확대 */
 html {
-  font-size: 115%;
+  font-size: 100%;
   overflow-x: hidden;
   scroll-behavior: smooth;
+}
+
+@media (min-width: 380px) {
+  html {
+    font-size: 108%;
+  }
+}
+
+@media (min-width: 640px) {
+  html {
+    font-size: 115%;
+  }
 }
 
 /* 그라데이션 공통 클래스 */
@@ -126,3 +138,51 @@ body {
   overflow-x: hidden;
   -webkit-tap-highlight-color: transparent;
 }
+
+/* 화면 높이가 작은 휴대폰 (세로 높이 740px 이하) 하단 잘림 방지 최적화 */
+@media (max-height: 740px) {
+  .landing-card {
+    min-height: auto !important;
+    height: auto !important;
+    padding-top: 0.85rem !important;
+    padding-bottom: 0.85rem !important;
+  }
+  .landing-phone-box {
+    height: 255px !important;
+    width: 172px !important;
+  }
+  .landing-phone-visual {
+    min-height: 255px !important;
+  }
+  .landing-brand-logo {
+    width: 2.35rem !important;
+    height: 2.35rem !important;
+  }
+  .landing-brand-title {
+    font-size: 1.25rem !important;
+    margin-top: 0.15rem !important;
+  }
+  .landing-headline-sub {
+    font-size: 1.05rem !important;
+  }
+  .landing-headline-main {
+    font-size: 1.7rem !important;
+  }
+  .landing-btn {
+    padding-top: 0.75rem !important;
+    padding-bottom: 0.75rem !important;
+    font-size: 0.95rem !important;
+  }
+}
+
+/* 화면 높이가 매우 작은 기기 (세로 높이 640px 이하, 가로 모드 등) 최적화 */
+@media (max-height: 640px) {
+  .landing-phone-box {
+    height: 220px !important;
+    width: 152px !important;
+  }
+  .landing-phone-visual {
+    min-height: 220px !important;
+  }
+}
+

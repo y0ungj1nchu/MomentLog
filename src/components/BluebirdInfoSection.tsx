@@ -7,9 +7,8 @@ export const BluebirdInfoSection: React.FC = () => {
       <div className="absolute top-1/2 left-0 w-72 h-72 bg-blue-100/30 rounded-full blur-3xl -translate-y-1/2 -translate-x-1/3 pointer-events-none" />
       <div className="absolute top-1/3 right-0 w-80 h-80 bg-purple-100/30 rounded-full blur-3xl translate-x-1/4 pointer-events-none" />
 
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 relative z-10">
+      <div className="max-w-4xl mx-auto px-3.5 min-[380px]:px-4 sm:px-6 relative z-10">
         
-        {/* 섹션 헤더 */}
         {/* 섹션 헤더 */}
         <div className="text-center mb-10 sm:mb-14">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blue-50 text-[#6A85F1] font-bold text-xs sm:text-sm mb-3 border border-blue-100/80 shadow-xs">

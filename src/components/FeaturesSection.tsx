@@ -3,13 +3,13 @@ import React from 'react';
 export const FeaturesSection: React.FC = () => {
   return (
     <section className="py-16 md:py-24 bg-[#F8F9FE] relative">
-      <div className="max-w-5xl mx-auto px-4 sm:px-6">
-        <div className="bg-white rounded-[2.5rem] md:rounded-[3rem] p-8 sm:p-12 md:p-14 shadow-xl border border-blue-50">
-          <div className="grid md:grid-cols-2 gap-10 lg:gap-14 items-center">
+      <div className="max-w-5xl mx-auto px-3.5 min-[380px]:px-4 sm:px-6">
+        <div className="bg-white rounded-[2rem] sm:rounded-[2.5rem] md:rounded-[3rem] p-5 min-[380px]:p-7 sm:p-12 md:p-14 shadow-xl border border-blue-50">
+          <div className="grid md:grid-cols-2 gap-8 sm:gap-10 lg:gap-14 items-center">
             
             {/* 좌측: 모먼트로그 공식 앱 아이콘 그래픽 */}
             <div className="flex justify-center items-center">
-              <div className="relative w-64 h-64 sm:w-80 sm:h-80 rounded-[2.5rem] p-3 sm:p-4 bg-gradient-to-br from-blue-50 via-white to-purple-50 shadow-2xl border-4 border-white flex items-center justify-center group overflow-hidden">
+              <div className="relative w-52 h-52 min-[380px]:w-64 min-[380px]:h-64 sm:w-80 sm:h-80 rounded-[2rem] sm:rounded-[2.5rem] p-3 sm:p-4 bg-gradient-to-br from-blue-50 via-white to-purple-50 shadow-2xl border-4 border-white flex items-center justify-center group overflow-hidden">
                 {/* 은은한 배경 광원 */}
                 <div className="absolute inset-0 bg-gradient-to-tr from-blue-100/40 via-purple-100/30 to-pink-100/30 rounded-[2.5rem] opacity-60 group-hover:opacity-100 transition-opacity pointer-events-none" />
                 
