@@ -206,7 +206,7 @@ export const App: React.FC = () => {
       )}
       {step === 'main' && (
         <main className="fade-enter">
-          <Navbar />
+          <Navbar onReset={handleReset} />
           <ResultSection mbti={userSelections.mbti} />
           <BluebirdInfoSection />
           <InstagramSection />
