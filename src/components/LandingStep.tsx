@@ -32,11 +32,6 @@ export const LandingStep: React.FC<LandingStepProps> = ({ onStart, onSelectMood 
       {/* 스마트폰 목업 형태의 메인 랜딩 포스터 카드 (100% 코드 기반 렌더링) */}
       <div className="relative h-[95dvh] max-h-[900px] w-full max-w-[420px] rounded-[2.5rem] sm:rounded-[3rem] p-4 sm:p-6 shadow-2xl border-[3px] sm:border-4 border-white bg-gradient-to-b from-[#FAF8FF] via-[#FDF9FF] to-[#FFF5FA] flex flex-col justify-between overflow-hidden select-none my-auto">
         
-        {/* 우측 상단 감성 캘리그라피 */}
-        <div className="absolute top-4 right-4 sm:top-5 sm:right-6 rotate-[9deg] text-[#94A3B8] text-[11px] sm:text-xs font-semibold tracking-tight pointer-events-none">
-          오늘 어떤 하루였나요?
-        </div>
-
         {/* 좌측 하단 장식용 리본 루프 라인 SVG */}
         <svg
           className="absolute -bottom-4 -left-6 w-28 h-28 pointer-events-none opacity-50 overflow-visible"
@@ -310,18 +305,17 @@ export const LandingStep: React.FC<LandingStepProps> = ({ onStart, onSelectMood 
             </div>
           </div>
 
-          {/* 우측 하단 캘리그라피 메모 */}
-          <div className="absolute right-1 bottom-0 text-right text-[10px] sm:text-[11px] font-semibold text-[#64748B] leading-tight rotate-[-4deg] select-none pointer-events-none">
-            <p>지금,</p>
-            <p>여기서, 잠깐만</p>
-            <p>나를 들여다보는 시간 <span className="text-[#A855F7]">♥</span></p>
-          </div>
-
         </div>
 
         {/* 4. 하단 액션 & 시작 버튼 영역 */}
-        <div className="w-full flex flex-col items-center pt-2 relative z-20">
+        <div className="w-full flex flex-col items-center pt-1 sm:pt-2 relative z-20">
           
+          {/* 지금, 여기서 잠깐 나를 돌아보는 시간 (버튼 위 1열 배치) */}
+          <div className="text-center mb-2 sm:mb-2.5 text-xs sm:text-[13px] font-semibold text-[#64748B] tracking-tight flex items-center justify-center gap-1 select-none">
+            <span>지금 여기서 잠깐 나를 돌아보는 시간</span>
+            <span className="text-[#A855F7]">♥</span>
+          </div>
+
           {/* 대형 시작 버튼 '지금, 내 마음 확인하기 →' */}
           <button
             type="button"
