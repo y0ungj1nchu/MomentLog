@@ -160,149 +160,162 @@ export const LandingStep: React.FC<LandingStepProps> = ({ onStart, onSelectMood 
         </div>
 
         {/* 3. 중앙 비주얼: 스마트폰 + 귀여운 캐릭터 + 6대 감정 플로팅 캡슐 */}
-        <div className="relative w-full flex-1 flex items-center justify-center my-1 min-h-[260px] sm:min-h-[300px]">
+        <div className="relative w-full flex-1 flex items-center justify-center my-0.5 sm:my-1 min-h-[310px] sm:min-h-[360px]">
           
-          {/* 중앙 스마트폰 디바이스 프레임 */}
-          <div className="relative w-[190px] sm:w-[220px] h-[260px] sm:h-[295px] rounded-[2.3rem] sm:rounded-[2.7rem] border-[5px] sm:border-[6px] border-white shadow-xl shadow-purple-900/10 bg-gradient-to-b from-white via-[#FAF5FF]/80 to-[#EFF6FF]/70 backdrop-blur-md flex flex-col items-center pt-4 overflow-hidden">
-            
-            {/* 폰 상단 미니 로고 & 인사말 */}
-            <div className="flex flex-col items-center text-center">
-              <div className="w-8 h-8 opacity-85">
-                <svg viewBox="0 0 100 100" className="w-full h-full">
-                  <path
-                    d="M 28 72 C 16 60 18 36 30 24 C 42 14 58 14 70 24 C 82 36 84 60 72 72"
-                    stroke="#936DF7"
-                    strokeWidth="5"
-                    strokeLinecap="round"
-                    fill="none"
-                  />
-                  <path
-                    d="M 25 76 C 35 68 44 70 50 75 C 56 70 65 68 75 76"
-                    stroke="#936DF7"
-                    strokeWidth="5"
-                    strokeLinecap="round"
-                    fill="none"
-                  />
-                  <path
-                    d="M 48 34 L 48 48 L 59 44"
-                    stroke="#936DF7"
-                    strokeWidth="5"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    fill="none"
-                  />
-                </svg>
+          {/* 스마트폰 및 말풍선 통합 래퍼 (말풍선들이 사각형 경계에 자연스럽게 걸치도록 기준 컨테이너 역할) */}
+          <div className="relative w-[195px] min-[390px]:w-[208px] sm:w-[230px] h-[315px] min-[390px]:h-[335px] sm:h-[375px]">
+
+            {/* 중앙 스마트폰 디바이스 프레임 (세로로 긴 슬림 비율) */}
+            <div className="w-full h-full rounded-[2.3rem] sm:rounded-[2.7rem] border-[5px] sm:border-[6px] border-white shadow-xl shadow-purple-900/10 bg-gradient-to-b from-white via-[#FAF5FF]/80 to-[#EFF6FF]/70 backdrop-blur-md flex flex-col items-center pt-3.5 sm:pt-4 overflow-hidden relative z-10">
+              
+              {/* 폰 상단 미니 로고 & 인사말 */}
+              <div className="flex flex-col items-center text-center">
+                <div className="w-8 h-8 opacity-85">
+                  <svg viewBox="0 0 100 100" className="w-full h-full">
+                    <path
+                      d="M 28 72 C 16 60 18 36 30 24 C 42 14 58 14 70 24 C 82 36 84 60 72 72"
+                      stroke="#936DF7"
+                      strokeWidth="5"
+                      strokeLinecap="round"
+                      fill="none"
+                    />
+                    <path
+                      d="M 25 76 C 35 68 44 70 50 75 C 56 70 65 68 75 76"
+                      stroke="#936DF7"
+                      strokeWidth="5"
+                      strokeLinecap="round"
+                      fill="none"
+                    />
+                    <path
+                      d="M 48 34 L 48 48 L 59 44"
+                      stroke="#936DF7"
+                      strokeWidth="5"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      fill="none"
+                    />
+                  </svg>
+                </div>
+                <p className="text-[10px] sm:text-[11px] text-gray-400 font-medium mt-0.5 leading-tight">
+                  오늘도<br />수고했어요 :)
+                </p>
               </div>
-              <p className="text-[10px] sm:text-[11px] text-gray-400 font-medium mt-0.5 leading-tight">
-                오늘도<br />수고했어요 :)
-              </p>
+
+              {/* 폰 하단에서 고개를 빼꼼 내민 귀여운 3D 젤리 캐릭터 */}
+              <div className="absolute -bottom-2 inset-x-0 flex justify-center items-end">
+                <div className="relative w-36 sm:w-44 h-28 sm:h-34">
+                  <svg viewBox="0 0 160 120" className="w-full h-full overflow-visible">
+                    <defs>
+                      {/* 캐릭터 3D 볼륨감 그라데이션 */}
+                      <linearGradient id="blobBodyGrad" x1="20%" y1="0%" x2="80%" y2="100%">
+                        <stop offset="0%" stopColor="#FFFFFF" />
+                        <stop offset="35%" stopColor="#F5EDFF" />
+                        <stop offset="70%" stopColor="#E9D8FD" />
+                        <stop offset="100%" stopColor="#D6BCFA" />
+                      </linearGradient>
+                      <radialGradient id="blushGlow" cx="50%" cy="50%" r="50%">
+                        <stop offset="0%" stopColor="#F472B6" stopOpacity="0.55" />
+                        <stop offset="100%" stopColor="#F472B6" stopOpacity="0" />
+                      </radialGradient>
+                    </defs>
+
+                    {/* 머리 위 즐거운 반짝임 방사선 3개 */}
+                    <line x1="62" y1="22" x2="55" y2="12" stroke="#60A5FA" strokeWidth="3" strokeLinecap="round" />
+                    <line x1="80" y1="17" x2="80" y2="6" stroke="#818CF8" strokeWidth="3" strokeLinecap="round" />
+                    <line x1="98" y1="22" x2="105" y2="12" stroke="#A78BFA" strokeWidth="3" strokeLinecap="round" />
+
+                    {/* 통통하고 둥근 젤리 몸통 */}
+                    <path
+                      d="M 25 105 C 25 38, 135 38, 135 105 Z"
+                      fill="url(#blobBodyGrad)"
+                      filter="drop-shadow(0 4px 10px rgba(168, 85, 247, 0.15))"
+                    />
+
+                    {/* 반짝이는 두 눈 (세로 타원형 캡슐 눈) */}
+                    <rect x="52" y="60" width="8.5" height="18" rx="4.25" fill="#1E293B" />
+                    <rect x="99.5" y="60" width="8.5" height="18" rx="4.25" fill="#1E293B" />
+
+                    {/* 눈동자 상단 하이라이트 빛망울 */}
+                    <circle cx="55" cy="64" r="2.2" fill="#FFFFFF" />
+                    <circle cx="102.5" cy="64" r="2.2" fill="#FFFFFF" />
+
+                    {/* 발그레한 볼터치 */}
+                    <circle cx="43" cy="74" r="8" fill="url(#blushGlow)" />
+                    <circle cx="117" cy="74" r="8" fill="url(#blushGlow)" />
+
+                    {/* 책상 위에 얹은 양 손(앞발) */}
+                    <ellipse cx="44" cy="98" rx="13" ry="8" fill="#FFFFFF" stroke="#EDE9FE" strokeWidth="2.5" />
+                    <ellipse cx="116" cy="98" rx="13" ry="8" fill="#FFFFFF" stroke="#EDE9FE" strokeWidth="2.5" />
+                  </svg>
+                </div>
+              </div>
+
+              {/* 하단 화이트 책상/포그라운드 선반 */}
+              <div className="absolute -bottom-1 inset-x-0 h-6 bg-white/95 border-t border-purple-50 shadow-sm" />
             </div>
 
-            {/* 폰 하단에서 고개를 빼꼼 내민 귀여운 3D 젤리 캐릭터 */}
-            <div className="absolute -bottom-2 inset-x-0 flex justify-center items-end">
-              <div className="relative w-36 sm:w-44 h-28 sm:h-34">
-                <svg viewBox="0 0 160 120" className="w-full h-full overflow-visible">
-                  <defs>
-                    {/* 캐릭터 3D 볼륨감 그라데이션 */}
-                    <linearGradient id="blobBodyGrad" x1="20%" y1="0%" x2="80%" y2="100%">
-                      <stop offset="0%" stopColor="#FFFFFF" />
-                      <stop offset="35%" stopColor="#F5EDFF" />
-                      <stop offset="70%" stopColor="#E9D8FD" />
-                      <stop offset="100%" stopColor="#D6BCFA" />
-                    </linearGradient>
-                    <radialGradient id="blushGlow" cx="50%" cy="50%" r="50%">
-                      <stop offset="0%" stopColor="#F472B6" stopOpacity="0.55" />
-                      <stop offset="100%" stopColor="#F472B6" stopOpacity="0" />
-                    </radialGradient>
-                  </defs>
-
-                  {/* 머리 위 즐거운 반짝임 방사선 3개 */}
-                  <line x1="62" y1="22" x2="55" y2="12" stroke="#60A5FA" strokeWidth="3" strokeLinecap="round" />
-                  <line x1="80" y1="17" x2="80" y2="6" stroke="#818CF8" strokeWidth="3" strokeLinecap="round" />
-                  <line x1="98" y1="22" x2="105" y2="12" stroke="#A78BFA" strokeWidth="3" strokeLinecap="round" />
-
-                  {/* 통통하고 둥근 젤리 몸통 */}
-                  <path
-                    d="M 25 105 C 25 38, 135 38, 135 105 Z"
-                    fill="url(#blobBodyGrad)"
-                    filter="drop-shadow(0 4px 10px rgba(168, 85, 247, 0.15))"
-                  />
-
-                  {/* 반짝이는 두 눈 (세로 타원형 캡슐 눈) */}
-                  <rect x="52" y="60" width="8.5" height="18" rx="4.25" fill="#1E293B" />
-                  <rect x="99.5" y="60" width="8.5" height="18" rx="4.25" fill="#1E293B" />
-
-                  {/* 눈동자 상단 하이라이트 빛망울 */}
-                  <circle cx="55" cy="64" r="2.2" fill="#FFFFFF" />
-                  <circle cx="102.5" cy="64" r="2.2" fill="#FFFFFF" />
-
-                  {/* 발그레한 볼터치 */}
-                  <circle cx="43" cy="74" r="8" fill="url(#blushGlow)" />
-                  <circle cx="117" cy="74" r="8" fill="url(#blushGlow)" />
-
-                  {/* 책상 위에 얹은 양 손(앞발) */}
-                  <ellipse cx="44" cy="98" rx="13" ry="8" fill="#FFFFFF" stroke="#EDE9FE" strokeWidth="2.5" />
-                  <ellipse cx="116" cy="98" rx="13" ry="8" fill="#FFFFFF" stroke="#EDE9FE" strokeWidth="2.5" />
-                </svg>
-              </div>
-            </div>
-
-            {/* 하단 화이트 책상/포그라운드 선반 */}
-            <div className="absolute -bottom-1 inset-x-0 h-6 bg-white/95 border-t border-purple-50 shadow-sm" />
-          </div>
-
-          {/* 좌측 3대 감정 플로팅 캡슐 */}
-          <div className="absolute left-0 inset-y-0 flex flex-col justify-between py-2 pointer-events-none">
+            {/* 좌측 3대 감정 플로팅 캡슐 (사각형 좌측 경계선에 걸치도록 배치) */}
             {/* 1. 행복한 ☺️ */}
-            <div className="anim-capsule-1">
-              <div className="bg-white/95 backdrop-blur-md px-3 py-1.5 rounded-full shadow-md border border-purple-100/90 text-gray-700 text-[11px] sm:text-xs font-bold flex items-center gap-1.5">
-                <span>행복한</span>
-                <span className="text-sm">☺️</span>
+            <div className="absolute left-0 -translate-x-[48%] top-[12%] sm:top-[13%] z-20 pointer-events-none">
+              <div className="anim-capsule-1 pointer-events-auto">
+                <div className="bg-white/95 backdrop-blur-md px-3 py-1.5 rounded-full shadow-md border border-purple-100/90 text-gray-700 text-[11px] sm:text-xs font-bold flex items-center gap-1.5 whitespace-nowrap">
+                  <span>행복한</span>
+                  <span className="text-sm">☺️</span>
+                </div>
               </div>
             </div>
 
             {/* 2. 지친... 😔 */}
-            <div className="anim-capsule-2 -translate-x-1">
-              <div className="bg-white/95 backdrop-blur-md px-3 py-1.5 rounded-full shadow-md border border-blue-100/90 text-gray-600 text-[11px] sm:text-xs font-bold flex items-center gap-1.5">
-                <span>지친...</span>
-                <span className="text-sm">😔</span>
+            <div className="absolute left-0 -translate-x-[52%] top-[42%] sm:top-[43%] z-20 pointer-events-none">
+              <div className="anim-capsule-2 pointer-events-auto">
+                <div className="bg-white/95 backdrop-blur-md px-3 py-1.5 rounded-full shadow-md border border-blue-100/90 text-gray-600 text-[11px] sm:text-xs font-bold flex items-center gap-1.5 whitespace-nowrap">
+                  <span>지친...</span>
+                  <span className="text-sm">😔</span>
+                </div>
               </div>
             </div>
 
             {/* 3. 설레는 💖 */}
-            <div className="anim-capsule-3 translate-x-1">
-              <div className="bg-white/95 backdrop-blur-md px-3 py-1.5 rounded-full shadow-md border border-pink-100/90 text-gray-700 text-[11px] sm:text-xs font-bold flex items-center gap-1.5">
-                <span>설레는</span>
-                <span className="text-sm">💖</span>
+            <div className="absolute left-0 -translate-x-[44%] top-[70%] sm:top-[71%] z-20 pointer-events-none">
+              <div className="anim-capsule-3 pointer-events-auto">
+                <div className="bg-white/95 backdrop-blur-md px-3 py-1.5 rounded-full shadow-md border border-pink-100/90 text-gray-700 text-[11px] sm:text-xs font-bold flex items-center gap-1.5 whitespace-nowrap">
+                  <span>설레는</span>
+                  <span className="text-sm">💖</span>
+                </div>
               </div>
             </div>
-          </div>
 
-          {/* 우측 3대 감정 플로팅 캡슐 */}
-          <div className="absolute right-0 inset-y-0 flex flex-col justify-between py-2 pointer-events-none">
+            {/* 우측 3대 감정 플로팅 캡슐 (사각형 우측 경계선에 걸치도록 배치) */}
             {/* 4. 복잡한 🌀 */}
-            <div className="anim-capsule-4">
-              <div className="bg-white/95 backdrop-blur-md px-3 py-1.5 rounded-full shadow-md border border-purple-100/90 text-gray-700 text-[11px] sm:text-xs font-bold flex items-center gap-1.5">
-                <span>복잡한</span>
-                <span className="text-sm">🌀</span>
+            <div className="absolute right-0 translate-x-[48%] top-[18%] sm:top-[19%] z-20 pointer-events-none">
+              <div className="anim-capsule-4 pointer-events-auto">
+                <div className="bg-white/95 backdrop-blur-md px-3 py-1.5 rounded-full shadow-md border border-purple-100/90 text-gray-700 text-[11px] sm:text-xs font-bold flex items-center gap-1.5 whitespace-nowrap">
+                  <span>복잡한</span>
+                  <span className="text-sm">🌀</span>
+                </div>
               </div>
             </div>
 
             {/* 5. 괜찮은 것 같아 🍃 */}
-            <div className="anim-capsule-5 translate-x-1">
-              <div className="bg-white/95 backdrop-blur-md px-3 py-1.5 rounded-full shadow-md border border-emerald-100/90 text-gray-700 text-[11px] sm:text-xs font-bold flex items-center gap-1.5">
-                <span>괜찮은 것 같아</span>
-                <span className="text-sm">🍃</span>
+            <div className="absolute right-0 translate-x-[50%] top-[46%] sm:top-[47%] z-20 pointer-events-none">
+              <div className="anim-capsule-5 pointer-events-auto">
+                <div className="bg-white/95 backdrop-blur-md px-3 py-1.5 rounded-full shadow-md border border-emerald-100/90 text-gray-700 text-[11px] sm:text-xs font-bold flex items-center gap-1.5 whitespace-nowrap">
+                  <span>괜찮은 것 같아</span>
+                  <span className="text-sm">🍃</span>
+                </div>
               </div>
             </div>
 
             {/* 6. 조금 불안해 ☁️ */}
-            <div className="anim-capsule-6 -translate-x-1">
-              <div className="bg-white/95 backdrop-blur-md px-3 py-1.5 rounded-full shadow-md border border-slate-100/90 text-gray-600 text-[11px] sm:text-xs font-bold flex items-center gap-1.5">
-                <span>조금 불안해</span>
-                <span className="text-sm">☁️</span>
+            <div className="absolute right-0 translate-x-[46%] top-[72%] sm:top-[73%] z-20 pointer-events-none">
+              <div className="anim-capsule-6 pointer-events-auto">
+                <div className="bg-white/95 backdrop-blur-md px-3 py-1.5 rounded-full shadow-md border border-slate-100/90 text-gray-600 text-[11px] sm:text-xs font-bold flex items-center gap-1.5 whitespace-nowrap">
+                  <span>조금 불안해</span>
+                  <span className="text-sm">☁️</span>
+                </div>
               </div>
             </div>
+
           </div>
 
         </div>
