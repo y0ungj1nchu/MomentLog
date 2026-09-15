@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Step, MoodOption, QuestionData, QuestionOption, UserSelections } from './types';
 import { LandingStep } from './components/LandingStep';
 import { QuestionStep } from './components/QuestionStep';
@@ -163,8 +163,26 @@ export const App: React.FC = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
+  useEffect(() => {
+    if (step === 'landing') {
+      document.body.style.overflow = 'hidden';
+      document.documentElement.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+      document.documentElement.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+      document.documentElement.style.overflow = '';
+    };
+  }, [step]);
+
   return (
-    <div className="min-h-screen bg-[#F8F9FE] text-gray-800 font-sans selection:bg-[#C198F0] selection:text-white">
+    <div
+      className={`min-h-screen bg-[#F8F9FE] text-gray-800 font-sans selection:bg-[#C198F0] selection:text-white ${
+        step === 'landing' ? 'h-[100dvh] max-h-[100dvh] overflow-hidden' : ''
+      }`}
+    >
       {step === 'landing' && (
         <LandingStep onStart={handleStart} onSelectMood={handleSelectMood} />
       )}

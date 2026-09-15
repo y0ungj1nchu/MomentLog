@@ -23,14 +23,14 @@ export const LandingStep: React.FC<LandingStepProps> = ({ onStart, onSelectMood 
   };
 
   return (
-    <section className="min-h-[100dvh] w-full flex flex-col justify-start sm:justify-center items-center bg-[#F4F5FB] px-2 py-2 sm:px-4 sm:py-6 fade-enter overflow-y-auto overflow-x-hidden relative">
+    <section className="h-[100dvh] max-h-[100dvh] w-full flex flex-col justify-center items-center bg-[#F4F5FB] p-2 sm:p-4 fade-enter overflow-hidden relative select-none">
       {/* 배경 장식 은은한 파스텔 광원 블러 */}
       <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[580px] h-[580px] bg-gradient-to-br from-blue-200/35 via-purple-200/30 to-pink-200/25 rounded-full blur-3xl pointer-events-none" />
       <div className="absolute bottom-10 left-10 w-72 h-72 bg-blue-100/30 rounded-full blur-3xl pointer-events-none" />
       <div className="absolute top-10 right-10 w-64 h-64 bg-purple-100/30 rounded-full blur-3xl pointer-events-none" />
 
-      {/* 스마트폰 목업 형태의 메인 랜딩 포스터 카드 (반응형 비율 최적화) */}
-      <div className="landing-card relative min-h-[90dvh] sm:min-h-0 sm:h-[95dvh] max-h-none sm:max-h-[920px] w-full max-w-[425px] rounded-[2rem] sm:rounded-[3rem] p-3.5 min-[380px]:p-5 sm:p-6 shadow-2xl border-[3px] sm:border-4 border-white bg-gradient-to-b from-[#FAF8FF] via-[#FDF9FF] to-[#FFF5FA] flex flex-col justify-between overflow-hidden select-none my-auto">
+      {/* 스마트폰 목업 형태의 메인 랜딩 포스터 카드 (화면 꽉 채움 & 무스크롤) */}
+      <div className="landing-card relative h-[96dvh] max-h-[880px] w-full max-w-[420px] rounded-[2rem] sm:rounded-[2.8rem] p-3 min-[380px]:p-4 sm:p-5 shadow-2xl border-[3px] sm:border-4 border-white bg-gradient-to-b from-[#FAF8FF] via-[#FDF9FF] to-[#FFF5FA] flex flex-col justify-between overflow-hidden select-none">
         
         {/* 좌측 하단 장식용 리본 루프 라인 SVG */}
         <svg
@@ -160,10 +160,10 @@ export const LandingStep: React.FC<LandingStepProps> = ({ onStart, onSelectMood 
         </div>
 
         {/* 3. 중앙 비주얼: 스마트폰 + 귀여운 캐릭터 + 6대 감정 플로팅 캡슐 */}
-        <div className="landing-phone-visual relative w-full flex-1 flex items-center justify-center my-0.5 sm:my-1 min-h-[255px] min-[360px]:min-h-[285px] sm:min-h-[360px]">
+        <div className="landing-phone-visual relative w-full flex-1 flex items-center justify-center my-0.5 min-h-0">
           
           {/* 스마트폰 및 말풍선 통합 래퍼 (말풍선들이 사각형 경계에 자연스럽게 걸치도록 기준 컨테이너 역할) */}
-          <div className="landing-phone-box relative w-[180px] min-[360px]:w-[198px] min-[400px]:w-[218px] sm:w-[230px] h-[280px] min-[360px]:h-[315px] min-[400px]:h-[340px] sm:h-[375px]">
+          <div className="landing-phone-box relative w-[175px] min-[360px]:w-[195px] min-[400px]:w-[215px] sm:w-[230px] h-[270px] min-[360px]:h-[305px] min-[400px]:h-[335px] sm:h-[370px]">
 
             {/* 중앙 스마트폰 디바이스 프레임 (세로로 긴 슬림 비율) */}
             <div className="w-full h-full rounded-[2rem] sm:rounded-[2.7rem] border-[4px] sm:border-[6px] border-white shadow-xl shadow-purple-900/10 bg-gradient-to-b from-white via-[#FAF5FF]/80 to-[#EFF6FF]/70 backdrop-blur-md flex flex-col items-center pt-3 sm:pt-4 overflow-hidden relative z-10">

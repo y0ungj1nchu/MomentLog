@@ -139,50 +139,67 @@ body {
   -webkit-tap-highlight-color: transparent;
 }
 
-/* 화면 높이가 작은 휴대폰 (세로 높이 740px 이하) 하단 잘림 방지 최적화 */
+/* 화면 높이가 작은 휴대폰 (세로 높이 740px 이하) 첫 화면 스크롤 제거 및 컴팩트 핏 */
 @media (max-height: 740px) {
   .landing-card {
-    min-height: auto !important;
-    height: auto !important;
-    padding-top: 0.85rem !important;
-    padding-bottom: 0.85rem !important;
+    height: 96dvh !important;
+    max-height: 96dvh !important;
+    padding-top: 0.65rem !important;
+    padding-bottom: 0.65rem !important;
   }
   .landing-phone-box {
-    height: 255px !important;
-    width: 172px !important;
+    height: 240px !important;
+    width: 165px !important;
   }
   .landing-phone-visual {
-    min-height: 255px !important;
+    min-height: 0 !important;
   }
   .landing-brand-logo {
-    width: 2.35rem !important;
-    height: 2.35rem !important;
+    width: 2.15rem !important;
+    height: 2.15rem !important;
   }
   .landing-brand-title {
-    font-size: 1.25rem !important;
-    margin-top: 0.15rem !important;
+    font-size: 1.2rem !important;
+    margin-top: 0.1rem !important;
   }
   .landing-headline-sub {
-    font-size: 1.05rem !important;
+    font-size: 1rem !important;
   }
   .landing-headline-main {
-    font-size: 1.7rem !important;
+    font-size: 1.6rem !important;
   }
   .landing-btn {
-    padding-top: 0.75rem !important;
-    padding-bottom: 0.75rem !important;
-    font-size: 0.95rem !important;
+    padding-top: 0.7rem !important;
+    padding-bottom: 0.7rem !important;
+    font-size: 0.9rem !important;
   }
 }
 
 /* 화면 높이가 매우 작은 기기 (세로 높이 640px 이하, 가로 모드 등) 최적화 */
 @media (max-height: 640px) {
+  .landing-card {
+    height: 97dvh !important;
+    max-height: 97dvh !important;
+    padding-top: 0.5rem !important;
+    padding-bottom: 0.5rem !important;
+  }
   .landing-phone-box {
-    height: 220px !important;
-    width: 152px !important;
+    height: 205px !important;
+    width: 145px !important;
   }
   .landing-phone-visual {
-    min-height: 220px !important;
+    min-height: 0 !important;
+  }
+  .landing-headline-sub {
+    font-size: 0.9rem !important;
+  }
+  .landing-headline-main {
+    font-size: 1.4rem !important;
+  }
+  .landing-btn {
+    padding-top: 0.6rem !important;
+    padding-bottom: 0.6rem !important;
+    font-size: 0.85rem !important;
   }
 }
 
