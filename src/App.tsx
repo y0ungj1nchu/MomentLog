@@ -170,6 +170,7 @@ export const App: React.FC = () => {
       )}
       {step === 'q1' && (
         <QuestionStep
+          key="q1"
           data={q1Data}
           themeColor="blue"
           selectedOptionId={userSelections.q1?.id}
@@ -179,6 +180,7 @@ export const App: React.FC = () => {
       )}
       {step === 'q2' && (
         <QuestionStep
+          key="q2"
           data={q2Data}
           themeColor="purple"
           selectedOptionId={userSelections.q2?.id}
@@ -188,6 +190,7 @@ export const App: React.FC = () => {
       )}
       {step === 'q3' && (
         <QuestionStep
+          key="q3"
           data={q3Data}
           themeColor="blue"
           selectedOptionId={userSelections.q3?.id}
@@ -197,6 +200,7 @@ export const App: React.FC = () => {
       )}
       {step === 'q4' && (
         <QuestionStep
+          key="q4"
           data={q4Data}
           themeColor="purple"
           selectedOptionId={userSelections.q4?.id}

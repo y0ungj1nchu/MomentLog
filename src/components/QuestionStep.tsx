@@ -25,7 +25,9 @@ export const QuestionStep: React.FC<QuestionStepProps> = ({
   const isPurple = themeColor === 'purple';
   const progressPercent = Math.round((data.stepNumber / data.totalSteps) * 100);
 
-  const handleSelect = (option: QuestionOption) => {
+  const handleSelect = (e: React.MouseEvent<HTMLButtonElement>, option: QuestionOption) => {
+    // 모바일 터치 시 버튼 포커스 잔류 방지
+    e.currentTarget.blur();
     setSelectedId(option.id);
 
     // 테두리 반짝임 피드백 후 다음 단계 이동
@@ -94,17 +96,18 @@ export const QuestionStep: React.FC<QuestionStepProps> = ({
             const isSelected = selectedId === option.id;
             return (
               <button
-                key={option.id}
+                key={`q${data.stepNumber}-opt${option.id}`}
                 type="button"
-                onClick={() => handleSelect(option)}
-                className={`w-full p-3 min-[380px]:p-4 rounded-xl sm:rounded-2xl bg-white border-2 flex items-center justify-between text-left transition-all duration-150 relative cursor-pointer active:scale-[0.98] min-h-[3.75rem] sm:min-h-[4.25rem] ${
+                onClick={(e) => handleSelect(e, option)}
+                onTouchEnd={(e) => (e.currentTarget as HTMLButtonElement).blur()}
+                className={`w-full p-3 min-[380px]:p-4 rounded-xl sm:rounded-2xl bg-white border-2 flex items-center justify-between text-left transition-all duration-150 relative cursor-pointer active:scale-[0.98] select-none outline-none focus:outline-none focus:ring-0 min-h-[3.75rem] sm:min-h-[4.25rem] ${
                   isSelected
                     ? isPurple
                       ? 'border-[#C198F0] ring-4 ring-[#C198F0]/30 shadow-[0_0_16px_rgba(193,152,240,0.45)] z-10'
                       : 'border-[#6A85F1] ring-4 ring-[#6A85F1]/30 shadow-[0_0_16px_rgba(106,133,241,0.45)] z-10'
                     : isPurple
-                    ? 'border-transparent shadow-xs hover:border-[#C198F0]/50 hover:shadow-md'
-                    : 'border-transparent shadow-xs hover:border-[#6A85F1]/50 hover:shadow-md'
+                    ? 'border-transparent shadow-xs option-hover-purple'
+                    : 'border-transparent shadow-xs option-hover-blue'
                 }`}
               >
                 <div className="flex items-center gap-2.5 min-[380px]:gap-3.5 relative z-10 w-full pr-1">

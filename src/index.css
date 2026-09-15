@@ -186,3 +186,24 @@ body {
   }
 }
 
+/* PC/마우스 환경에서만 hover 하이라이트 적용 (아이폰 등 모바일 터치 기기의 sticky hover 잔상 방지) */
+@media (hover: hover) and (pointer: fine) {
+  .option-hover-purple:hover {
+    border-color: rgba(193, 152, 240, 0.5) !important;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1) !important;
+  }
+  .option-hover-blue:hover {
+    border-color: rgba(106, 133, 241, 0.5) !important;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1) !important;
+  }
+}
+
+/* 터치 디바이스 전역 탭 하이라이트 및 포커스 아웃라인 잔류 방지 */
+button,
+a,
+input,
+[role="button"] {
+  -webkit-tap-highlight-color: transparent;
+}
+
+
