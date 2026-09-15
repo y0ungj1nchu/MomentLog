@@ -37,18 +37,18 @@ export const QuestionStep: React.FC<QuestionStepProps> = ({
   };
 
   return (
-    <section className="min-h-[100dvh] flex flex-col justify-between bg-[#F8F9FE] px-3.5 sm:px-4 py-3 sm:py-6 fade-enter overflow-y-auto">
+    <section className="h-[100dvh] max-h-[100dvh] w-full flex flex-col justify-between bg-[#F8F9FE] px-3 min-[380px]:px-4 py-2 min-[380px]:py-2.5 sm:py-5 fade-enter overflow-hidden select-none">
       {/* 핸드폰 세로 방향(Portrait) 기준 최적화 컨테이너 */}
-      <div className="w-full max-w-md mx-auto flex flex-col flex-1 justify-between gap-3 min-[380px]:gap-4 sm:gap-5 my-auto py-1 sm:py-2">
+      <div className="w-full max-w-md mx-auto flex flex-col flex-1 justify-between gap-2 min-[380px]:gap-2.5 sm:gap-4 my-auto h-full max-h-full py-0.5 sm:py-1">
         
         {/* 상단 네비게이션 바: 뒤로가기 버튼 & 진행률 */}
-        <div className="w-full">
-          <div className="flex items-center justify-between mb-2 sm:mb-2.5">
+        <div className="w-full flex-shrink-0">
+          <div className="flex items-center justify-between mb-1.5 sm:mb-2">
             {/* 뒤로가기 버튼 */}
             <button
               type="button"
               onClick={onBack}
-              className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-white shadow-xs border border-gray-200/80 flex items-center justify-center text-gray-700 hover:text-gray-900 hover:bg-gray-50 active:scale-95 transition-all cursor-pointer"
+              className="w-8 h-8 min-[380px]:w-9 min-[380px]:h-9 sm:w-10 sm:h-10 rounded-full bg-white shadow-xs border border-gray-200/80 flex items-center justify-center text-gray-700 hover:text-gray-900 hover:bg-gray-50 active:scale-95 transition-all cursor-pointer"
               aria-label="이전 단계로 이동"
               title="이전으로 돌아가기"
             >
@@ -79,19 +79,19 @@ export const QuestionStep: React.FC<QuestionStepProps> = ({
         </div>
 
         {/* 질문 카드 (질문 위에 불필요한 '심리테스트 Q1' 라벨 제거) */}
-        <div className="bg-white rounded-[1.7rem] sm:rounded-[2rem] p-4 min-[380px]:p-5 sm:p-6 shadow-xs border border-gray-100/90 text-left">
-          <h2 className="text-base min-[380px]:text-lg sm:text-xl font-black text-gray-900 leading-snug break-keep">
+        <div className="question-card bg-white rounded-[1.3rem] min-[380px]:rounded-[1.6rem] sm:rounded-[2rem] p-3 min-[380px]:p-4 sm:p-5 shadow-xs border border-gray-100/90 text-left flex-shrink-0">
+          <h2 className="text-[15px] min-[380px]:text-base sm:text-lg font-black text-gray-900 leading-snug break-keep">
             {data.title}
           </h2>
           {data.description && (
-            <p className="text-[11px] min-[380px]:text-xs sm:text-sm text-gray-400 mt-1.5 sm:mt-2 font-medium break-keep">
+            <p className="text-[11px] min-[380px]:text-xs sm:text-sm text-gray-400 mt-1 font-medium break-keep">
               {data.description}
             </p>
           )}
         </div>
 
         {/* 4지선다 선택지 버튼 리스트 (핸드폰 세로 방향 1열 스택 배치) */}
-        <div className="flex flex-col gap-2 min-[380px]:gap-2.5 sm:gap-3 w-full">
+        <div className="flex flex-col gap-1.5 min-[380px]:gap-2 sm:gap-2.5 w-full flex-1 justify-center">
           {data.options.map((option) => {
             const isSelected = selectedId === option.id;
             return (
@@ -100,7 +100,7 @@ export const QuestionStep: React.FC<QuestionStepProps> = ({
                 type="button"
                 onClick={(e) => handleSelect(e, option)}
                 onTouchEnd={(e) => (e.currentTarget as HTMLButtonElement).blur()}
-                className={`w-full p-3 min-[380px]:p-4 rounded-xl sm:rounded-2xl bg-white border-2 flex items-center justify-between text-left transition-all duration-150 relative cursor-pointer active:scale-[0.98] select-none outline-none focus:outline-none focus:ring-0 min-h-[3.75rem] sm:min-h-[4.25rem] ${
+                className={`question-opt-btn w-full p-2.5 min-[380px]:p-3 sm:p-4 rounded-xl sm:rounded-2xl bg-white border-2 flex items-center justify-between text-left transition-all duration-150 relative cursor-pointer active:scale-[0.98] select-none outline-none focus:outline-none focus:ring-0 min-h-[3.25rem] min-[380px]:min-h-[3.6rem] sm:min-h-[4.25rem] ${
                   isSelected
                     ? isPurple
                       ? 'border-[#C198F0] ring-4 ring-[#C198F0]/30 shadow-[0_0_16px_rgba(193,152,240,0.45)] z-10'
@@ -110,9 +110,9 @@ export const QuestionStep: React.FC<QuestionStepProps> = ({
                     : 'border-transparent shadow-xs option-hover-blue'
                 }`}
               >
-                <div className="flex items-center gap-2.5 min-[380px]:gap-3.5 relative z-10 w-full pr-1">
+                <div className="flex items-center gap-2 min-[380px]:gap-3 relative z-10 w-full pr-1">
                   <span
-                    className={`flex-shrink-0 w-7 h-7 sm:w-9 sm:h-9 rounded-lg sm:rounded-xl font-black flex items-center justify-center text-xs sm:text-base transition-colors ${
+                    className={`flex-shrink-0 w-6 h-6 min-[380px]:w-7 min-[380px]:h-7 sm:w-9 sm:h-9 rounded-lg sm:rounded-xl font-black flex items-center justify-center text-xs sm:text-base transition-colors ${
                       isSelected
                         ? 'gradient-bg text-white shadow-xs'
                         : isPurple
@@ -122,7 +122,7 @@ export const QuestionStep: React.FC<QuestionStepProps> = ({
                   >
                     {option.label || option.id}
                   </span>
-                  <p className="text-gray-800 text-xs min-[380px]:text-sm sm:text-base font-semibold leading-snug break-keep flex-1">
+                  <p className="text-gray-800 text-xs min-[380px]:text-[13px] sm:text-base font-semibold leading-snug break-keep flex-1">
                     "{option.text}"
                   </p>
                 </div>
@@ -132,8 +132,8 @@ export const QuestionStep: React.FC<QuestionStepProps> = ({
         </div>
 
         {/* 하단 미니 브랜딩 문구 */}
-        <div className="text-center pt-1 pb-1">
-          <span className="text-[11px] font-bold text-gray-300 tracking-wider">
+        <div className="text-center pt-0.5 pb-0.5 flex-shrink-0">
+          <span className="text-[10px] min-[380px]:text-[11px] font-bold text-gray-300 tracking-wider">
             MOMENTLOG · 나만의 파랑새 찾기
           </span>
         </div>

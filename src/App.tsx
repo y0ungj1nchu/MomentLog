@@ -164,7 +164,7 @@ export const App: React.FC = () => {
   };
 
   useEffect(() => {
-    if (step === 'landing') {
+    if (step !== 'main') {
       document.body.style.overflow = 'hidden';
       document.documentElement.style.overflow = 'hidden';
     } else {
@@ -180,7 +180,7 @@ export const App: React.FC = () => {
   return (
     <div
       className={`min-h-screen bg-[#F8F9FE] text-gray-800 font-sans selection:bg-[#C198F0] selection:text-white ${
-        step === 'landing' ? 'h-[100dvh] max-h-[100dvh] overflow-hidden' : ''
+        step !== 'main' ? 'h-[100dvh] max-h-[100dvh] overflow-hidden' : ''
       }`}
     >
       {step === 'landing' && (
