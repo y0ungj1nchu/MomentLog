@@ -26,3 +26,5 @@ push.bat
 .idea/
 .DS_Store
 Thumbs.db
+chrome_tmp/
+edge_tmp/
