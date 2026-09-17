@@ -79,19 +79,19 @@ export const QuestionStep: React.FC<QuestionStepProps> = ({
         </div>
 
         {/* 질문 카드 (질문 위에 불필요한 '심리테스트 Q1' 라벨 제거) */}
-        <div className="question-card bg-white rounded-[1.3rem] min-[380px]:rounded-[1.6rem] sm:rounded-[2rem] p-3 min-[380px]:p-4 sm:p-5 shadow-xs border border-gray-100/90 text-left flex-shrink-0">
-          <h2 className="text-[15px] min-[380px]:text-base sm:text-lg font-black text-gray-900 leading-snug break-keep">
+        <div className="question-card bg-white rounded-[1.4rem] min-[380px]:rounded-[1.7rem] sm:rounded-[2rem] p-3.5 min-[380px]:p-4.5 sm:p-5 shadow-xs border border-gray-100/90 text-left flex-shrink-0">
+          <h2 className="text-base min-[380px]:text-[17px] sm:text-xl font-black text-gray-900 leading-snug break-keep">
             {data.title}
           </h2>
           {data.description && (
-            <p className="text-[11px] min-[380px]:text-xs sm:text-sm text-gray-400 mt-1 font-medium break-keep">
+            <p className="text-xs min-[380px]:text-[13px] sm:text-sm text-gray-400 mt-1 font-medium break-keep">
               {data.description}
             </p>
           )}
         </div>
 
         {/* 4지선다 선택지 버튼 리스트 (핸드폰 세로 방향 1열 스택 배치) */}
-        <div className="flex flex-col gap-1.5 min-[380px]:gap-2 sm:gap-2.5 w-full flex-1 justify-center">
+        <div className="flex flex-col gap-2 min-[380px]:gap-2.5 sm:gap-3 w-full flex-1 justify-center">
           {data.options.map((option) => {
             const isSelected = selectedId === option.id;
             return (
@@ -100,7 +100,7 @@ export const QuestionStep: React.FC<QuestionStepProps> = ({
                 type="button"
                 onClick={(e) => handleSelect(e, option)}
                 onTouchEnd={(e) => (e.currentTarget as HTMLButtonElement).blur()}
-                className={`question-opt-btn w-full p-2.5 min-[380px]:p-3 sm:p-4 rounded-xl sm:rounded-2xl bg-white border-2 flex items-center justify-between text-left transition-all duration-150 relative cursor-pointer active:scale-[0.98] select-none outline-none focus:outline-none focus:ring-0 min-h-[3.25rem] min-[380px]:min-h-[3.6rem] sm:min-h-[4.25rem] ${
+                className={`question-opt-btn w-full p-3 min-[380px]:p-3.5 sm:p-4 rounded-xl sm:rounded-2xl bg-white border-2 flex items-center justify-between text-left transition-all duration-150 relative cursor-pointer active:scale-[0.98] select-none outline-none focus:outline-none focus:ring-0 min-h-[3.75rem] min-[380px]:min-h-[4.15rem] sm:min-h-[4.6rem] ${
                   isSelected
                     ? isPurple
                       ? 'border-[#C198F0] ring-4 ring-[#C198F0]/30 shadow-[0_0_16px_rgba(193,152,240,0.45)] z-10'
@@ -110,9 +110,9 @@ export const QuestionStep: React.FC<QuestionStepProps> = ({
                     : 'border-transparent shadow-xs option-hover-blue'
                 }`}
               >
-                <div className="flex items-center gap-2 min-[380px]:gap-3 relative z-10 w-full pr-1">
+                <div className="flex items-center gap-2.5 min-[380px]:gap-3.5 relative z-10 w-full pr-1">
                   <span
-                    className={`flex-shrink-0 w-6 h-6 min-[380px]:w-7 min-[380px]:h-7 sm:w-9 sm:h-9 rounded-lg sm:rounded-xl font-black flex items-center justify-center text-xs sm:text-base transition-colors ${
+                    className={`flex-shrink-0 w-7 h-7 min-[380px]:w-8 min-[380px]:h-8 sm:w-9 sm:h-9 rounded-lg sm:rounded-xl font-black flex items-center justify-center text-xs min-[380px]:text-sm sm:text-base transition-colors ${
                       isSelected
                         ? 'gradient-bg text-white shadow-xs'
                         : isPurple
@@ -122,7 +122,7 @@ export const QuestionStep: React.FC<QuestionStepProps> = ({
                   >
                     {option.label || option.id}
                   </span>
-                  <p className="text-gray-800 text-xs min-[380px]:text-[13px] sm:text-base font-semibold leading-snug break-keep flex-1">
+                  <p className="text-gray-800 text-[13.5px] min-[380px]:text-[15px] sm:text-base font-semibold leading-snug break-keep flex-1">
                     "{option.text}"
                   </p>
                 </div>
